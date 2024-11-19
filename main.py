@@ -16,7 +16,7 @@ BASE_URL = "https://www.hoyolab.com"
 def fetch_html(url):
     try:
         
-        chromedriver_path =   
+        chromedriver_path =  os.path.join(os.path.dirname(__file__), 'chromedriver-win64', 'chromedriver.exe')  
         service = Service(executable_path=chromedriver_path)
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
@@ -34,11 +34,18 @@ def fetch_html(url):
         return None
 
 
-
-
 def parse_event_data(html):
+    """
+    Parses event data to extract title and date.
+
+    Args:
+        html: The HTML content as a string.
+
+    Returns:
+        A list of dictionaries, each containing the title and date of an event.
+    """
     soup = BeautifulSoup(html, "html.parser")
-    event_cards = soup.select(".mhy-news-card__info")  # Updated selector
+    event_cards = soup.select(".mhy-news-card__info")  # Select all event cards
     event_data = []
 
     for card in event_cards:
@@ -50,23 +57,14 @@ def parse_event_data(html):
         date_element = card.select_one(".mhy-news-card__time")
         date = date_element.text.strip() if date_element else "No date"
 
-        # Extract image URL
-        cover_element = card.find_next_sibling("div", class_="mhy-news-card__cover")
-        image_element = cover_element.select_one(".mhy-news-card__img") if cover_element else None
-        if image_element:
-            style = image_element.get("style", "")
-            image_url = style.split("url(")[-1].split(")")[0].strip('"') if "url(" in style else None
-        else:
-            image_url = None
-
         # Append event data
         event_data.append({
             "name": title,
             "date": date,
-            "image_url": image_url
         })
 
     return event_data
+
 
 def get_absolute_url(relative_url):
     if relative_url.startswith("http"):
@@ -74,18 +72,26 @@ def get_absolute_url(relative_url):
     return f"{BASE_URL}{relative_url}"
 
 def store_data_csv(data, filename="events.csv"):
-  """
-  Stores event data in a CSV file.
+    """
+    Stores event data in a CSV file.
 
-  Args:
-    data: A list of dictionaries, where each dictionary represents an event.
-    filename: The name of the CSV file to store the data in.
-  """
-  with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-    fieldnames = data[0].keys() if data else []
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    writer.writerows(data)
+    Args:
+        data: A list of dictionaries containing event data.
+        filename: The name of the CSV file.
+    """
+    if not data:
+        print("No data to write to CSV.")
+        return
+
+    with open(filename, "w", newline="", encoding="utf-8") as csvfile:
+        fieldnames = data[0].keys()
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+        writer.writerows(data)
+
+    print(f"Data successfully stored in {filename}.")
+
 
 
 def scrape_articles(event_data):
@@ -160,11 +166,11 @@ html = fetch_html(url)
 
 if html:
     event_data = parse_event_data(html)
-    for event in event_data:
-        print(f"Title: {event['name']}")
-        print(f"Date: {event['date']}")
-        print(f"Image URL: {event['image_url']}")
-        print("-" * 50)
+    
+    # Save data to CSV
+    store_data_csv(event_data, filename="events.csv")
+    
+    print("Scraped event data saved to events.csv.")
 else:
     print("Failed to fetch the page.")
 
