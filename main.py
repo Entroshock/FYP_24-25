@@ -123,9 +123,7 @@ def clean_event_data(data):
   return cleaned_data
 
 
-
-# Example usage
-url = "https://www.hoyolab.com/circles/6/39/official?page_type=39&page_sort=events"  # Replace with the actual URL
+url = "https://www.hoyolab.com/circles/6/39/official?page_type=39&page_sort=events" 
 html = fetch_html(url)
 if html:
   event_data = parse_event_data(html)
