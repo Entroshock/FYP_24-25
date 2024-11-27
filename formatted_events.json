@@ -1,0 +1,72 @@
+[
+  {
+    "eventId": "35080323",
+    "title": "Garden of Plenty Event: Calyx Drop Rate Doubled for a Limited Time",
+    "description": "▌Event Period 2024/11/22 04:00:00 – 2024/11/29 03:59:00 (server time) ▌Participation Requirement Complete the Adventure Mission \"Calyx (Golden): Bud of Memories\" ▌Event Details ●During the Garden of Plenty event, beat Calyx (Golden) and Calyx (Crimson) challenges to receive double rewards. ●You will get an additional set of rewards on top of default drops after consuming an event double reward opportunity and Trailblaze Power. ●The number of daily double reward opportunities is limited and can be viewed in the Garden of Plenty event page. ●Double reward opportunities refresh daily at 04:00 (server time). Make sure to use them before they're gone!",
+    "startDate": "2024-11-22T04:00:00",
+    "endDate": "2024-11-29T03:59:00",
+    "startTimestamp": 1732248000000,
+    "endTimestamp": 1732852740000,
+    "lastUpdated": "2024-11-27T12:35:37.904077"
+  },
+  {
+    "eventId": "34893777",
+    "title": "Shadow of the Ranger: Complete Event Assignments to get rewards such as Stellar Jades!",
+    "description": "A space station researcher has requested your aid in uncovering Boothill's whereabouts. The clues are nigh impossible to unravel, and the mysteries behind the Galaxy Ranger are endless. ▌Event Period",
+    "startDate": "2024-11-13T04:00:00",
+    "endDate": "2024-12-02T03:59:00",
+    "startTimestamp": 1731470400000,
+    "endTimestamp": 1733111940000,
+    "lastUpdated": "2024-11-27T12:35:48.174273"
+  },
+  {
+    "eventId": "34892114",
+    "title": "Light Cone Event Warp \"Bygone Reminiscence\"",
+    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2024/11/13 12:00:00 – 2024/12/03 15:00:00 (server time), and includes the following content: ▌Light Cone Event Warp: \"Bygone Reminiscence — Along the Passing Shore\"",
+    "startDate": "2024-11-13T12:00:00",
+    "endDate": "2024-12-03T15:00:00",
+    "startTimestamp": 1731499200000,
+    "endTimestamp": 1733238000000,
+    "lastUpdated": "2024-11-27T12:35:58.626093"
+  },
+  {
+    "eventId": "34892058",
+    "title": "Character Event Warp: \"Words of Yore\" and \"Gilded Imprisonment\"",
+    "description": "Hello, Trailblazers! Character Event Warp Period for this phase is 2024/11/13 12:00:00 – 2024/12/03 15:00:00 (server time), and includes the following content: ▌\"Words of Yore\" Character Event Warp",
+    "startDate": "2024-11-13T12:00:00",
+    "endDate": "2024-12-03T15:00:00",
+    "startTimestamp": 1731499200000,
+    "endTimestamp": 1733238000000,
+    "lastUpdated": "2024-11-27T12:36:08.893892"
+  },
+  {
+    "eventId": "34739115",
+    "title": "Planar Fissure Event: Planar Ornaments Drop Rate Doubled for a Limited Time",
+    "description": "▌Event Period 2024/11/06 04:00:00 – 2024/11/13 03:59:00 (server time) ▌Participation Requirement Unlock Simulated Universe: World 3 ▌Event Details ●During the Planar Fissure event period, get double rewards from the Simulated Universe or Divergent Universe. ●You will get additional rewards on top of default drops after consuming an event double reward opportunity and Immersifiers (or Trailblaze Power). ●During the event, the number of double reward opportunities is limited and can be viewed in the Planar Fissure event page. ●The double reward count will not reset during the event. Be sure to schedule your time for this challenge accordingly, Trailblazers.",
+    "startDate": "2024-11-06T04:00:00",
+    "endDate": "2024-11-13T03:59:00",
+    "startTimestamp": 1730865600000,
+    "endTimestamp": 1731470340000,
+    "lastUpdated": "2024-11-27T12:36:19.164190"
+  },
+  {
+    "eventId": "34613231",
+    "title": "Mr. Cold Feet's Pop-Up Shop: Submit designated materials to obtain rewards such as Stellar Jades!",
+    "description": "Sampo seems to be preparing for some new business venture in Belobog. Should we check it out? ▌Event Period 2024/10/31 12:00:00 – 2024/11/11 03:59:00 (server time) ▌Participation Requirement Trailblaze Level ≥ 21 ※ This content can be experienced in advance through the Finality's Vision function. ※ Trailblazers are recommended to experience this content after completing the Trailblaze Mission \"Jarilo-VI — Silent Galaxy\" ▌Event Rewards",
+    "startDate": "2024-10-31T12:00:00",
+    "endDate": "2024-11-11T03:59:00",
+    "startTimestamp": 1730376000000,
+    "endTimestamp": 1731297540000,
+    "lastUpdated": "2024-11-27T12:36:29.585320"
+  },
+  {
+    "eventId": "34467317",
+    "title": "Sound Hunt Ninjutsu Inscription: Participate in the event to get the specific 4-star Light Cone as a reward",
+    "description": "The grand music festival hides a lurking threat as the Dazzling Ninja Hero takes the stage — let the hunt begin once more! The band performance will soon commence, and it promises to be an electrifying spectacle! ▌Limited-Time Event Period",
+    "startDate": "2024-10-25T12:00:00",
+    "endDate": "2024-12-02T03:59:00",
+    "startTimestamp": 1729854000000,
+    "endTimestamp": 1733111940000,
+    "lastUpdated": "2024-11-27T12:36:40.039024"
+  }
+]
