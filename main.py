@@ -2,7 +2,8 @@ import requests
 import json
 import time
 import re
-from datetime import datetime
+import random
+from datetime import datetime, timedelta
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -14,58 +15,122 @@ def get_headers():
         'Accept-Language': 'en-US,en;q=0.9'
     }
 
-def parse_event_dates(text):
-    """Extract start and end dates from text"""
-    # Print the text we're trying to parse
+def is_version_update_article(article):
+    """Check if this is a version update announcement"""
+    title = article.get('title', '').lower()
+    description = article.get('description', '').lower()
+    
+    # Specific patterns that indicate a version update announcement
+    update_patterns = [
+        'version update',
+        'version maintenance',
+        'paean of era nova',  # Specific to current version
+        'welcome to version'
+    ]
+    
+    return any(pattern in title or pattern in description for pattern in update_patterns)
+
+def add_delay(min_seconds=10, max_seconds=11):
+    """Add a random delay between requests to be respectful to the server"""
+    delay = random.uniform(min_seconds, max_seconds)
+    print(f"\nWaiting {delay:.1f} seconds before next request...")
+    time.sleep(delay)
+
+def parse_version_update_time(text):
+    """Extract version update time from announcement"""
+    # Look for version number
+    version_pattern = r"Version (\d+\.\d+)"
+    update_time_pattern = r"Begins at (\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})"
+    
+    version_match = re.search(version_pattern, text)
+    time_match = re.search(update_time_pattern, text)
+    
+    if version_match and time_match:
+        version = version_match.group(1)
+        update_time = datetime.strptime(time_match.group(1), "%Y/%m/%d %H:%M:%S")
+        
+        # Add 5 hours for the maintenance period
+        start_time = update_time + timedelta(hours=5)
+        
+        return {
+            'version': version,
+            'updateStart': update_time.isoformat(),
+            'versionStart': start_time.isoformat(),
+            'timestamp': int(start_time.timestamp() * 1000)
+        }
+    
+    return None
+
+def parse_event_dates(text, version_updates=None):
+    """Extract start and end dates from text with proper version update handling"""
     print("\nTrying to parse dates from:")
     print(text[:200])
     
-    # First, look for the event period section
-    event_period_pattern = r"▌Event Period[^\d]*((?:\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})[^\d]*(?:\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2}))"
-    period_match = re.search(event_period_pattern, text, re.IGNORECASE)
+    # First look for version reference
+    version_pattern = r"after the Version (\d+\.\d+) update"
+    version_match = re.search(version_pattern, text, re.IGNORECASE)
     
-    if period_match:
-        # Now extract the two dates from the event period section
-        date_pattern = r"(\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})"
-        dates = re.findall(date_pattern, period_match.group(1))
+    # Then look for end date
+    end_date_pattern = r"–\s*(\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})"
+    end_date_match = re.search(end_date_pattern, text)
+    
+    if not end_date_match:
+        print("No end date found")
+        return None
+
+    try:
+        end_date = datetime.strptime(end_date_match.group(1), "%Y/%m/%d %H:%M:%S")
         
-        if len(dates) >= 2:
-            try:
-                start_date = datetime.strptime(dates[0], "%Y/%m/%d %H:%M:%S")
-                end_date = datetime.strptime(dates[1], "%Y/%m/%d %H:%M:%S")
+        # If this mentions a version update and we have version data
+        if version_match and version_updates:
+            version = version_match.group(1)
+            print(f"Found version reference: {version}")
+            
+            if version in version_updates:
+                version_info = version_updates[version]
+                # Convert the stored ISO format string back to datetime
+                start_date = datetime.fromisoformat(version_info['versionStart'])
+                print(f"Using version {version} start time: {start_date}")
                 
+                # Only return if start date is before end date
+                if start_date < end_date:
+                    return {
+                        'startDate': start_date.isoformat(),
+                        'endDate': end_date.isoformat(),
+                        'startTimestamp': int(start_date.timestamp() * 1000),
+                        'endTimestamp': int(end_date.timestamp() * 1000),
+                        'version': version
+                    }
+                else:
+                    print(f"Warning: Version start date {start_date} would be after end date {end_date}")
+                    return None
+            else:
+                print(f"Warning: Version {version} not found in version_updates")
+                return None
+        
+        # If no version reference or no version data, look for explicit start date
+        start_date_pattern = r"(\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})\s*[–-]"
+        start_date_match = re.search(start_date_pattern, text)
+        
+        if start_date_match:
+            start_date = datetime.strptime(start_date_match.group(1), "%Y/%m/%d %H:%M:%S")
+            if start_date < end_date:
                 return {
                     'startDate': start_date.isoformat(),
                     'endDate': end_date.isoformat(),
                     'startTimestamp': int(start_date.timestamp() * 1000),
                     'endTimestamp': int(end_date.timestamp() * 1000)
                 }
-            except ValueError as e:
-                print(f"Error parsing dates: {e}")
-                print(f"Date strings: {dates}")
+            else:
+                print(f"Warning: Explicit start date {start_date} would be after end date {end_date}")
                 return None
-    
-    # If no event period section found, try finding any date range
-    date_range_pattern = r"(\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})\s*[–-]\s*(\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})"
-    date_range_match = re.search(date_range_pattern, text)
-    
-    if date_range_match:
-        try:
-            start_date = datetime.strptime(date_range_match.group(1), "%Y/%m/%d %H:%M:%S")
-            end_date = datetime.strptime(date_range_match.group(2), "%Y/%m/%d %H:%M:%S")
-            
-            return {
-                'startDate': start_date.isoformat(),
-                'endDate': end_date.isoformat(),
-                'startTimestamp': int(start_date.timestamp() * 1000),
-                'endTimestamp': int(end_date.timestamp() * 1000)
-            }
-        except ValueError as e:
-            print(f"Error parsing dates: {e}")
-            return None
-    
-    print("No date patterns found in text")
-    return None
+        
+        print("No valid start date pattern found and no version update information available")
+        return None
+                
+    except ValueError as e:
+        print(f"Error parsing dates: {e}")
+        return None
 
 def is_event_article(article):
     """Check if the article is about an event"""
@@ -92,7 +157,9 @@ def is_event_article(article):
     )
 
 def get_article_list(last_id=""):
-    """Fetch articles from the API"""
+    """Fetch articles with rate limiting"""
+    add_delay()  # Add delay before each request
+    
     base_url = "https://bbs-api-os.hoyolab.com/community/post/wapi/getNewsList"
     params = {
         'gids': '6',
@@ -121,11 +188,8 @@ def get_article_list(last_id=""):
                 'content': post.get('content')
             }
             
-            if is_event_article(article):
-                articles.append(article)
-                print(f"Found event article: {article['title']}")
-            else:
-                print(f"Skipping non-event article: {article['title']}")
+            articles.append(article)
+            print(f"Found article: {article['title']}")
             
         return articles, data.get('data', {}).get('last_id', ''), data.get('data', {}).get('is_last', True)
     
@@ -164,7 +228,7 @@ def format_event_for_firestore(article):
     return {
         'eventId': article.get('id'),
         'title': article.get('title'),
-        'description': clean_description,  # Use clean description only
+        'description': clean_description,  
         'startDate': dates['startDate'],
         'endDate': dates['endDate'],
         'startTimestamp': dates['startTimestamp'],
@@ -191,9 +255,10 @@ def upload_to_firestore(events):
     except Exception as e:
         print(f"Error uploading to Firestore: {e}")
 
-
 def get_article_content(post_id):
-    """Fetch detailed article content using the API endpoint"""
+    """Fetch detailed article content with rate limiting"""
+    add_delay()  # Add delay before each request
+    
     api_url = f"https://bbs-api-os.hoyolab.com/community/post/wapi/getPostFull?post_id={post_id}&read=1&scene=1"
     
     try:
@@ -203,96 +268,88 @@ def get_article_content(post_id):
         data = response.json()
         post_data = data.get('data', {}).get('post', {}).get('post', {})
         
-        # Check for multi-language content
-        multi_lang = post_data.get('multi_language_info', {})
-        structured_content = post_data.get('structured_content', '')
-        
         # Try to get content from different possible sources
-        content = None
-        
-        # First try structured content
-        if structured_content:
-            content = structured_content
-        
-        # Then try multi-language content
-        if not content:
-            lang_content = multi_lang.get('lang_content', {}).get('en-us', '')
-            if lang_content:
-                content = lang_content
-        
-        # Finally try the desc field
+        structured_content = post_data.get('structured_content', '')
         desc = post_data.get('desc', '')
+        multi_lang = post_data.get('multi_language_info', {})
+        lang_content = multi_lang.get('lang_content', {}).get('en-us', '')
         
         # Combine all available content
-        full_text = ' '.join(filter(None, [desc, content]))
-        
-        # Debug print
-        print(f"\nFull article content:")
-        print(json.dumps(post_data, indent=2))
+        full_text = ' '.join(filter(None, [desc, structured_content, lang_content]))
         
         return {
             'description': desc,
-            'content': content,
+            'content': structured_content or lang_content,
             'full_text': full_text,
             'structured_content': structured_content,
-            'raw_post_data': post_data  # Keep the raw data for debugging
+            'raw_post_data': post_data
         }
     
     except requests.exceptions.RequestException as e:
         print(f"Error fetching article content: {e}")
-        if hasattr(e, 'response') and hasattr(e.response, 'text'):
-            print(f"Error response: {e.response.text}")
         return None
 
-
 def scrape_hoyolab(article_limit=10):
-    """Main scraping function"""
+    """Main scraping function with two-pass processing"""
     all_articles = []
     formatted_events = []
+    version_updates = {}
     last_id = ""
     is_last = False
     page_count = 0
     
-    while not is_last and len(all_articles) < article_limit and page_count < 10:
+    # First pass: Get all articles and process version updates
+    print("\nFirst pass: Processing version updates...")
+    while not is_last and page_count < 10:
         page_count += 1
-        print(f"\nFetching page {page_count} (found {len(all_articles)}/{article_limit} event articles)...")
+        print(f"\nFetching page {page_count} for version updates...")
         articles, new_last_id, is_last = get_article_list(last_id)
         
         if not articles:
             break
-        
+            
         for article in articles:
-            if len(all_articles) >= article_limit:
-                break
-                
-            print(f"Processing article: {article['title']}")
-            
-            # Get detailed content
-            content = get_article_content(article['id'])
-            print(f"\nRaw API response for {article['title']}:")
-            print(json.dumps(content, indent=2))
-            if content:
-                article.update(content)
-                # Use the full text for date parsing
-                article['description'] = article.get('full_text', '')
-            
-            formatted_event = format_event_for_firestore(article)
-            if formatted_event:
-                formatted_events.append(formatted_event)
-                print(f"Successfully processed event: {article['title']}")
-            else:
-                print(f"Could not process dates for: {article['title']}")
+            print(f"Checking article: {article['title']}")
+            if is_version_update_article(article):
+                print(f"Found version update article: {article['title']}")
+                content = get_article_content(article['id'])
+                if content:
+                    article.update(content)
+                    version_info = parse_version_update_time(article.get('full_text', ''))
+                    if version_info:
+                        version = version_info['version']
+                        version_updates[version] = version_info
+                        print(f"Found version {version} start time: {version_info['versionStart']}")
             
             all_articles.append(article)
-            time.sleep(10)
-        
+            
         last_id = new_last_id
     
-    # Save both raw and formatted data
-    if all_articles:
-        with open('raw_articles.json', 'w', encoding='utf-8') as f:
-            json.dump(all_articles, f, ensure_ascii=False, indent=2)
+    # Second pass: Process event articles with version information
+    print("\nSecond pass: Processing event articles...")
+    event_count = 0
+    for article in all_articles:
+        if event_count >= article_limit:
+            break
             
+        if is_event_article(article):
+            print(f"Processing event article: {article['title']}")
+            content = get_article_content(article['id']) if 'full_text' not in article else None
+            
+            if content:
+                article.update(content)
+                
+            dates = parse_event_dates(article.get('full_text', ''), version_updates)
+            if dates:
+                formatted_event = format_event_for_firestore(article, dates)
+                if formatted_event:
+                    formatted_events.append(formatted_event)
+                    print(f"Successfully processed event: {article['title']}")
+                    event_count += 1
+            else:
+                print(f"Could not parse dates for: {article['title']}")
+    
+    # Save formatted events
     if formatted_events:
         with open('formatted_events.json', 'w', encoding='utf-8') as f:
             json.dump(formatted_events, f, ensure_ascii=False, indent=2)
@@ -301,6 +358,28 @@ def scrape_hoyolab(article_limit=10):
         upload_to_firestore(formatted_events)
     
     return formatted_events
+
+def format_event_for_firestore(article, dates):
+    """Format article data with validated dates"""
+    raw_post_data = article.get('raw_post_data', {})
+    clean_description = raw_post_data.get('desc', '') or article.get('description', '')
+    
+    event_data = {
+        'eventId': article.get('id'),
+        'title': article.get('title'),
+        'description': clean_description,
+        'startDate': dates['startDate'],
+        'endDate': dates['endDate'],
+        'startTimestamp': dates['startTimestamp'],
+        'endTimestamp': dates['endTimestamp'],
+        'lastUpdated': datetime.now().isoformat()
+    }
+    
+    # Add version if available
+    if 'version' in dates:
+        event_data['version'] = dates['version']
+    
+    return event_data
 
 if __name__ == "__main__":
     events = scrape_hoyolab(article_limit=10)

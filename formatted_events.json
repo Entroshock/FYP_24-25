@@ -1,72 +1,106 @@
 [
   {
-    "eventId": "35080323",
-    "title": "Garden of Plenty Event: Calyx Drop Rate Doubled for a Limited Time",
-    "description": "▌Event Period 2024/11/22 04:00:00 – 2024/11/29 03:59:00 (server time) ▌Participation Requirement Complete the Adventure Mission \"Calyx (Golden): Bud of Memories\" ▌Event Details ●During the Garden of Plenty event, beat Calyx (Golden) and Calyx (Crimson) challenges to receive double rewards. ●You will get an additional set of rewards on top of default drops after consuming an event double reward opportunity and Trailblaze Power. ●The number of daily double reward opportunities is limited and can be viewed in the Garden of Plenty event page. ●Double reward opportunities refresh daily at 04:00 (server time). Make sure to use them before they're gone!",
-    "startDate": "2024-11-22T04:00:00",
-    "endDate": "2024-11-29T03:59:00",
-    "startTimestamp": 1732248000000,
-    "endTimestamp": 1732852740000,
-    "lastUpdated": "2024-11-27T12:35:37.904077"
+    "eventId": "36844003",
+    "title": "Light Cone Event Warp: \"Brilliant Fixation\" & \"Coalesced Truths\"",
+    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time), and includes the following content: ▌ Light Cone Event Warp: \"Brilliant Fixation\"",
+    "startDate": "2025-02-05T12:00:00",
+    "endDate": "2025-02-25T15:00:00",
+    "startTimestamp": 1738756800000,
+    "endTimestamp": 1740495600000,
+    "lastUpdated": "2025-02-11T03:51:25.589360"
   },
   {
-    "eventId": "34893777",
-    "title": "Shadow of the Ranger: Complete Event Assignments to get rewards such as Stellar Jades!",
-    "description": "A space station researcher has requested your aid in uncovering Boothill's whereabouts. The clues are nigh impossible to unravel, and the mysteries behind the Galaxy Ranger are endless. ▌Event Period",
-    "startDate": "2024-11-13T04:00:00",
-    "endDate": "2024-12-02T03:59:00",
-    "startTimestamp": 1731470400000,
-    "endTimestamp": 1733111940000,
-    "lastUpdated": "2024-11-27T12:35:48.174273"
+    "eventId": "36843932",
+    "title": "Character Event Warp: Tailored Fate & Indelible Coterie",
+    "description": "Hello, Trailblazers! Character Event Warp Period for this phase is 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time), and includes the following content: ▌ \"Tailored Fate\" Character Event Warp",
+    "startDate": "2025-02-05T12:00:00",
+    "endDate": "2025-02-25T15:00:00",
+    "startTimestamp": 1738756800000,
+    "endTimestamp": 1740495600000,
+    "lastUpdated": "2025-02-11T03:51:36.170446"
   },
   {
-    "eventId": "34892114",
-    "title": "Light Cone Event Warp \"Bygone Reminiscence\"",
-    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2024/11/13 12:00:00 – 2024/12/03 15:00:00 (server time), and includes the following content: ▌Light Cone Event Warp: \"Bygone Reminiscence — Along the Passing Shore\"",
-    "startDate": "2024-11-13T12:00:00",
-    "endDate": "2024-12-03T15:00:00",
-    "startTimestamp": 1731499200000,
-    "endTimestamp": 1733238000000,
-    "lastUpdated": "2024-11-27T12:35:58.626093"
+    "eventId": "36767294",
+    "title": "Enscrolled Crepusculum: Defeat the enemies in stories and obtain Tracks of Destiny and other rewards",
+    "description": "A lost child has appeared in the bustling market of Okhema. She glances around, seemingly trying to find something... ▌ Event Period 2025/02/03 12:00:00 – 2025/02/24 03:59:00 (server time) ▌Participation Requirement",
+    "startDate": "2025-02-03T12:00:00",
+    "endDate": "2025-02-24T03:59:00",
+    "startTimestamp": 1738584000000,
+    "endTimestamp": 1740369540000,
+    "lastUpdated": "2025-02-11T03:51:47.251485"
   },
   {
-    "eventId": "34892058",
-    "title": "Character Event Warp: \"Words of Yore\" and \"Gilded Imprisonment\"",
-    "description": "Hello, Trailblazers! Character Event Warp Period for this phase is 2024/11/13 12:00:00 – 2024/12/03 15:00:00 (server time), and includes the following content: ▌\"Words of Yore\" Character Event Warp",
-    "startDate": "2024-11-13T12:00:00",
-    "endDate": "2024-12-03T15:00:00",
-    "startTimestamp": 1731499200000,
-    "endTimestamp": 1733238000000,
-    "lastUpdated": "2024-11-27T12:36:08.893892"
-  },
-  {
-    "eventId": "34739115",
+    "eventId": "36634082",
     "title": "Planar Fissure Event: Planar Ornaments Drop Rate Doubled for a Limited Time",
-    "description": "▌Event Period 2024/11/06 04:00:00 – 2024/11/13 03:59:00 (server time) ▌Participation Requirement Unlock Simulated Universe: World 3 ▌Event Details ●During the Planar Fissure event period, get double rewards from the Simulated Universe or Divergent Universe. ●You will get additional rewards on top of default drops after consuming an event double reward opportunity and Immersifiers (or Trailblaze Power). ●During the event, the number of double reward opportunities is limited and can be viewed in the Planar Fissure event page. ●The double reward count will not reset during the event. Be sure to schedule your time for this challenge accordingly, Trailblazers.",
-    "startDate": "2024-11-06T04:00:00",
-    "endDate": "2024-11-13T03:59:00",
-    "startTimestamp": 1730865600000,
-    "endTimestamp": 1731470340000,
-    "lastUpdated": "2024-11-27T12:36:19.164190"
+    "description": "Hello, Trailblazers! ▌ Event Period 2025/01/27 04:00:00 – 2025/02/03 03:59:00 (server time) ▌Participation Requirement Unlock Simulated Universe: World 3 ▌Event Details ● During the Planar Fissure event period, get double rewards from the Simulated Universe or Divergent Universe. ● You will get additional rewards on top of default drops after consuming an event double reward opportunity and Immersifiers (or Trailblaze Power). ● During the event, the number of double reward opportunities is limited and can be viewed in the Planar Fissure event page. ● The double reward count will not reset during the event. Be sure to schedule your time for this challenge accordingly, Trailblazers.",
+    "startDate": "2025-01-27T04:00:00",
+    "endDate": "2025-02-03T03:59:00",
+    "startTimestamp": 1737950400000,
+    "endTimestamp": 1738555140000,
+    "lastUpdated": "2025-02-11T03:51:58.648392"
   },
   {
-    "eventId": "34613231",
-    "title": "Mr. Cold Feet's Pop-Up Shop: Submit designated materials to obtain rewards such as Stellar Jades!",
-    "description": "Sampo seems to be preparing for some new business venture in Belobog. Should we check it out? ▌Event Period 2024/10/31 12:00:00 – 2024/11/11 03:59:00 (server time) ▌Participation Requirement Trailblaze Level ≥ 21 ※ This content can be experienced in advance through the Finality's Vision function. ※ Trailblazers are recommended to experience this content after completing the Trailblaze Mission \"Jarilo-VI — Silent Galaxy\" ▌Event Rewards",
-    "startDate": "2024-10-31T12:00:00",
-    "endDate": "2024-11-11T03:59:00",
-    "startTimestamp": 1730376000000,
-    "endTimestamp": 1731297540000,
-    "lastUpdated": "2024-11-27T12:36:29.585320"
+    "eventId": "36633597",
+    "title": "Cosmic Lucky Prize Event Details",
+    "description": "Hello, Trailblazers! ▌ Event Period Event Period: 2025/01/27 04:00:00 (server time) – 2025/02/26 06:00:00 (UTC+8) Prize Draw Period: 2025/01/27 04:00:00 – 2025/02/02 23:59:00 (server time) Draw Entry Time: Starting from Phase 2, each phase refreshes at 00:00 (Server Time) daily. ● Phase 1: 2025/01/27 04:00:00 – 2025/01/27 23:59:00 (server time) ● Phases 2–7: Daily from 00:00 to 23:59 (Server Time), 2025/01/28 through 2025/02/02 Winner Announcement Time: Results for each phase will be revealed at 21:00 (UTC+8) the following day. Here are the times for each server: ● America Server: Following day at 08:00 (Server Time) ● Europe Server: Following day at 14:00 (Server Time) ● Asia Server: Following day at 21:00 (Server Time) ● TW,HK,MO Server: Following day at 21:00 (Server Time) ※ When the prize draw phase ends, Trailblazers can still claim fixed rewards for the event. View the rules below for exact rules. ▌ Event Participation Rules",
+    "startDate": "2025-01-27T04:00:00",
+    "endDate": "2025-02-26T06:00:00",
+    "startTimestamp": 1737950400000,
+    "endTimestamp": 1740549600000,
+    "lastUpdated": "2025-02-11T03:52:09.961779"
   },
   {
-    "eventId": "34467317",
-    "title": "Sound Hunt Ninjutsu Inscription: Participate in the event to get the specific 4-star Light Cone as a reward",
-    "description": "The grand music festival hides a lurking threat as the Dazzling Ninja Hero takes the stage — let the hunt begin once more! The band performance will soon commence, and it promises to be an electrifying spectacle! ▌Limited-Time Event Period",
-    "startDate": "2024-10-25T12:00:00",
-    "endDate": "2024-12-02T03:59:00",
-    "startTimestamp": 1729854000000,
-    "endTimestamp": 1733111940000,
-    "lastUpdated": "2024-11-27T12:36:40.039024"
+    "eventId": "36471191",
+    "title": "Hypogeum Enigma: Participate in exploring the hypogeum to obtain Tracks of Destiny and get a 4-star character",
+    "description": "Hello, Trailblazers! The explorer Damionis is preparing to explore the ancient city ruins... He seems to have forgotten to invite you? ▌ Limited-Time Event Period 2025/01/22 12:00:00 – 2025/02/24 03:59:00 (server time) ※ After the limited-time event concludes, Hypogeum Enigma will be moved to Conventional Memoir, where Trailblazers can continue to experience its gameplay. ▌Participation Requirement",
+    "startDate": "2025-01-22T12:00:00",
+    "endDate": "2025-02-24T03:59:00",
+    "startTimestamp": 1737547200000,
+    "endTimestamp": 1740369540000,
+    "lastUpdated": "2025-02-11T03:52:20.447390"
+  },
+  {
+    "eventId": "36341346",
+    "title": "Light Cone Event Warp: Brilliant Fixation & Coalesced Truths",
+    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is after the Version 3.0 update – 2025/02/05 11:59:00 (server time), and includes the following content: ▌ Light Cone Event Warp: \"Brilliant Fixation\"",
+    "startDate": "2025-01-15T11:00:00",
+    "endDate": "2025-02-05T11:59:00",
+    "startTimestamp": 1736938800000,
+    "endTimestamp": 1738756740000,
+    "lastUpdated": "2025-02-11T03:52:41.697203",
+    "version": "3.0"
+  },
+  {
+    "eventId": "36341290",
+    "title": "Character Event Warp: Message From Beyond & Indelible Coterie",
+    "description": "Hello, Trailblazers! Character Event Warp Period for this phase is after the Version 3.0 update – 2025/02/05 11:59:00 (server time), and includes the following content: ▌ \"Message From Beyond\" Character Event Warp",
+    "startDate": "2025-01-15T11:00:00",
+    "endDate": "2025-02-05T11:59:00",
+    "startTimestamp": 1736938800000,
+    "endTimestamp": 1738756740000,
+    "lastUpdated": "2025-02-11T03:52:53.131928",
+    "version": "3.0"
+  },
+  {
+    "eventId": "36323609",
+    "title": "Mem's Gift: During the event period, log into the game to get Star Rail Special Pass ×10 and Variable Dice ×1!",
+    "description": "Hello, Trailblazers! Mem brought you a generous gift. Take it, and don't forget to thank them. ▌Event Period After the version 3.0 update – 2025/02/26 06:00:00 (UTC+8) ▌Participation Requirement Unlock Travel Log ▌Event Details When logging into the game during the event period, Trailblazers can obtain rewards from the Travel Log — Mem's Gift: Star Rail Special Pass ×10 and Variable Dice ×1!",
+    "startDate": "2025-01-15T11:00:00",
+    "endDate": "2025-02-26T06:00:00",
+    "startTimestamp": 1736938800000,
+    "endTimestamp": 1740549600000,
+    "lastUpdated": "2025-02-11T03:53:04.522488",
+    "version": "3.0"
+  },
+  {
+    "eventId": "36026844",
+    "title": "\"Fashion Guide of the Cosmos\" Event Details",
+    "description": "Log into the game during V3.0 and unlock the Characters function to obtain March 7th: Preservation's outfit Nascent Spring! ▌Event Period After the version 3.0 update – 2025/02/26 06:00:00 (UTC+8) ▌Participation Requirement Characters function Unlocked ▌Event Details ● Log into the game during V3.0 and unlock the Characters function to obtain March 7th: Preservation's outfit Nascent Spring! ● After the event concludes, the outfit Nascent Spring will become available for purchase in the Contract Shop for Oneiric Shard ×1680. ● Obtaining the outfit will unlock the outfit, as well as the corresponding avatar. ● This outfit is limited to 1 piece per account and cannot be acquired repeatedly. ● Nascent Spring can only be used by March 7th (Preservation). ● After changing into Nascent Spring, March 7th will wear the corresponding outfit during exploration and combat. ● Outfits wore will not change the outfit shown on March 7th during cinematics.",
+    "startDate": "2025-01-15T11:00:00",
+    "endDate": "2025-02-26T06:00:00",
+    "startTimestamp": 1736938800000,
+    "endTimestamp": 1740549600000,
+    "lastUpdated": "2025-02-11T03:53:15.247392",
+    "version": "3.0"
   }
 ]

@@ -155,7 +155,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     if (this.isBrowser) {
       try {
-        // Dynamically import FullCalendar and its plugins
+        // This Dynamically imports FullCalendar and its plugins
         const [
           { Calendar }, 
           { default: dayGridPlugin },
