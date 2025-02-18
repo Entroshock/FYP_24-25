@@ -25,4 +25,6 @@ import { CalendarViewComponent } from './components/calendar-view/calendar-view.
     }
   `]
 })
-export class AppComponent {}
+export class AppComponent {
+  title: any;
+}
