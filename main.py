@@ -1,3 +1,4 @@
+
 import requests
 import json
 import time
@@ -7,6 +8,8 @@ from datetime import datetime, timedelta
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from transformers import pipeline
+import numpy as np
 
 def get_headers():
     return {
@@ -30,7 +33,7 @@ def is_version_update_article(article):
     
     return any(pattern in title or pattern in description for pattern in update_patterns)
 
-def add_delay(min_seconds=10, max_seconds=11):
+def add_delay(min_seconds=2, max_seconds=5):
     """Add a random delay between requests to be respectful to the server"""
     delay = random.uniform(min_seconds, max_seconds)
     print(f"\nWaiting {delay:.1f} seconds before next request...")
@@ -197,44 +200,31 @@ def get_article_list(last_id=""):
         print(f"Error fetching article list: {e}")
         return [], "", True
 
-def format_event_for_firestore(article):
-    """Format article data for Firestore with clean description"""
-    raw_post_data = article.get('raw_post_data', {})
-    
-    # Get clean description (original short description)
-    clean_description = raw_post_data.get('desc', '') or article.get('description', '')
-    
-    # Combine all possible content sources for date parsing
-    content_sources = [
-        article.get('full_text', ''),
-        article.get('content', ''),
-        article.get('structured_content', ''),
-        raw_post_data.get('content', ''),
-        raw_post_data.get('desc', '')
-    ]
-    
-    # Try parsing dates from each source
-    dates = None
-    for source in content_sources:
-        if source:
-            dates = parse_event_dates(source)
-            if dates:
-                break
-    
-    if not dates:
-        print(f"Could not parse dates for article: {article.get('title')}")
-        return None
-        
-    return {
+def format_event_for_firestore(article, dates):
+
+    """Format article data with sentiment analysis"""
+    # Get existing event data
+    event_data = {
         'eventId': article.get('id'),
         'title': article.get('title'),
-        'description': clean_description,  
+        'description': article.get('description', ''),
         'startDate': dates['startDate'],
         'endDate': dates['endDate'],
         'startTimestamp': dates['startTimestamp'],
         'endTimestamp': dates['endTimestamp'],
         'lastUpdated': datetime.now().isoformat()
     }
+    
+    # Add sentiment analysis
+    comments = get_article_comments(article['id'])
+    sentiment = analyze_sentiment(comments)
+    event_data['sentiment'] = sentiment
+    
+    # Add version if available
+    if 'version' in dates:
+        event_data['version'] = dates['version']
+    
+    return event_data
 
 def upload_to_firestore(events):
     """Upload events to Firestore"""
@@ -254,6 +244,66 @@ def upload_to_firestore(events):
                 
     except Exception as e:
         print(f"Error uploading to Firestore: {e}")
+
+def get_article_comments(post_id):
+    """Fetch comments for an article"""
+    base_url = "https://bbs-api-os.hoyolab.com/community/post/wapi/getPostReplies"
+    params = {
+        'post_id': post_id,
+        'size': 20,  # Adjust size as needed
+        'last_id': ''
+    }
+    
+    try:
+        response = requests.get(base_url, params=params, headers=get_headers())
+        response.raise_for_status()
+        
+        data = response.json()
+        comments = []
+        
+        for reply in data.get('data', {}).get('list', []):
+            comment = {
+                'content': reply.get('reply', {}).get('content', ''),
+                'likes': reply.get('reply', {}).get('like_num', 0)
+            }
+            comments.append(comment)
+            
+        return comments
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching comments: {e}")
+        return []
+
+def analyze_sentiment(comments):
+    """Analyze sentiment of comments using BERT"""
+    # Initialize sentiment analysis pipeline
+    sentiment_analyzer = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
+    
+    if not comments:
+        return "neutral"
+    
+    # Weight comments by likes
+    total_weight = 0
+    weighted_scores = 0
+    
+    for comment in comments:
+        # Get sentiment score (1-5)
+        result = sentiment_analyzer(comment['content'])[0]
+        score = int(result['label'].split()[0])  # Convert '1 star' to 1
+        
+        # Weight by likes (add 1 to avoid zero weights)
+        weight = comment['likes'] + 1
+        weighted_scores += score * weight
+        total_weight += weight
+    
+    average_score = weighted_scores / total_weight
+    
+    # Convert to sentiment category
+    if average_score >= 4:
+        return "positive"
+    elif average_score >= 3:
+        return "neutral"
+    else:
+        return "negative"
 
 def get_article_content(post_id):
     """Fetch detailed article content with rate limiting"""

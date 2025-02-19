@@ -22,6 +22,7 @@ interface GameEvent {
   startTimestamp: number;
   endTimestamp: number;
   lastUpdated: string;
+  sentiment: 'positive' | 'neutral' | 'negative';
 }
 
 @Component({
@@ -217,7 +218,10 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
         eventContent: (info: EventContentArg) => ({
           html: `
             <div style="padding: 3px;">
-              <div style="font-weight: bold;">${info.event.title}</div>
+              <div style="font-weight: bold;">
+                ${info.event.title}
+                ${this.getSentimentIcon(info.event.extendedProps['sentiment'])}
+              </div>
               <div style="font-size: 0.8em;">${this.formatTime(info.event.start!)}</div>
             </div>
           `
@@ -284,16 +288,55 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   }
 
   convertToCalendarEvents(events: GameEvent[]): EventInput[] {
-    return events.map(event => ({
-      id: event.eventId,
-      title: event.title,
-      start: event.startDate,
-      end: event.endDate,
-      description: event.description,
-      allDay: false,
-      backgroundColor: this.getEventColor(this.getEventType(event.title)),
-      borderColor: this.getEventColor(this.getEventType(event.title))
-    }));
+    return events.map(event => {
+      const baseColor = this.getEventColor(this.getEventType(event.title));
+      const eventColor = this.adjustColorBySentiment(baseColor, event.sentiment);
+      
+      return {
+        id: event.eventId,
+        title: event.title,
+        start: event.startDate,
+        end: event.endDate,
+        description: event.description,
+        allDay: false,
+        backgroundColor: eventColor,
+        borderColor: eventColor,
+        extendedProps: {
+          sentiment: event.sentiment
+        }
+      };
+    });
+  }
+
+  getSentimentIcon(sentiment: string): string {
+    switch (sentiment) {
+      case 'positive':
+        return '👍';
+      case 'negative':
+        return '👎';
+      default:
+        return '🤔';
+    }
+  }
+
+
+  adjustColorBySentiment(baseColor: string, sentiment: string): string {
+    // Convert hex to RGB
+    const r = parseInt(baseColor.slice(1, 3), 16);
+    const g = parseInt(baseColor.slice(3, 5), 16);
+    const b = parseInt(baseColor.slice(5, 7), 16);
+    
+    switch (sentiment) {
+      case 'positive':
+        // Brighten the color
+        return `rgba(${r}, ${g}, ${b}, 0.8)`;
+      case 'negative':
+        // Darken the color
+        return `rgba(${Math.floor(r * 0.7)}, ${Math.floor(g * 0.7)}, ${Math.floor(b * 0.7)}, 1)`;
+      default:
+        // Keep original color for neutral
+        return baseColor;
+    }
   }
 
   getEventColor(type: string): string {

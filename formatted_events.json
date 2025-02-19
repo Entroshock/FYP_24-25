@@ -7,7 +7,7 @@
     "endDate": "2025-02-25T15:00:00",
     "startTimestamp": 1738756800000,
     "endTimestamp": 1740495600000,
-    "lastUpdated": "2025-02-11T03:51:25.589360"
+    "lastUpdated": "2025-02-19T00:13:00.238819"
   },
   {
     "eventId": "36843932",
@@ -17,7 +17,7 @@
     "endDate": "2025-02-25T15:00:00",
     "startTimestamp": 1738756800000,
     "endTimestamp": 1740495600000,
-    "lastUpdated": "2025-02-11T03:51:36.170446"
+    "lastUpdated": "2025-02-19T00:13:04.086053"
   },
   {
     "eventId": "36767294",
@@ -27,7 +27,7 @@
     "endDate": "2025-02-24T03:59:00",
     "startTimestamp": 1738584000000,
     "endTimestamp": 1740369540000,
-    "lastUpdated": "2025-02-11T03:51:47.251485"
+    "lastUpdated": "2025-02-19T00:13:07.191388"
   },
   {
     "eventId": "36634082",
@@ -37,7 +37,7 @@
     "endDate": "2025-02-03T03:59:00",
     "startTimestamp": 1737950400000,
     "endTimestamp": 1738555140000,
-    "lastUpdated": "2025-02-11T03:51:58.648392"
+    "lastUpdated": "2025-02-19T00:13:12.395098"
   },
   {
     "eventId": "36633597",
@@ -47,7 +47,7 @@
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1737950400000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-02-11T03:52:09.961779"
+    "lastUpdated": "2025-02-19T00:13:15.701875"
   },
   {
     "eventId": "36471191",
@@ -57,7 +57,7 @@
     "endDate": "2025-02-24T03:59:00",
     "startTimestamp": 1737547200000,
     "endTimestamp": 1740369540000,
-    "lastUpdated": "2025-02-11T03:52:20.447390"
+    "lastUpdated": "2025-02-19T00:13:19.704858"
   },
   {
     "eventId": "36341346",
@@ -67,7 +67,7 @@
     "endDate": "2025-02-05T11:59:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1738756740000,
-    "lastUpdated": "2025-02-11T03:52:41.697203",
+    "lastUpdated": "2025-02-19T00:13:28.740637",
     "version": "3.0"
   },
   {
@@ -78,7 +78,7 @@
     "endDate": "2025-02-05T11:59:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1738756740000,
-    "lastUpdated": "2025-02-11T03:52:53.131928",
+    "lastUpdated": "2025-02-19T00:13:34.022782",
     "version": "3.0"
   },
   {
@@ -89,7 +89,7 @@
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-02-11T03:53:04.522488",
+    "lastUpdated": "2025-02-19T00:13:36.936830",
     "version": "3.0"
   },
   {
@@ -100,7 +100,7 @@
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-02-11T03:53:15.247392",
+    "lastUpdated": "2025-02-19T00:13:40.527120",
     "version": "3.0"
   }
 ]
