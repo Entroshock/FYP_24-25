@@ -222,15 +222,17 @@ interface GameEvent {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 16px;
-      height: 16px;
+      width: 22px;
+      height: 22px;
       text-align: center;
-      line-height: 1;
-      font-size: 10px;
+      line-height: 22px;
+      font-size: 14px;
       font-weight: bold;
       border-radius: 50%;
       background: rgba(255,255,255,0.25);
       flex-shrink: 0;
+      margin-left: 4px;
+      padding-bottom: 1px; /* Help center the symbols vertically */
     }
     
     /* Better day cell styling */
@@ -493,6 +495,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
 
     // Color the entire event background based on type
     const bgColor = this.getEventColor(type);
+    const sentimentBgColor = this.getSentimentBgColor(sentiment);
     
     // Create a clean structured event with header bar and content
     return {
@@ -500,7 +503,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
         <div class="event-container" style="background-color: ${bgColor};">
           <div class="event-header">
             <span class="event-title-text">${this.truncateTitle(info.event.title, maxTitleLength)}</span>
-            <span class="event-sentiment">${sentimentIcon}</span>
+            <span class="event-sentiment" style="background-color: ${sentimentBgColor};">${sentimentIcon}</span>
           </div>
           <div class="event-content">
             <div class="event-time">${this.formatTime(info.event.start!)}</div>
@@ -610,15 +613,27 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     }
   }
   
-  // Add these helper methods for sentiment styling
+  // Helper methods for sentiment styling
   getSentimentIcon(sentiment: string): string {
     switch (sentiment) {
       case 'positive':
         return '✓';
       case 'negative':
-        return '✗';
+        return '×'; // Using the multiplication symbol which is more consistently centered
       default:
-        return '○';
+        return '⚪'; // Using a white circle which is more consistently centered
+    }
+  }
+  
+  // Add a new method for sentiment background colors
+  getSentimentBgColor(sentiment: string): string {
+    switch (sentiment) {
+      case 'positive':
+        return 'rgba(76, 175, 80, 0.7)'; // Green with opacity
+      case 'negative':
+        return 'rgba(244, 67, 54, 0.7)'; // Red with opacity
+      default:
+        return 'rgba(158, 158, 158, 0.5)'; // Gray for neutral with opacity
     }
   }
   
@@ -638,13 +653,13 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
     
     // Log values for debugging
-    console.log('Event Data:', {
-      title: info.event.title,
-      type: eventType,
-      sentiment: sentiment,
-      eventColor: this.getEventColor(eventType),
-      sentimentColor: this.getSentimentColor(sentiment)
-    });
+    // console.log('Event Data:', {
+    //   title: info.event.title,
+    //   type: eventType,
+    //   sentiment: sentiment,
+    //   eventColor: this.getEventColor(eventType),
+    //   sentimentColor: this.getSentimentColor(sentiment)
+    // });
     
     // Format dates
     const startDate = new Date(info.event.start!).toLocaleString();
@@ -672,4 +687,3 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     }
   }
 }
-
