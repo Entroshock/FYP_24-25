@@ -5,8 +5,7 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EventInput } from '@fullcalendar/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser'; // ADD THIS IMPORT
-
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
   EventClickArg,
   EventMountArg,
@@ -563,7 +562,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
         allDay: false,
         backgroundColor: baseColor, // Use the pure base color by type
         borderColor: baseColor,
-        textColor: '#FFFFFF', // White text for contrast
+        textColor: '#FFFFFF', 
         extendedProps: {
           sentiment: event.sentiment,
           type: type
@@ -656,6 +655,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     `;
     
     // Use DomSanitizer to bypass security
+    // fucking fix this later with a pipe if needed
     this.safeEventHTML = this.sanitizer.bypassSecurityTrustHtml(htmlContent);
     this.showEventModal = true;
   }
