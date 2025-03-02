@@ -1,5 +1,16 @@
 [
   {
+    "eventId": "37189509",
+    "title": "Version 3.1 Store & Nameless Honor Update",
+    "description": "Hello, Trailblazers! After the 3.1 version update, Nameless Honor and the store will be updated, with details as follows. ▌ Version 3.1 Nameless Honor Details During the event, Trailblazers can increase their Nameless Honor level to obtain rewards such as Star Rail Passes, Wishful Resin, Self-Modeling Resins, and Tracks of Destiny. After unlocking Nameless Glory, you will immediately obtain Stellar Jade ×680. By increasing Nameless Honor levels, you can additionally receive rewards such as Star Rail Special Pass ×4, a selected 4-star Light Cone, Variable Dice ×1, Wishful Resin ×1, Self-Modeling Resin ×1, Relic Remains, universal Path material Tears of Dreams, and more! If the Trailblazer unlocks Nameless Medal, in addition to the previous rewards, they will immediately increase their Honor level by 10 and will also obtain the avatars \"Tribbie: Delicacies\" and \"Mydei: Delicacies\", Stellar Jade ×200, and Fuel Rewards! ■ Opening Time After the Version 3.1 update – 2025/04/07 03:59:00 (Server Time) ■ Requirements Trailblaze Level ≥ 12 and have completed the Trailblaze Mission \"Jarilo-VI — Long Wait for the Blade's Edge\" ■ Nameless Honor Description ● After Nameless Honor is unlocked, the Nameless Gift will automatically be unlocked. Trailblazers can obtain EXP and increase their Nameless Honor level via This Week's Missions and This Period's Missions. The maximum Nameless Honor level is capped at Level 70. Attaining specific levels will allow the Trailblazer to obtain Star Rail Passes, Self-Modeling Resin, Tracks of Destiny, and more. ● This Week's Missions will reset every Monday at 04:00 (server time). ● Trailblazers who have unlocked Nameless Glory can purchase the Honor Badge to upgrade to Nameless Medal. ■ Reminders ● After reaching level cap, EXP will no longer be awarded through missions during this period. ● In the event of special circumstances leading to the repeated purchase of Nameless Glory or Nameless Medal, The Nameless EXP will not be accumulated, and Oneiric Shard ×750 (or Oneiric Shard ×1,410) will be refunded based on the price of the purchase. ● In the event of special circumstances leading to the repeated purchase of the Honor Badge, Oneiric Shards ×860 will be refunded. ● The purchase of Nameless Glory, Nameless Medal, and Honor Badge will be closed for this period at 2025/04/07 02:59:00 (Server Time). After the purchase is closed, Trailblazers can still complete the Nameless Honor missions and receive rewards. Please note the available purchase time and event period. ● In the webpage top-up center, the purchase deadline for Nameless Glory, Nameless Medal, and Honor Badge is 2025/04/06 03:59:00 (UTC+8). Trailblazers who top up via webpage should note the available purchase time.",
+    "startDate": "2025-02-26T11:00:00",
+    "endDate": "2025-04-07T03:59:00",
+    "startTimestamp": 1740567600000,
+    "endTimestamp": 1743994740000,
+    "lastUpdated": "2025-03-02T12:39:13.908745",
+    "version": "3.1"
+  },
+  {
     "eventId": "36844003",
     "title": "Light Cone Event Warp: \"Brilliant Fixation\" & \"Coalesced Truths\"",
     "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time), and includes the following content: ▌ Light Cone Event Warp: \"Brilliant Fixation\"",
@@ -7,7 +18,7 @@
     "endDate": "2025-02-25T15:00:00",
     "startTimestamp": 1738756800000,
     "endTimestamp": 1740495600000,
-    "lastUpdated": "2025-02-19T00:13:00.238819"
+    "lastUpdated": "2025-03-02T12:39:21.713114"
   },
   {
     "eventId": "36843932",
@@ -17,7 +28,7 @@
     "endDate": "2025-02-25T15:00:00",
     "startTimestamp": 1738756800000,
     "endTimestamp": 1740495600000,
-    "lastUpdated": "2025-02-19T00:13:04.086053"
+    "lastUpdated": "2025-03-02T12:39:25.705313"
   },
   {
     "eventId": "36767294",
@@ -27,7 +38,7 @@
     "endDate": "2025-02-24T03:59:00",
     "startTimestamp": 1738584000000,
     "endTimestamp": 1740369540000,
-    "lastUpdated": "2025-02-19T00:13:07.191388"
+    "lastUpdated": "2025-03-02T12:39:28.649455"
   },
   {
     "eventId": "36634082",
@@ -37,7 +48,7 @@
     "endDate": "2025-02-03T03:59:00",
     "startTimestamp": 1737950400000,
     "endTimestamp": 1738555140000,
-    "lastUpdated": "2025-02-19T00:13:12.395098"
+    "lastUpdated": "2025-03-02T12:39:31.552191"
   },
   {
     "eventId": "36633597",
@@ -47,7 +58,7 @@
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1737950400000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-02-19T00:13:15.701875"
+    "lastUpdated": "2025-03-02T12:39:35.053673"
   },
   {
     "eventId": "36471191",
@@ -57,7 +68,7 @@
     "endDate": "2025-02-24T03:59:00",
     "startTimestamp": 1737547200000,
     "endTimestamp": 1740369540000,
-    "lastUpdated": "2025-02-19T00:13:19.704858"
+    "lastUpdated": "2025-03-02T12:39:39.525377"
   },
   {
     "eventId": "36341346",
@@ -67,7 +78,7 @@
     "endDate": "2025-02-05T11:59:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1738756740000,
-    "lastUpdated": "2025-02-19T00:13:28.740637",
+    "lastUpdated": "2025-03-02T12:39:47.989697",
     "version": "3.0"
   },
   {
@@ -78,7 +89,7 @@
     "endDate": "2025-02-05T11:59:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1738756740000,
-    "lastUpdated": "2025-02-19T00:13:34.022782",
+    "lastUpdated": "2025-03-02T12:39:50.778962",
     "version": "3.0"
   },
   {
@@ -89,18 +100,7 @@
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-02-19T00:13:36.936830",
-    "version": "3.0"
-  },
-  {
-    "eventId": "36026844",
-    "title": "\"Fashion Guide of the Cosmos\" Event Details",
-    "description": "Log into the game during V3.0 and unlock the Characters function to obtain March 7th: Preservation's outfit Nascent Spring! ▌Event Period After the version 3.0 update – 2025/02/26 06:00:00 (UTC+8) ▌Participation Requirement Characters function Unlocked ▌Event Details ● Log into the game during V3.0 and unlock the Characters function to obtain March 7th: Preservation's outfit Nascent Spring! ● After the event concludes, the outfit Nascent Spring will become available for purchase in the Contract Shop for Oneiric Shard ×1680. ● Obtaining the outfit will unlock the outfit, as well as the corresponding avatar. ● This outfit is limited to 1 piece per account and cannot be acquired repeatedly. ● Nascent Spring can only be used by March 7th (Preservation). ● After changing into Nascent Spring, March 7th will wear the corresponding outfit during exploration and combat. ● Outfits wore will not change the outfit shown on March 7th during cinematics.",
-    "startDate": "2025-01-15T11:00:00",
-    "endDate": "2025-02-26T06:00:00",
-    "startTimestamp": 1736938800000,
-    "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-02-19T00:13:40.527120",
+    "lastUpdated": "2025-03-02T12:39:54.539239",
     "version": "3.0"
   }
 ]

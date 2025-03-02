@@ -5,6 +5,7 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EventInput } from '@fullcalendar/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'; // ADD THIS IMPORT
 
 import {
   EventClickArg,
@@ -53,11 +54,19 @@ interface GameEvent {
         </div>
         <div id="calendar"></div>
       </div>
+      
+      <!-- Enhanced Modal for event details -->
+        <div id="eventModal" class="event-modal" [class.active]="showEventModal" (click)="closeModalOnBackdrop($event)">
+      <div class="event-modal-content">
+        <span class="close-modal" (click)="closeEventModal()">&times;</span>
+        <div [innerHTML]="safeEventHTML"></div>
+      </div>
     </div>
   `,
   styles: [`
     .calendar-wrapper {
       margin: 20px;
+      font-family: 'Arial', sans-serif;
     }
 
     .filters {
@@ -85,7 +94,9 @@ interface GameEvent {
       border-radius: 20px;
       color: white;
       cursor: pointer;
-      transition: opacity 0.2s;
+      transition: all 0.2s;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .filter-buttons button:not(.active) {
@@ -94,6 +105,12 @@ interface GameEvent {
 
     .filter-buttons button:hover {
       opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .filter-buttons button.active {
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     }
 
     .calendar-container {
@@ -132,6 +149,210 @@ interface GameEvent {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    
+    /* Improved event styling on calendar */
+    :host ::ng-deep .fc-event {
+      border-radius: 4px;
+      overflow: hidden;
+      border: none !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 1px !important;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    
+    :host ::ng-deep .fc-event:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+    
+    :host ::ng-deep .fc-daygrid-event {
+      white-space: normal !important;
+      align-items: flex-start !important;
+      padding: 0 !important;
+    }
+    
+    /* Custom event styling */
+    :host ::ng-deep .event-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 4px;
+      color: white !important;
+    }
+    
+    :host ::ng-deep .event-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 6px 3px;
+      background-color: rgba(0,0,0,0.2);
+    }
+    
+    :host ::ng-deep .event-title-text {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 5px;
+      font-weight: 600;
+      font-size: 0.9em;
+    }
+    
+    :host ::ng-deep .event-content {
+      padding: 2px 6px 4px;
+    }
+    
+    :host ::ng-deep .event-time {
+      font-size: 0.8em;
+      opacity: 0.9;
+    }
+    
+    :host ::ng-deep .event-sentiment {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      text-align: center;
+      line-height: 1;
+      font-size: 10px;
+      font-weight: bold;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      flex-shrink: 0;
+    }
+    
+    /* Better day cell styling */
+    :host ::ng-deep .fc-daygrid-day-frame {
+      min-height: 80px;
+    }
+    
+    :host ::ng-deep .fc-daygrid-day-top {
+      justify-content: center;
+      margin-bottom: 5px;
+    }
+    
+    :host ::ng-deep .fc-daygrid-day-number {
+      font-weight: 500;
+      font-size: 14px;
+      padding: 4px;
+    }
+    
+    :host ::ng-deep .fc-day-today {
+      background-color: rgba(66, 133, 244, 0.05) !important;
+    }
+    
+    :host ::ng-deep .fc-day-today .fc-daygrid-day-number {
+      background-color: #4285f4;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+.event-modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.event-modal.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: normal;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close-modal:hover {
+  color: #555;
+}
+
+/* For better mobile support */
+@media (max-width: 768px) {
+  .event-modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+/* Event modal content styling - New classes */
+:host ::ng-deep .event-title {
+  margin: 0 0 15px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+:host ::ng-deep .event-type-badge {
+  display: inline-block;
+  color: white;
+  border-radius: 20px;
+  padding: 4px 15px;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+:host ::ng-deep .event-sentiment {
+  display: inline-block;
+  font-weight: 500;
+}
+
+:host ::ng-deep .event-time-section {
+  margin: 20px 0;
+}
+
+:host ::ng-deep .event-time-row {
+  margin-bottom: 8px;
+}
+
+:host ::ng-deep .event-time-label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+:host ::ng-deep .event-description-title {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+:host ::ng-deep .event-description-content {
+  line-height: 1.5;
+  color: #555;
+}
+
   `]
 })
 export class CalendarViewComponent implements OnInit, OnDestroy {
@@ -145,9 +366,14 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   eventTypes = ['Warp', 'Garden of Plenty', 'Planar', 'Other'];
   activeEventTypes = new Set(this.eventTypes);
   private eventsSubject = new BehaviorSubject<GameEvent[]>([]);
+  
+  // Modal state
+  showEventModal = false;
+  safeEventHTML: SafeHtml = '';
 
   constructor(
     private firestore: Firestore,
+    private sanitizer: DomSanitizer,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -209,27 +435,62 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,listWeek'
         },
+        dayMaxEvents: true, // Allow "more" link when too many events
         events: [],
-        // Now with proper typing
+        eventTimeFormat: { // Customize the time display
+          hour: '2-digit',
+          minute: '2-digit',
+          meridiem: 'short'
+        },
         eventClick: (info: EventClickArg) => this.handleEventClick(info),
         eventDidMount: (info: EventMountArg) => {
-          info.el.title = info.event.extendedProps['description'] || info.event.title;
+          // Improved tooltip handling
+          const tooltip = info.event.extendedProps['description'] || info.event.title;
+          info.el.setAttribute('data-tooltip', tooltip);
         },
-        eventContent: (info: EventContentArg) => ({
-          html: `
-            <div style="padding: 3px;">
-              <div style="font-weight: bold;">
-                ${info.event.title}
-                ${this.getSentimentIcon(info.event.extendedProps['sentiment'])}
-              </div>
-              <div style="font-size: 0.8em;">${this.formatTime(info.event.start!)}</div>
-            </div>
-          `
-        })
+        eventContent: (info: EventContentArg) => this.renderEventContent(info)
       });
   
       this.calendar.render();
     }
+  }
+
+  renderEventContent(info: EventContentArg): { html: string } {
+    const type = this.getEventType(info.event.title);
+    const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
+    const sentimentIcon = this.getSentimentIcon(sentiment);
+    
+    // Enhanced event rendering with better structure and containment
+    let maxTitleLength = 18; // Default
+    
+    // Adjust title length based on view type
+    if (info.view.type === 'timeGridWeek' || info.view.type === 'timeGridDay') {
+      maxTitleLength = 25;
+    } else if (info.view.type === 'listWeek') {
+      maxTitleLength = 100; // No truncation needed for list view
+    }
+
+    // Color the entire event background based on type
+    const bgColor = this.getEventColor(type);
+    
+    // Create a clean structured event with header bar and content
+    return {
+      html: `
+        <div class="event-container" style="background-color: ${bgColor};">
+          <div class="event-header">
+            <span class="event-title-text">${this.truncateTitle(info.event.title, maxTitleLength)}</span>
+            <span class="event-sentiment">${sentimentIcon}</span>
+          </div>
+          <div class="event-content">
+            <div class="event-time">${this.formatTime(info.event.start!)}</div>
+          </div>
+        </div>
+      `
+    };
+  }
+
+  truncateTitle(title: string, maxLength: number): string {
+    return title.length > maxLength ? title.substring(0, maxLength) + '...' : title;
   }
 
   loadEvents() {
@@ -289,9 +550,10 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
 
   convertToCalendarEvents(events: GameEvent[]): EventInput[] {
     return events.map(event => {
-      const baseColor = this.getEventColor(this.getEventType(event.title));
-      const eventColor = this.adjustColorBySentiment(baseColor, event.sentiment);
+      const type = this.getEventType(event.title);
+      const baseColor = this.getEventColor(type);
       
+      // We'll handle the sentiment visually in the DOM, not in the color
       return {
         id: event.eventId,
         title: event.title,
@@ -299,68 +561,113 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
         end: event.endDate,
         description: event.description,
         allDay: false,
-        backgroundColor: eventColor,
-        borderColor: eventColor,
+        backgroundColor: baseColor, // Use the pure base color by type
+        borderColor: baseColor,
+        textColor: '#FFFFFF', // White text for contrast
         extendedProps: {
-          sentiment: event.sentiment
+          sentiment: event.sentiment,
+          type: type
         }
       };
     });
   }
 
+  getEventColor(type: string): string {
+    switch (type) {
+      case 'Warp': return '#e91e63';  // Vibrant pink/red
+      case 'Garden of Plenty': return '#4caf50';  // Green
+      case 'Planar': return '#2196f3';  // Blue
+      default: return '#9c27b0';  // Purple
+    }
+  }
+  
+  getSentimentClassName(sentiment: string): string {
+    switch (sentiment) {
+      case 'positive': return 'sentiment-positive';
+      case 'negative': return 'sentiment-negative';
+      default: return 'sentiment-neutral';
+    }
+  }
+  
+  // Add these helper methods for sentiment styling
   getSentimentIcon(sentiment: string): string {
     switch (sentiment) {
       case 'positive':
-        return '👍';
+        return '✓';
       case 'negative':
-        return '👎';
+        return '✗';
       default:
-        return '🤔';
+        return '○';
     }
   }
-
-
-  adjustColorBySentiment(baseColor: string, sentiment: string): string {
-    // Convert hex to RGB
-    const r = parseInt(baseColor.slice(1, 3), 16);
-    const g = parseInt(baseColor.slice(3, 5), 16);
-    const b = parseInt(baseColor.slice(5, 7), 16);
-    
+  
+  getSentimentColor(sentiment: string): string {
     switch (sentiment) {
       case 'positive':
-        // Brighten the color
-        return `rgba(${r}, ${g}, ${b}, 0.8)`;
+        return '#4caf50'; // Green
       case 'negative':
-        // Darken the color
-        return `rgba(${Math.floor(r * 0.7)}, ${Math.floor(g * 0.7)}, ${Math.floor(b * 0.7)}, 1)`;
+        return '#f44336'; // Red
       default:
-        // Keep original color for neutral
-        return baseColor;
+        return '#757575'; // Gray for neutral
     }
   }
-
-  getEventColor(type: string): string {
-    switch (type) {
-      case 'Warp': return '#e91e63';
-      case 'Garden of Plenty': return '#4caf50';
-      case 'Planar': return '#2196f3';
-      default: return '#9c27b0';
-    }
-  }
-
+  
   handleEventClick(info: EventClickArg) {
+    const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
+    const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
+    
+    // Log values for debugging
+    console.log('Event Data:', {
+      title: info.event.title,
+      type: eventType,
+      sentiment: sentiment,
+      eventColor: this.getEventColor(eventType),
+      sentimentColor: this.getSentimentColor(sentiment)
+    });
+    
+    // Get colors directly
+    const typeColor = this.getEventColor(eventType);
+    const sentimentColor = this.getSentimentColor(sentiment);
+    const sentimentIcon = this.getSentimentIcon(sentiment);
+    
+    // Format dates
     const startDate = new Date(info.event.start!).toLocaleString();
     const endDate = new Date(info.event.end!).toLocaleString();
     
-    const eventDetails = `
-      ${info.event.title}
+    // Create HTML content
+    const htmlContent = `
+      <h2 style="margin: 0 0 15px 0; font-size: 18px;">${info.event.title}</h2>
       
-      From: ${startDate}
-      To: ${endDate}
+      <div style="margin-bottom: 15px; display: flex; align-items: center;">
+        <span style="display: inline-block; background-color: ${typeColor}; color: white; padding: 3px 10px; margin-right: 10px;">${eventType}</span>
+        <span style="color: ${sentimentColor}; display: inline-flex; align-items: center;">
+          <span style="margin-right: 4px;">${sentimentIcon}</span>
+          <span>${sentiment.charAt(0).toUpperCase() + sentiment.slice(1)} sentiment</span>
+        </span>
+      </div>
       
-      ${info.event.extendedProps['description']}
+      <div style="margin-bottom: 15px;">
+        <div><strong>Start:</strong> ${startDate}</div>
+        <div><strong>End:</strong> ${endDate}</div>
+      </div>
+      
+      <h3 style="margin: 15px 0 10px 0; font-size: 16px;">Description</h3>
+      <div>${info.event.extendedProps['description'] || 'No description available.'}</div>
     `;
     
-    alert(eventDetails);
+    // Use DomSanitizer to bypass security
+    this.safeEventHTML = this.sanitizer.bypassSecurityTrustHtml(htmlContent);
+    this.showEventModal = true;
+  }
+  
+  closeEventModal() {
+    this.showEventModal = false;
+  }
+  
+  closeModalOnBackdrop(event: MouseEvent) {
+    if ((event.target as HTMLElement).classList.contains('event-modal')) {
+      this.closeEventModal();
+    }
   }
 }
+
