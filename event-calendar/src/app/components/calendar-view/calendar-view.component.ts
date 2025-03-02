@@ -1,16 +1,18 @@
-// Import necessary modules and types
 import { Component, OnInit, PLATFORM_ID, Inject, OnDestroy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EventInput } from '@fullcalendar/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+
 import {
   EventClickArg,
   EventMountArg,
   EventContentArg
 } from '@fullcalendar/core';
+
+import { EventModalComponent } from './event-modal.component';
 
 // Define our event data structure to match Firestore
 interface GameEvent {
@@ -24,11 +26,10 @@ interface GameEvent {
   lastUpdated: string;
   sentiment: 'positive' | 'neutral' | 'negative';
 }
-
 @Component({
   selector: 'app-calendar-view',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, EventModalComponent], // Import the modal component
   template: `
     <div class="calendar-wrapper">
       <!-- Event type filters -->
@@ -54,12 +55,20 @@ interface GameEvent {
         <div id="calendar"></div>
       </div>
       
-      <!-- Enhanced Modal for event details -->
-        <div id="eventModal" class="event-modal" [class.active]="showEventModal" (click)="closeModalOnBackdrop($event)">
-      <div class="event-modal-content">
-        <span class="close-modal" (click)="closeEventModal()">&times;</span>
-        <div [innerHTML]="safeEventHTML"></div>
-      </div>
+      <!-- Use the event modal component -->
+      <app-event-modal
+        [isVisible]="showEventModal"
+        [title]="selectedEvent.title"
+        [eventType]="selectedEvent.type"
+        [typeColor]="getEventColor(selectedEvent.type)"
+        [sentiment]="selectedEvent.sentiment"
+        [sentimentColor]="getSentimentColor(selectedEvent.sentiment)"
+        [sentimentIcon]="getSentimentIcon(selectedEvent.sentiment)"
+        [startDate]="selectedEvent.startDate"
+        [endDate]="selectedEvent.endDate"
+        [description]="selectedEvent.description"
+        (closeModal)="closeEventModal()">
+      </app-event-modal>
     </div>
   `,
   styles: [`
@@ -368,11 +377,24 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   
   // Modal state
   showEventModal = false;
-  safeEventHTML: SafeHtml = '';
+  selectedEvent: {
+    title: string;
+    type: string;
+    sentiment: 'positive' | 'neutral' | 'negative';
+    startDate: string;
+    endDate: string;
+    description: string;
+  } = {
+    title: '',
+    type: '',
+    sentiment: 'neutral',
+    startDate: '',
+    endDate: '',
+    description: ''
+  };
 
   constructor(
     private firestore: Firestore,
-    private sanitizer: DomSanitizer,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -624,46 +646,26 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
       sentimentColor: this.getSentimentColor(sentiment)
     });
     
-    // Get colors directly
-    const typeColor = this.getEventColor(eventType);
-    const sentimentColor = this.getSentimentColor(sentiment);
-    const sentimentIcon = this.getSentimentIcon(sentiment);
-    
     // Format dates
     const startDate = new Date(info.event.start!).toLocaleString();
     const endDate = new Date(info.event.end!).toLocaleString();
     
-    // Create HTML content
-    const htmlContent = `
-      <h2 style="margin: 0 0 15px 0; font-size: 18px;">${info.event.title}</h2>
-      
-      <div style="margin-bottom: 15px; display: flex; align-items: center;">
-        <span style="display: inline-block; background-color: ${typeColor}; color: white; padding: 3px 10px; margin-right: 10px;">${eventType}</span>
-        <span style="color: ${sentimentColor}; display: inline-flex; align-items: center;">
-          <span style="margin-right: 4px;">${sentimentIcon}</span>
-          <span>${sentiment.charAt(0).toUpperCase() + sentiment.slice(1)} sentiment</span>
-        </span>
-      </div>
-      
-      <div style="margin-bottom: 15px;">
-        <div><strong>Start:</strong> ${startDate}</div>
-        <div><strong>End:</strong> ${endDate}</div>
-      </div>
-      
-      <h3 style="margin: 15px 0 10px 0; font-size: 16px;">Description</h3>
-      <div>${info.event.extendedProps['description'] || 'No description available.'}</div>
-    `;
+    // Update the selected event object
+    this.selectedEvent = {
+      title: info.event.title,
+      type: eventType,
+      sentiment: sentiment as 'positive' | 'neutral' | 'negative',
+      startDate: startDate,
+      endDate: endDate,
+      description: info.event.extendedProps['description'] || 'No description available.'
+    };
     
-    // Use DomSanitizer to bypass security
-    // fucking fix this later with a pipe if needed
-    this.safeEventHTML = this.sanitizer.bypassSecurityTrustHtml(htmlContent);
     this.showEventModal = true;
   }
   
   closeEventModal() {
     this.showEventModal = false;
   }
-  
   closeModalOnBackdrop(event: MouseEvent) {
     if ((event.target as HTMLElement).classList.contains('event-modal')) {
       this.closeEventModal();
