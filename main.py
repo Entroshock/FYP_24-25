@@ -4,6 +4,8 @@ import json
 import time
 import re
 import random
+import os
+import traceback
 from datetime import datetime, timedelta
 import firebase_admin
 from firebase_admin import credentials
@@ -27,7 +29,6 @@ def is_version_update_article(article):
     update_patterns = [
         'version update',
         'version maintenance',
-        'paean of era nova',  # Specific to current version
         'welcome to version'
     ]
     
@@ -65,24 +66,41 @@ def parse_version_update_time(text):
     return None
 
 def parse_event_dates(text, version_updates=None):
-    """Extract start and end dates from text with proper version update handling"""
+    """Extract start and end dates from text with proper version update handling and improved pattern matching"""
     print("\nTrying to parse dates from:")
-    print(text[:200])
+    print(text[:200] + "..." if len(text) > 200 else text)
     
     # First look for version reference
     version_pattern = r"after the Version (\d+\.\d+) update"
     version_match = re.search(version_pattern, text, re.IGNORECASE)
     
-    # Then look for end date
-    end_date_pattern = r"–\s*(\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})"
+    # Then look for end date - UPDATED to support both en-dash, regular hyphen, and more flexible spacing
+    end_date_pattern = r"[–\-]\s*(\d{4}/\d{1,2}/\d{1,2}\s+\d{2}:\d{2}:\d{2})"
     end_date_match = re.search(end_date_pattern, text)
     
     if not end_date_match:
-        print("No end date found")
+        # Try alternative patterns for end date
+        alternative_patterns = [
+            r"(\d{4}/\d{1,2}/\d{1,2}\s+\d{2}:\d{2}:\d{2})\s*\(server time\)",  # Look for date with server time mention
+            r"Period.*?[–\-].*?(\d{4}/\d{1,2}/\d{1,2}\s+\d{2}:\d{2}:\d{2})",   # Look after "Period" with dash
+            r"Event Period.*?[–\-].*?(\d{4}/\d{1,2}/\d{1,2}\s+\d{2}:\d{2}:\d{2})"  # Look after "Event Period"
+        ]
+        
+        for pattern in alternative_patterns:
+            match = re.search(pattern, text, re.DOTALL)
+            if match:
+                print(f"Found end date using alternative pattern: {match.group(1)}")
+                end_date_match = match
+                break
+    
+    if not end_date_match:
+        print("No end date found using any pattern")
         return None
 
     try:
-        end_date = datetime.strptime(end_date_match.group(1), "%Y/%m/%d %H:%M:%S")
+        end_date_str = end_date_match.group(1).strip()
+        print(f"Extracted end date: {end_date_str}")
+        end_date = datetime.strptime(end_date_str, "%Y/%m/%d %H:%M:%S")
         
         # If this mentions a version update and we have version data
         if version_match and version_updates:
@@ -111,29 +129,83 @@ def parse_event_dates(text, version_updates=None):
                 print(f"Warning: Version {version} not found in version_updates")
                 return None
         
-        # If no version reference or no version data, look for explicit start date
-        start_date_pattern = r"(\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}:\d{2})\s*[–-]"
-        start_date_match = re.search(start_date_pattern, text)
+        # IMPROVED: Multiple approaches to find start date
         
-        if start_date_match:
-            start_date = datetime.strptime(start_date_match.group(1), "%Y/%m/%d %H:%M:%S")
-            if start_date < end_date:
-                return {
-                    'startDate': start_date.isoformat(),
-                    'endDate': end_date.isoformat(),
-                    'startTimestamp': int(start_date.timestamp() * 1000),
-                    'endTimestamp': int(end_date.timestamp() * 1000)
-                }
-            else:
-                print(f"Warning: Explicit start date {start_date} would be after end date {end_date}")
-                return None
+        # Approach 1: Look for explicit start-end date pattern
+        start_date_patterns = [
+            r"(\d{4}/\d{1,2}/\d{1,2}\s+\d{2}:\d{2}:\d{2})\s*[–\-]",  # Standard format with dash
+            r"Event Period\s+(\d{4}/\d{1,2}/\d{1,2}\s+\d{2}:\d{2}:\d{2})",  # After Event Period
+            r"Period[: ]+(\d{4}/\d{1,2}/\d{1,2}\s+\d{2}:\d{2}:\d{2})"  # After Period:
+        ]
         
-        print("No valid start date pattern found and no version update information available")
+        for pattern in start_date_patterns:
+            start_date_match = re.search(pattern, text)
+            if start_date_match:
+                start_date_str = start_date_match.group(1).strip()
+                print(f"Found start date using pattern: {start_date_str}")
+                start_date = datetime.strptime(start_date_str, "%Y/%m/%d %H:%M:%S")
+                
+                if start_date < end_date:
+                    return {
+                        'startDate': start_date.isoformat(),
+                        'endDate': end_date.isoformat(),
+                        'startTimestamp': int(start_date.timestamp() * 1000),
+                        'endTimestamp': int(end_date.timestamp() * 1000)
+                    }
+                else:
+                    print(f"Warning: Start date {start_date} would be after end date {end_date}")
+                    continue  # Try next pattern
+        
+        # Approach 2: Extract all dates and find the one before the end date
+        all_dates_pattern = r"(\d{4}/\d{1,2}/\d{1,2}\s+\d{2}:\d{2}:\d{2})"
+        all_dates = re.findall(all_dates_pattern, text)
+        
+        if len(all_dates) >= 2:
+            print(f"Found {len(all_dates)} dates in text")
+            
+            for date_str in all_dates:
+                if date_str == end_date_str:
+                    continue  # Skip the end date
+                    
+                try:
+                    potential_start = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
+                    if potential_start < end_date:
+                        print(f"Using date as start: {date_str}")
+                        return {
+                            'startDate': potential_start.isoformat(),
+                            'endDate': end_date.isoformat(),
+                            'startTimestamp': int(potential_start.timestamp() * 1000),
+                            'endTimestamp': int(end_date.timestamp() * 1000)
+                        }
+                except ValueError:
+                    continue  # Skip invalid dates
+        
+        # If we still couldn't find a start date, we'll use a fallback approach
+        # For events like Planar Fissure, sometimes the start date is mentioned right before the end date
+        # Let's try to use the first date as start date if there are at least two dates
+        if len(all_dates) >= 2:
+            try:
+                first_date_str = all_dates[0]
+                first_date = datetime.strptime(first_date_str, "%Y/%m/%d %H:%M:%S")
+                
+                if first_date < end_date:
+                    print(f"Using first date as fallback start date: {first_date_str}")
+                    return {
+                        'startDate': first_date.isoformat(),
+                        'endDate': end_date.isoformat(),
+                        'startTimestamp': int(first_date.timestamp() * 1000),
+                        'endTimestamp': int(end_date.timestamp() * 1000)
+                    }
+            except ValueError:
+                pass  # Ignore parsing errors in fallback
+        
+        print("No valid start date pattern found")
         return None
                 
     except ValueError as e:
         print(f"Error parsing dates: {e}")
         return None
+    
 
 def is_event_article(article):
     """Check if the article is about an event"""
@@ -227,23 +299,86 @@ def format_event_for_firestore(article, dates):
     return event_data
 
 def upload_to_firestore(events):
-    """Upload events to Firestore"""
+    """Upload events to Firestore with enhanced error handling and debugging"""
     try:
-        if not firebase_admin._apps:
-            cred = credentials.Certificate('./serviceAccountKey.json')
-            firebase_admin.initialize_app(cred)
+        print("\n--- FIREBASE UPLOAD PROCESS STARTING ---")
         
-        db = firestore.client()
+        # Check if Firebase is already initialized
+        firebase_initialized = bool(firebase_admin._apps)
+        print(f"Firebase already initialized: {firebase_initialized}")
+        
+        if not firebase_initialized:
+            # Get absolute path of the current script
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            service_account_path = os.path.join(current_dir, 'serviceAccountKey.json')
+            
+            # Check if file exists
+            if os.path.exists(service_account_path):
+                print(f"Found service account key at: {service_account_path}")
+            else:
+                print(f"WARNING: Service account key not found at: {service_account_path}")
+                # Try alternate locations
+                alternate_paths = [
+                    './serviceAccountKey.json',
+                    '../serviceAccountKey.json',
+                    os.path.abspath('serviceAccountKey.json')
+                ]
+                
+                for path in alternate_paths:
+                    if os.path.exists(path):
+                        print(f"Found service account key at alternate location: {path}")
+                        service_account_path = path
+                        break
+            
+            try:
+                print(f"Initializing Firebase with credentials from: {service_account_path}")
+                cred = credentials.Certificate(service_account_path)
+                firebase_admin.initialize_app(cred)
+                print("Firebase initialized successfully")
+            except Exception as init_error:
+                print(f"ERROR initializing Firebase: {init_error}")
+                traceback.print_exc()
+                return False
+        
+        # Get Firestore client
+        try:
+            print("Getting Firestore client...")
+            db = firestore.client()
+            print("Firestore client created successfully")
+        except Exception as db_error:
+            print(f"ERROR getting Firestore client: {db_error}")
+            traceback.print_exc()
+            return False
+        
+        # Upload events
         events_collection = db.collection('events')
+        success_count = 0
         
-        for event in events:
-            if event:
-                doc_ref = events_collection.document(str(event['eventId']))
+        print(f"\nUploading {len(events)} events to Firestore...")
+        for index, event in enumerate(events):
+            if not event:
+                print(f"Skipping empty event at index {index}")
+                continue
+                
+            try:
+                event_id = str(event['eventId'])
+                print(f"Uploading event [{index+1}/{len(events)}]: ID={event_id}, Title={event['title']}")
+                
+                doc_ref = events_collection.document(event_id)
                 doc_ref.set(event, merge=True)
-                print(f"Uploaded event: {event['title']}")
+                
+                success_count += 1
+                print(f"Successfully uploaded event: {event['title']}")
+            except Exception as event_error:
+                print(f"ERROR uploading event {event.get('eventId', 'unknown')}: {event_error}")
+        
+        print(f"\n--- FIREBASE UPLOAD COMPLETE: {success_count}/{len(events)} events uploaded successfully ---")
+        return success_count > 0
                 
     except Exception as e:
-        print(f"Error uploading to Firestore: {e}")
+        print(f"CRITICAL ERROR in upload_to_firestore function: {e}")
+        traceback.print_exc()
+        return False
 
 def get_article_comments(post_id):
     """Fetch comments for an article"""
@@ -401,11 +536,8 @@ def scrape_hoyolab(article_limit=10):
     
     # Save formatted events
     if formatted_events:
-        with open('formatted_events.json', 'w', encoding='utf-8') as f:
+        with open('../formatted_events.json', 'w', encoding='utf-8') as f:
             json.dump(formatted_events, f, ensure_ascii=False, indent=2)
-        
-        # Upload to Firestore
-        upload_to_firestore(formatted_events)
     
     return formatted_events
 
@@ -432,12 +564,21 @@ def format_event_for_firestore(article, dates):
     return event_data
 
 if __name__ == "__main__":
-    events = scrape_hoyolab(article_limit=10)
+    # Existing code to get events...
+    events = scrape_hoyolab(article_limit=20)  # Increased limit to catch more events
     print(f"\nSuccessfully processed {len(events)} events")
     
     if events:
-        print("\nSample of first event:")
-        event = events[0]
-        print(f"Title: {event['title']}")
-        print(f"Start Date: {event['startDate']}")
-        print(f"End Date: {event['endDate']}")
+        # Save to JSON file
+        with open('formatted_events.json', 'w', encoding='utf-8') as f:
+            json.dump(events, f, ensure_ascii=False, indent=2)
+        print(f"Saved events to {os.path.abspath('formatted_events.json')}")
+        
+        # Try uploading to Firestore with improved function
+        upload_success = upload_to_firestore(events)
+        
+        if not upload_success:
+            print("\n⚠️ WARNING: Failed to upload events to Firestore!")
+            print("The calendar view may not update until Firestore upload is successful.")
+        else:
+            print("\n✅ Events uploaded to Firestore successfully!")
