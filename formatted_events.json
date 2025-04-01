@@ -1,5 +1,15 @@
 [
   {
+    "eventId": "37871013",
+    "title": "Realm of the Strange Event: Cavern Relic Drop Rate Doubled For a Limited Time",
+    "description": "Hello, Trailblazers! ▌ Event Period 2025/03/28 04:00:00 - 2025/04/04 03:59:00 (server time) ▌Participation Requirement Unlock Cavern of Corrosion: Path of Drifting ▌Event Details ● During the Realm of the Strange event, get double rewards when you challenge and beat Cavern of Corrosion. ● You will get an additional set of rewards on top of default drops after consuming an event double reward opportunity and Trailblaze Power. ● During the event, the number of daily double reward opportunities is limited. The maximum and currently remaining numbers of opportunities will be displayed in the Realm of the Strange event page. ● Double reward opportunities refresh daily at 04:00. Make sure to use them before they're gone!",
+    "startDate": "2025-03-28T04:00:00",
+    "endDate": "2025-04-04T03:59:00",
+    "startTimestamp": 1743134400000,
+    "endTimestamp": 1743735540000,
+    "lastUpdated": "2025-04-01T11:58:52.183937"
+  },
+  {
     "eventId": "37702787",
     "title": "Version 3.1 Event Warp (II)",
     "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2025/03/19 12:00:00 - 2025/04/08 15:00:00 (server time), and includes the following content: ※ Among the above characters and Light Cones, limited characters and limited Light Cones will not be available in the Stellar Warp event. ※ During the event, the limited 5-star character Mydei (Destruction: Imaginary) can only be obtained from the Character Event Warp \"Fiery Lionheart,\" and the limited 5-star character Huohuo (Abundance: Wind) can only be obtained from the Character Event Warp \"Bloom in Gloom.\" ※ During the event, the limited 5-star Light Cone \"Flame of Blood, Blaze My Path (Destruction)\" can only be obtained from the Light Cone Event Warp \"Brilliant Fixation : Flame of Blood, Blaze My Path\", and the limited 5-star Light Cone \"Night of Fright (Abundance)\" can only be obtained from the Light Cone Event Warp \"Bygone Reminiscence: Night of Fright.\" ※ \"Fiery Lionheart\" and \"Bloom in Gloom\" are considered Character Event Warps. The cumulative Warp count for a guaranteed 5-star character in any Character Event Warp will always be carried over to other Character Event Warps, but is independent of and unaffected by other types of Warps. ※ \"Brilliant Fixation: Flame of Blood, Blaze My Path\" and \"Bygone Reminiscence: Night of Fright\" are considered Light Cone Event Warps. The cumulative Warp count for a guaranteed 5-star Light Cone in any Light Cone Event Warp will always be carried over to other Light Cone Event Warps, but is independent of and unaffected by other types of Warps. ※ For more information, please head to the Warp screen. ▌ Character Trial Event: Aptitude Showcase",
@@ -7,7 +17,7 @@
     "endDate": "2025-04-08T15:00:00",
     "startTimestamp": 1742385600000,
     "endTimestamp": 1744120800000,
-    "lastUpdated": "2025-03-24T15:45:42.785690"
+    "lastUpdated": "2025-04-01T11:58:56.825466"
   },
   {
     "eventId": "37561378",
@@ -17,7 +27,7 @@
     "endDate": "2025-03-19T03:59:00",
     "startTimestamp": 1741752000000,
     "endTimestamp": 1742356740000,
-    "lastUpdated": "2025-03-24T15:45:47.559359"
+    "lastUpdated": "2025-04-01T11:59:01.631343"
   },
   {
     "eventId": "37189509",
@@ -27,7 +37,7 @@
     "endDate": "2025-04-07T03:59:00",
     "startTimestamp": 1740567600000,
     "endTimestamp": 1743994740000,
-    "lastUpdated": "2025-03-24T15:45:53.064986",
+    "lastUpdated": "2025-04-01T11:59:09.783332",
     "version": "3.1"
   },
   {
@@ -38,7 +48,7 @@
     "endDate": "2025-02-21T03:59:00",
     "startTimestamp": 1739505600000,
     "endTimestamp": 1740110340000,
-    "lastUpdated": "2025-03-24T15:45:57.285948"
+    "lastUpdated": "2025-04-01T11:59:12.507496"
   },
   {
     "eventId": "36844003",
@@ -48,7 +58,7 @@
     "endDate": "2025-02-25T15:00:00",
     "startTimestamp": 1738756800000,
     "endTimestamp": 1740495600000,
-    "lastUpdated": "2025-03-24T15:46:01.673362"
+    "lastUpdated": "2025-04-01T11:59:16.704251"
   },
   {
     "eventId": "36843932",
@@ -58,7 +68,7 @@
     "endDate": "2025-02-25T15:00:00",
     "startTimestamp": 1738756800000,
     "endTimestamp": 1740495600000,
-    "lastUpdated": "2025-03-24T15:46:04.119881"
+    "lastUpdated": "2025-04-01T11:59:21.661113"
   },
   {
     "eventId": "36767294",
@@ -68,7 +78,7 @@
     "endDate": "2025-02-24T03:59:00",
     "startTimestamp": 1738584000000,
     "endTimestamp": 1740369540000,
-    "lastUpdated": "2025-03-24T15:46:09.218481"
+    "lastUpdated": "2025-04-01T11:59:25.122598"
   },
   {
     "eventId": "36634082",
@@ -78,7 +88,7 @@
     "endDate": "2025-02-03T03:59:00",
     "startTimestamp": 1737950400000,
     "endTimestamp": 1738555140000,
-    "lastUpdated": "2025-03-24T15:46:12.500392"
+    "lastUpdated": "2025-04-01T11:59:28.649629"
   },
   {
     "eventId": "36633597",
@@ -88,7 +98,7 @@
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1737950400000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-03-24T15:46:15.958951"
+    "lastUpdated": "2025-04-01T11:59:32.496639"
   },
   {
     "eventId": "36471191",
@@ -98,7 +108,7 @@
     "endDate": "2025-02-24T03:59:00",
     "startTimestamp": 1737547200000,
     "endTimestamp": 1740369540000,
-    "lastUpdated": "2025-03-24T15:46:18.486711"
+    "lastUpdated": "2025-04-01T11:59:37.203226"
   },
   {
     "eventId": "36341346",
@@ -108,7 +118,7 @@
     "endDate": "2025-02-05T11:59:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1738756740000,
-    "lastUpdated": "2025-03-24T15:46:27.903349",
+    "lastUpdated": "2025-04-01T11:59:45.814128",
     "version": "3.0"
   },
   {
@@ -119,7 +129,7 @@
     "endDate": "2025-02-05T11:59:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1738756740000,
-    "lastUpdated": "2025-03-24T15:46:30.762310",
+    "lastUpdated": "2025-04-01T11:59:51.053816",
     "version": "3.0"
   },
   {
@@ -130,7 +140,7 @@
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-03-24T15:46:35.871497",
+    "lastUpdated": "2025-04-01T11:59:56.503173",
     "version": "3.0"
   },
   {
@@ -141,7 +151,7 @@
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-03-24T15:46:40.209496",
+    "lastUpdated": "2025-04-01T12:00:01.829347",
     "version": "3.0"
   },
   {
@@ -152,7 +162,7 @@
     "endDate": "2025-01-08T03:59:00",
     "startTimestamp": 1735704000000,
     "endTimestamp": 1736308740000,
-    "lastUpdated": "2025-03-24T15:46:44.422614"
+    "lastUpdated": "2025-04-01T12:00:04.637987"
   },
   {
     "eventId": "35814519",
@@ -162,7 +172,7 @@
     "endDate": "2025-01-14T15:00:00",
     "startTimestamp": 1735128000000,
     "endTimestamp": 1736866800000,
-    "lastUpdated": "2025-03-24T15:46:47.784069"
+    "lastUpdated": "2025-04-01T12:00:09.744523"
   },
   {
     "eventId": "35814299",
@@ -172,7 +182,7 @@
     "endDate": "2025-01-14T15:00:00",
     "startTimestamp": 1735128000000,
     "endTimestamp": 1736866800000,
-    "lastUpdated": "2025-03-24T15:46:52.996746"
+    "lastUpdated": "2025-04-01T12:00:13.064934"
   },
   {
     "eventId": "35812193",
@@ -182,7 +192,7 @@
     "endDate": "2025-01-06T03:59:00",
     "startTimestamp": 1735128000000,
     "endTimestamp": 1736135940000,
-    "lastUpdated": "2025-03-24T15:46:57.010222"
+    "lastUpdated": "2025-04-01T12:00:17.685620"
   },
   {
     "eventId": "35640384",
@@ -192,17 +202,6 @@
     "endDate": "2024-12-25T03:59:00",
     "startTimestamp": 1734494400000,
     "endTimestamp": 1735099140000,
-    "lastUpdated": "2025-03-24T15:47:00.544224"
-  },
-  {
-    "eventId": "35342617",
-    "title": "Light Cone Event Warp: \"Brilliant Fixation\" & \"Bygone Reminiscence\"",
-    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is after Version 2.7 update – 2024/12/25 11:59:00 (server time), and includes the following content: ▌\"Brilliant Fixation: A Grounded Ascent\" Light Cone Event Warp",
-    "startDate": "2024-12-04T11:00:00",
-    "endDate": "2024-12-25T11:59:00",
-    "startTimestamp": 1733310000000,
-    "endTimestamp": 1735127940000,
-    "lastUpdated": "2025-03-24T15:47:06.651641",
-    "version": "2.7"
+    "lastUpdated": "2025-04-01T12:00:22.179969"
   }
 ]

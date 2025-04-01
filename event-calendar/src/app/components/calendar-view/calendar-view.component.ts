@@ -319,6 +319,31 @@ interface GameEvent {
 }
 
 /* Event modal content styling - New classes */
+
+:host ::ng-deep .start-event {
+  border-left: 3px solid #333 !important;
+  border-radius: 4px 0 0 4px !important;
+}
+
+:host ::ng-deep .end-event {
+  border-right: 3px solid #333 !important;
+  border-radius: 0 4px 4px 0 !important;
+}
+
+:host ::ng-deep .event-time {
+  font-size: 0.8em;
+  opacity: 0.9;
+  font-weight: bold;
+}
+
+:host ::ng-deep .event-time b {
+  display: inline-block;
+  background-color: rgba(0,0,0,0.15);
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-top: 2px;
+}
+
 :host ::ng-deep .event-title {
   margin: 0 0 15px 0;
   font-size: 20px;
@@ -479,34 +504,45 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   }
 
   renderEventContent(info: EventContentArg): { html: string } {
-    const type = this.getEventType(info.event.title);
+    const type = this.getEventType(info.event.title.replace(' (Start)', '').replace(' (End)', ''));
     const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
     const sentimentIcon = this.getSentimentIcon(sentiment);
     
-    // Enhanced event rendering with better structure and containment
-    let maxTitleLength = 18; // Default
+    // Determine if this is a start or end event
+    const isStartEvent = info.event.extendedProps['isStartEvent'] || false;
+    const isEndEvent = info.event.extendedProps['isEndEvent'] || false;
+    
+    // Get the base event title without the (Start) or (End) suffix
+    const baseTitle = info.event.title
+      .replace(' (Start)', '')
+      .replace(' (End)', '');
     
     // Adjust title length based on view type
+    let maxTitleLength = 15; // Shorter default for start/end labels
+    
     if (info.view.type === 'timeGridWeek' || info.view.type === 'timeGridDay') {
-      maxTitleLength = 25;
+      maxTitleLength = 22;
     } else if (info.view.type === 'listWeek') {
       maxTitleLength = 100; // No truncation needed for list view
     }
-
+  
     // Color the entire event background based on type
     const bgColor = this.getEventColor(type);
     const sentimentBgColor = this.getSentimentBgColor(sentiment);
+    
+    // Create a visual indicator for start or end
+    const indicator = isStartEvent ? '▶ Start' : (isEndEvent ? '⏹ End' : '');
     
     // Create a clean structured event with header bar and content
     return {
       html: `
         <div class="event-container" style="background-color: ${bgColor};">
           <div class="event-header">
-            <span class="event-title-text">${this.truncateTitle(info.event.title, maxTitleLength)}</span>
+            <span class="event-title-text">${this.truncateTitle(baseTitle, maxTitleLength)}</span>
             <span class="event-sentiment" style="background-color: ${sentimentBgColor};">${sentimentIcon}</span>
           </div>
           <div class="event-content">
-            <div class="event-time">${this.formatTime(info.event.start!)}</div>
+            <div class="event-time"><b>${indicator}</b></div>
           </div>
         </div>
       `
@@ -573,27 +609,56 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   }
 
   convertToCalendarEvents(events: GameEvent[]): EventInput[] {
-    return events.map(event => {
+    const calendarEvents: EventInput[] = [];
+    
+    events.forEach(event => {
       const type = this.getEventType(event.title);
       const baseColor = this.getEventColor(type);
       
-      // We'll handle the sentiment visually in the DOM, not in the color
-      return {
-        id: event.eventId,
-        title: event.title,
+      // Create an event for the start date
+      calendarEvents.push({
+        id: `${event.eventId}-start`,
+        title: `${event.title} (Start)`,
         start: event.startDate,
-        end: event.endDate,
-        description: event.description,
-        allDay: false,
-        backgroundColor: baseColor, // Use the pure base color by type
+        // Don't include an end date to prevent spanning
+        allDay: true,
+        backgroundColor: baseColor,
         borderColor: baseColor,
-        textColor: '#FFFFFF', 
+        textColor: '#FFFFFF',
         extendedProps: {
           sentiment: event.sentiment,
-          type: type
+          type: type,
+          description: event.description,
+          isStartEvent: true,
+          relatedEventId: event.eventId,
+          startDate: event.startDate,
+          endDate: event.endDate
         }
-      };
+      });
+      
+      // Create an event for the end date
+      calendarEvents.push({
+        id: `${event.eventId}-end`,
+        title: `${event.title} (End)`,
+        start: event.endDate,
+        // Don't include an end date to prevent spanning
+        allDay: true,
+        backgroundColor: baseColor,
+        borderColor: baseColor,
+        textColor: '#FFFFFF',
+        extendedProps: {
+          sentiment: event.sentiment,
+          type: type,
+          description: event.description,
+          isEndEvent: true,
+          relatedEventId: event.eventId,
+          startDate: event.startDate,
+          endDate: event.endDate
+        }
+      });
     });
+    
+    return calendarEvents;
   }
 
   getEventColor(type: string): string {
@@ -652,22 +717,18 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
     const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
     
-    // Log values for debugging
-    // console.log('Event Data:', {
-    //   title: info.event.title,
-    //   type: eventType,
-    //   sentiment: sentiment,
-    //   eventColor: this.getEventColor(eventType),
-    //   sentimentColor: this.getSentimentColor(sentiment)
-    // });
+    // Format dates properly from the extended props
+    const startDate = new Date(info.event.extendedProps['startDate']).toLocaleString();
+    const endDate = new Date(info.event.extendedProps['endDate']).toLocaleString();
     
-    // Format dates
-    const startDate = new Date(info.event.start!).toLocaleString();
-    const endDate = new Date(info.event.end!).toLocaleString();
+    // Get the base event title without the (Start) or (End) suffix
+    const baseTitle = info.event.title
+      .replace(' (Start)', '')
+      .replace(' (End)', '');
     
     // Update the selected event object
     this.selectedEvent = {
-      title: info.event.title,
+      title: baseTitle,
       type: eventType,
       sentiment: sentiment as 'positive' | 'neutral' | 'negative',
       startDate: startDate,
