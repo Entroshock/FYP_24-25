@@ -25,52 +25,54 @@ interface GameEvent {
   endTimestamp: number;
   lastUpdated: string;
   sentiment: 'positive' | 'neutral' | 'negative';
+  imageUrl?: string; // Add optional image URL property
 }
 @Component({
   selector: 'app-calendar-view',
   standalone: true,
   imports: [CommonModule, EventModalComponent], // Import the modal component
   template: `
-    <div class="calendar-wrapper">
-      <!-- Event type filters -->
-      <div class="filters" *ngIf="!loading">
-        <h3>Event Types</h3>
-        <div class="filter-buttons">
-          <button 
-            *ngFor="let type of eventTypes" 
-            (click)="toggleEventType(type)"
-            [class.active]="isEventTypeActive(type)"
-            [style.background-color]="getEventColor(type)">
-            {{ type }}
-          </button>
-        </div>
+  <div class="calendar-wrapper">
+    <!-- Event type filters -->
+    <div class="filters" *ngIf="!loading">
+      <h3>Event Types</h3>
+      <div class="filter-buttons">
+        <button 
+          *ngFor="let type of eventTypes" 
+          (click)="toggleEventType(type)"
+          [class.active]="isEventTypeActive(type)"
+          [style.background-color]="getEventColor(type)">
+          {{ type }}
+        </button>
       </div>
-
-      <!-- Calendar container with loading state -->
-      <div class="calendar-container">
-        <div *ngIf="loading" class="loading-overlay">
-          <div class="loading-spinner"></div>
-          <p>Loading calendar...</p>
-        </div>
-        <div id="calendar"></div>
-      </div>
-      
-      <!-- Use the event modal component -->
-      <app-event-modal
-        [isVisible]="showEventModal"
-        [title]="selectedEvent.title"
-        [eventType]="selectedEvent.type"
-        [typeColor]="getEventColor(selectedEvent.type)"
-        [sentiment]="selectedEvent.sentiment"
-        [sentimentColor]="getSentimentColor(selectedEvent.sentiment)"
-        [sentimentIcon]="getSentimentIcon(selectedEvent.sentiment)"
-        [startDate]="selectedEvent.startDate"
-        [endDate]="selectedEvent.endDate"
-        [description]="selectedEvent.description"
-        (closeModal)="closeEventModal()">
-      </app-event-modal>
     </div>
-  `,
+
+    <!-- Calendar container with loading state -->
+    <div class="calendar-container">
+      <div *ngIf="loading" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Loading calendar...</p>
+      </div>
+      <div id="calendar"></div>
+    </div>
+    
+    <!-- Use the event modal component with imageUrl -->
+    <app-event-modal
+      [isVisible]="showEventModal"
+      [title]="selectedEvent.title"
+      [eventType]="selectedEvent.type"
+      [typeColor]="getEventColor(selectedEvent.type)"
+      [sentiment]="selectedEvent.sentiment"
+      [sentimentColor]="getSentimentColor(selectedEvent.sentiment)"
+      [sentimentIcon]="getSentimentIcon(selectedEvent.sentiment)"
+      [startDate]="selectedEvent.startDate"
+      [endDate]="selectedEvent.endDate"
+      [description]="selectedEvent.description"
+      [imageUrl]="selectedEvent.imageUrl"
+      (closeModal)="closeEventModal()">
+    </app-event-modal>
+  </div>
+`,
   styles: [`
     .calendar-wrapper {
       margin: 20px;
@@ -404,6 +406,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   
   // Modal state
   showEventModal = false;
+  
   selectedEvent: {
     title: string;
     type: string;
@@ -411,13 +414,15 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     startDate: string;
     endDate: string;
     description: string;
+    imageUrl: string; // Add image URL property
   } = {
     title: '',
     type: '',
     sentiment: 'neutral',
     startDate: '',
     endDate: '',
-    description: ''
+    description: '',
+    imageUrl: '' // Initialize as empty string
   };
 
   constructor(
@@ -615,24 +620,29 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
       const type = this.getEventType(event.title);
       const baseColor = this.getEventColor(type);
       
+      // Common extended props for both events
+      const commonProps = {
+        sentiment: event.sentiment,
+        type: type,
+        description: event.description,
+        startDate: event.startDate,
+        endDate: event.endDate,
+        imageUrl: event.imageUrl || '',
+        relatedEventId: event.eventId
+      };
+      
       // Create an event for the start date
       calendarEvents.push({
         id: `${event.eventId}-start`,
         title: `${event.title} (Start)`,
         start: event.startDate,
-        // Don't include an end date to prevent spanning
         allDay: true,
         backgroundColor: baseColor,
         borderColor: baseColor,
         textColor: '#FFFFFF',
         extendedProps: {
-          sentiment: event.sentiment,
-          type: type,
-          description: event.description,
-          isStartEvent: true,
-          relatedEventId: event.eventId,
-          startDate: event.startDate,
-          endDate: event.endDate
+          ...commonProps,
+          isStartEvent: true
         }
       });
       
@@ -641,19 +651,13 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
         id: `${event.eventId}-end`,
         title: `${event.title} (End)`,
         start: event.endDate,
-        // Don't include an end date to prevent spanning
         allDay: true,
         backgroundColor: baseColor,
         borderColor: baseColor,
         textColor: '#FFFFFF',
         extendedProps: {
-          sentiment: event.sentiment,
-          type: type,
-          description: event.description,
-          isEndEvent: true,
-          relatedEventId: event.eventId,
-          startDate: event.startDate,
-          endDate: event.endDate
+          ...commonProps,
+          isEndEvent: true
         }
       });
     });
@@ -713,31 +717,32 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     }
   }
   
-  handleEventClick(info: EventClickArg) {
-    const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
-    const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
-    
-    // Format dates properly from the extended props
-    const startDate = new Date(info.event.extendedProps['startDate']).toLocaleString();
-    const endDate = new Date(info.event.extendedProps['endDate']).toLocaleString();
-    
-    // Get the base event title without the (Start) or (End) suffix
-    const baseTitle = info.event.title
-      .replace(' (Start)', '')
-      .replace(' (End)', '');
-    
-    // Update the selected event object
-    this.selectedEvent = {
-      title: baseTitle,
-      type: eventType,
-      sentiment: sentiment as 'positive' | 'neutral' | 'negative',
-      startDate: startDate,
-      endDate: endDate,
-      description: info.event.extendedProps['description'] || 'No description available.'
-    };
-    
-    this.showEventModal = true;
-  }
+handleEventClick(info: EventClickArg) {
+  const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
+  const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
+  
+  // Format dates properly from the extended props
+  const startDate = new Date(info.event.extendedProps['startDate']).toLocaleString();
+  const endDate = new Date(info.event.extendedProps['endDate']).toLocaleString();
+  
+  // Get the base event title without the (Start) or (End) suffix
+  const baseTitle = info.event.title
+    .replace(' (Start)', '')
+    .replace(' (End)', '');
+  
+  // Update the selected event object with all properties including imageUrl
+  this.selectedEvent = {
+    title: baseTitle,
+    type: eventType,
+    sentiment: sentiment as 'positive' | 'neutral' | 'negative',
+    startDate: startDate,
+    endDate: endDate,
+    description: info.event.extendedProps['description'] || 'No description available.',
+    imageUrl: info.event.extendedProps['imageUrl'] || ''
+  };
+  
+  this.showEventModal = true;
+}
   
   closeEventModal() {
     this.showEventModal = false;

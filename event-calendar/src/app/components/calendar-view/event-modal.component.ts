@@ -1,5 +1,5 @@
-// event-modal.component.ts
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+// Enhanced event-modal.component.ts with improved image handling
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,6 +10,14 @@ import { CommonModule } from '@angular/common';
   <div class="event-modal" [class.active]="isVisible" (click)="closeOnBackdrop($event)">
     <div class="event-modal-content">
       <span class="close-modal" (click)="close()">&times;</span>
+      
+      <!-- Event Image (if available) - with error handling -->
+      <div class="event-image-container" *ngIf="imageUrl">
+        <img [src]="imageUrl" 
+             alt="{{ title }} image" 
+             class="event-image"
+             (error)="handleImageError($event)">
+      </div>
       
       <!-- Event Title -->
       <h2 class="event-title">{{ title }}</h2>
@@ -65,7 +73,7 @@ import { CommonModule } from '@angular/common';
       padding: 20px;
       border-radius: 8px;
       width: 90%;
-      max-width: 400px;
+      max-width: 500px; /* Increased from 400px to accommodate images better */
       position: relative;
       box-shadow: 0 2px 10px rgba(0,0,0,0.15);
       max-height: 85vh;
@@ -80,6 +88,7 @@ import { CommonModule } from '@angular/common';
       font-weight: normal;
       cursor: pointer;
       color: #aaa;
+      z-index: 10; /* Ensure it's above the image */
     }
   
     .close-modal:hover {
@@ -90,6 +99,24 @@ import { CommonModule } from '@angular/common';
       margin: 0 0 15px 0;
       font-size: 18px;
       font-weight: 600;
+    }
+  
+    .event-image-container {
+      margin-bottom: 20px;
+      text-align: center;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background-color: #f5f5f5; /* Light background for images that don't fill container */
+      position: relative;
+    }
+  
+    .event-image {
+      width: 100%;
+      max-height: 250px;
+      object-fit: contain; /* Changed from cover to contain to show full image */
+      display: block;
+      margin: 0 auto; /* Center image */
     }
   
     .event-meta {
@@ -145,10 +172,14 @@ import { CommonModule } from '@angular/common';
         width: 95%;
         padding: 15px;
       }
+      
+      .event-image {
+        max-height: 200px; /* Smaller for mobile */
+      }
     }
   `]
 })
-export class EventModalComponent {
+export class EventModalComponent implements OnChanges {
   @Input() isVisible = false;
   @Input() title = '';
   @Input() eventType = '';
@@ -159,8 +190,19 @@ export class EventModalComponent {
   @Input() startDate = '';
   @Input() endDate = '';
   @Input() description = '';
+  @Input() imageUrl = ''; // Input for image URL
   
   @Output() closeModal = new EventEmitter<void>();
+
+  // Log inputs when they change
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['imageUrl']) {
+      console.log('Modal imageUrl changed:', this.imageUrl);
+    }
+    if (changes['isVisible'] && this.isVisible) {
+      console.log('Modal opened with imageUrl:', this.imageUrl);
+    }
+  }
 
   get sentimentText(): string {
     return this.sentiment.charAt(0).toUpperCase() + this.sentiment.slice(1) + ' sentiment';
@@ -174,5 +216,18 @@ export class EventModalComponent {
     if ((event.target as HTMLElement).classList.contains('event-modal')) {
       this.close();
     }
+  }
+  
+  // Handle image loading errors
+  handleImageError(event: any): void {
+    console.error('Image failed to load:', this.imageUrl);
+    // Could set a fallback image here
+    event.target.src = '/assets/images/placeholder.png'; 
+    
+    // Or just hide the image container
+    // const container = event.target.parentElement;
+    // if (container) {
+    //   container.style.display = 'none';
+    // }
   }
 }

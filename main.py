@@ -272,31 +272,6 @@ def get_article_list(last_id=""):
         print(f"Error fetching article list: {e}")
         return [], "", True
 
-def format_event_for_firestore(article, dates):
-
-    """Format article data with sentiment analysis"""
-    # Get existing event data
-    event_data = {
-        'eventId': article.get('id'),
-        'title': article.get('title'),
-        'description': article.get('description', ''),
-        'startDate': dates['startDate'],
-        'endDate': dates['endDate'],
-        'startTimestamp': dates['startTimestamp'],
-        'endTimestamp': dates['endTimestamp'],
-        'lastUpdated': datetime.now().isoformat()
-    }
-    
-    # Add sentiment analysis
-    comments = get_article_comments(article['id'])
-    sentiment = analyze_sentiment(comments)
-    event_data['sentiment'] = sentiment
-    
-    # Add version if available
-    if 'version' in dates:
-        event_data['version'] = dates['version']
-    
-    return event_data
 
 def upload_to_firestore(events):
     """Upload events to Firestore with enhanced error handling and debugging"""
@@ -409,11 +384,12 @@ def get_article_comments(post_id):
         return []
 
 def analyze_sentiment(comments):
-    """Analyze sentiment of comments using BERT"""
+    """Analyze sentiment of comments using BERT with improved handling of long texts"""
     # Initialize sentiment analysis pipeline
     sentiment_analyzer = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
     
     if not comments:
+        print("No comments to analyze, returning neutral sentiment")
         return "neutral"
     
     # Weight comments by likes
@@ -421,27 +397,54 @@ def analyze_sentiment(comments):
     weighted_scores = 0
     
     for comment in comments:
-        # Get sentiment score (1-5)
-        result = sentiment_analyzer(comment['content'])[0]
-        score = int(result['label'].split()[0])  # Convert '1 star' to 1
+        comment_text = comment['content']
         
-        # Weight by likes (add 1 to avoid zero weights)
-        weight = comment['likes'] + 1
-        weighted_scores += score * weight
-        total_weight += weight
+        # Skip empty comments
+        if not comment_text or len(comment_text.strip()) == 0:
+            continue
+        
+        # Truncate long comments to avoid BERT token limit issues
+        # BERT typically has a 512 token limit, so we'll truncate to be safe
+        # A rough estimate is about 3-4 chars per token for many languages
+        if len(comment_text) > 1500:  # ~375-500 tokens
+            print(f"Truncating comment of length {len(comment_text)} to 1500 characters")
+            comment_text = comment_text[:1500]
+        
+        try:
+            # Get sentiment score (1-5)
+            result = sentiment_analyzer(comment_text)[0]
+            score = int(result['label'].split()[0])  # Convert '1 star' to 1
+            
+            # Weight by likes (add 1 to avoid zero weights)
+            weight = comment['likes'] + 1
+            weighted_scores += score * weight
+            total_weight += weight
+            
+        except Exception as e:
+            print(f"Error analyzing sentiment for comment: {e}")
+            # Continue with next comment instead of failing
+            continue
+    
+    # If no comments were successfully analyzed
+    if total_weight == 0:
+        print("Could not analyze any comments, returning neutral sentiment")
+        return "neutral"
     
     average_score = weighted_scores / total_weight
     
     # Convert to sentiment category
     if average_score >= 4:
-        return "positive"
+        sentiment = "positive"
     elif average_score >= 3:
-        return "neutral"
+        sentiment = "neutral"
     else:
-        return "negative"
+        sentiment = "negative"
+        
+    print(f"Sentiment analysis result: {sentiment} (average score: {average_score:.2f})")
+    return sentiment
 
 def get_article_content(post_id):
-    """Fetch detailed article content with rate limiting"""
+    """Fetch detailed article content with rate limiting and improved image extraction"""
     add_delay()  # Add delay before each request
     
     api_url = f"https://bbs-api-os.hoyolab.com/community/post/wapi/getPostFull?post_id={post_id}&read=1&scene=1"
@@ -453,11 +456,18 @@ def get_article_content(post_id):
         data = response.json()
         post_data = data.get('data', {}).get('post', {}).get('post', {})
         
+        # IMPORTANT: Get image_list from the correct location
+        # This was the main issue with your original code
+        image_list = data.get('data', {}).get('post', {}).get('image_list', [])
+        
         # Try to get content from different possible sources
         structured_content = post_data.get('structured_content', '')
         desc = post_data.get('desc', '')
         multi_lang = post_data.get('multi_language_info', {})
         lang_content = multi_lang.get('lang_content', {}).get('en-us', '')
+        
+        # Also get cover field which might contain an image
+        cover = post_data.get('cover', '')
         
         # Combine all available content
         full_text = ' '.join(filter(None, [desc, structured_content, lang_content]))
@@ -467,15 +477,128 @@ def get_article_content(post_id):
             'content': structured_content or lang_content,
             'full_text': full_text,
             'structured_content': structured_content,
-            'raw_post_data': post_data
+            'raw_post_data': post_data,
+            'image_list': image_list,  # Add image_list to the returned data
+            'cover': cover  # Add cover to the returned data
         }
     
     except requests.exceptions.RequestException as e:
         print(f"Error fetching article content: {e}")
         return None
+    
+
+def format_event_for_firestore(article, dates):
+    """Format article data with sentiment analysis, validated dates, and enhanced image extraction"""
+    # Get raw post data for better description and image extraction
+    raw_post_data = article.get('raw_post_data', {})
+    clean_description = raw_post_data.get('desc', '') or article.get('description', '')
+    
+    # Create base event data
+    event_data = {
+        'eventId': article.get('id'),
+        'title': article.get('title'),
+        'description': clean_description,
+        'startDate': dates['startDate'],
+        'endDate': dates['endDate'],
+        'startTimestamp': dates['startTimestamp'],
+        'endTimestamp': dates['endTimestamp'],
+        'lastUpdated': datetime.now().isoformat()
+    }
+    
+    # Add sentiment analysis
+    comments = get_article_comments(article['id'])
+    sentiment = analyze_sentiment(comments)
+    event_data['sentiment'] = sentiment
+    
+    # Add version if available
+    if 'version' in dates:
+        event_data['version'] = dates['version']
+    
+    # Enhanced image extraction with better logging
+    print(f"\n▶ Extracting image for event: {article.get('title')}")
+    image_url = None
+    
+    # METHOD 1: Check image_list first (most direct and reliable)
+    image_list = article.get('image_list', [])
+    if image_list and len(image_list) > 0:
+        image_url = image_list[0].get('url')
+        print(f"✓ Found image URL in image_list: {image_url}")
+    
+    # METHOD 2: Check cover field if no image in image_list
+    if not image_url and article.get('cover'):
+        image_url = article.get('cover')
+        print(f"✓ Found image URL in cover field: {image_url}")
+    
+    # METHOD 3: Try to extract from structured_content if still no image
+    if not image_url and 'structured_content' in raw_post_data:
+        structured_content = raw_post_data.get('structured_content', '')
+        try:
+            content_data = json.loads(structured_content)
+            if isinstance(content_data, list):
+                for item in content_data:
+                    # Make sure item is a dict and insert is also a dict before accessing its attributes
+                    if isinstance(item, dict) and 'insert' in item:
+                        insert_value = item.get('insert')
+                        # Check if insert_value is a dictionary before trying to access its attributes
+                        if isinstance(insert_value, dict) and insert_value.get('type') == 'image':
+                            image_url = insert_value.get('attributes', {}).get('src')
+                            if image_url:
+                                print(f"✓ Found image URL in structured_content: {image_url}")
+                                break
+        except (json.JSONDecodeError, TypeError) as e:
+            print(f"⚠ Error parsing structured_content: {e}")
+    
+    # If no image found after all attempts
+    if not image_url:
+        print(f"⚠ No image found for event: {article.get('title')}")
+    
+    # If found an image URL, download it and store local path
+    local_image_path = None
+    if image_url:
+        try:
+            # Create directory if it doesn't exist
+            os.makedirs('src/assets/images/events', exist_ok=True)
+            
+            # Parse URL to get file extension
+            from urllib.parse import urlparse
+            parsed_url = urlparse(image_url)
+            path = parsed_url.path
+            ext = os.path.splitext(path)[1]
+            if not ext:
+                ext = '.jpg'  # Default to .jpg if no extension
+            
+            # Save to Angular assets directory for easy access
+            local_filename = f"src/assets/images/events/event_{article.get('id')}{ext}"
+            
+            # Download the image
+            print(f"⏳ Downloading image from {image_url}")
+            img_response = requests.get(image_url, stream=True)
+            img_response.raise_for_status()
+            
+            with open(local_filename, 'wb') as f:
+                for chunk in img_response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            # Use path that will work in Angular
+            local_image_path = f"/assets/images/events/event_{article.get('id')}{ext}"
+            print(f"✓ Downloaded image to: {local_filename}")
+        except Exception as e:
+            print(f"⚠ Error downloading image: {e}")
+            traceback.print_exc()  # Add stack trace for better debugging
+    
+    # Add image URL to event data
+    if local_image_path:
+        event_data['imageUrl'] = local_image_path
+        print(f"✓ Added imageUrl to event: {local_image_path}")
+    elif image_url:
+        event_data['imageUrl'] = image_url
+        print(f"⚠ Using remote imageUrl (download failed): {image_url}")
+    
+    return event_data
+
 
 def scrape_hoyolab(article_limit=10):
-    """Main scraping function with two-pass processing"""
+    """Main scraping function with two-pass processing and image extraction"""
     all_articles = []
     formatted_events = []
     version_updates = {}
@@ -513,12 +636,14 @@ def scrape_hoyolab(article_limit=10):
     # Second pass: Process event articles with version information
     print("\nSecond pass: Processing event articles...")
     event_count = 0
+    image_count = 0  # Track how many events have images
+    
     for article in all_articles:
         if event_count >= article_limit:
             break
             
         if is_event_article(article):
-            print(f"Processing event article: {article['title']}")
+            print(f"\nProcessing event article: {article['title']}")
             content = get_article_content(article['id']) if 'full_text' not in article else None
             
             if content:
@@ -528,44 +653,33 @@ def scrape_hoyolab(article_limit=10):
             if dates:
                 formatted_event = format_event_for_firestore(article, dates)
                 if formatted_event:
+                    # Check if the event has an image
+                    if 'imageUrl' in formatted_event:
+                        image_count += 1
+                        
                     formatted_events.append(formatted_event)
                     print(f"Successfully processed event: {article['title']}")
                     event_count += 1
             else:
                 print(f"Could not parse dates for: {article['title']}")
     
+    # Print summary
+    print(f"\n===== SCRAPING SUMMARY =====")
+    print(f"Total events processed: {len(formatted_events)}")
+    print(f"Events with images: {image_count}")
+    print(f"Events without images: {len(formatted_events) - image_count}")
+    
     # Save formatted events
     if formatted_events:
-        with open('../formatted_events.json', 'w', encoding='utf-8') as f:
+        with open('formatted_events.json', 'w', encoding='utf-8') as f:
             json.dump(formatted_events, f, ensure_ascii=False, indent=2)
+        print(f"Saved all events to formatted_events.json")
     
     return formatted_events
 
-def format_event_for_firestore(article, dates):
-    """Format article data with validated dates"""
-    raw_post_data = article.get('raw_post_data', {})
-    clean_description = raw_post_data.get('desc', '') or article.get('description', '')
-    
-    event_data = {
-        'eventId': article.get('id'),
-        'title': article.get('title'),
-        'description': clean_description,
-        'startDate': dates['startDate'],
-        'endDate': dates['endDate'],
-        'startTimestamp': dates['startTimestamp'],
-        'endTimestamp': dates['endTimestamp'],
-        'lastUpdated': datetime.now().isoformat()
-    }
-    
-    # Add version if available
-    if 'version' in dates:
-        event_data['version'] = dates['version']
-    
-    return event_data
-
 if __name__ == "__main__":
-    # Existing code to get events...
-    events = scrape_hoyolab(article_limit=20)  # Increased limit to catch more events
+    # Scrape events with increased limit
+    events = scrape_hoyolab(article_limit=20)
     print(f"\nSuccessfully processed {len(events)} events")
     
     if events:
@@ -573,6 +687,10 @@ if __name__ == "__main__":
         with open('formatted_events.json', 'w', encoding='utf-8') as f:
             json.dump(events, f, ensure_ascii=False, indent=2)
         print(f"Saved events to {os.path.abspath('formatted_events.json')}")
+        
+        # Count events with images
+        events_with_images = sum(1 for event in events if 'imageUrl' in event)
+        print(f"Events with images: {events_with_images}/{len(events)}")
         
         # Try uploading to Firestore with improved function
         upload_success = upload_to_firestore(events)
