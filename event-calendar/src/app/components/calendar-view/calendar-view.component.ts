@@ -10,7 +10,7 @@ import {
   EventClickArg,
   EventMountArg,
   EventContentArg,
-  MoreLinkArg  // Add this import
+  MoreLinkArg
 } from '@fullcalendar/core';
 
 import { EventModalComponent } from './event-modal.component';
@@ -221,7 +221,10 @@ styles: [`
 :host ::ng-deep .fc-col-header-cell-cushion,
 :host ::ng-deep .fc-daygrid-day-number,
 :host ::ng-deep .fc-toolbar-title {
+  font-weight: 700;
+  font-size: 1.5em !important;
   color: #ffffff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
 
 :host ::ng-deep .fc-button-primary {
@@ -266,7 +269,7 @@ styles: [`
 }
 
 :host ::ng-deep .fc-day-today .fc-daygrid-day-number {
-  background-color: #4285f4;
+  background-color:rgb(0, 0, 0);
   color: white;
   border-radius: 50%;
   width: 24px;
@@ -287,12 +290,84 @@ styles: [`
 }
 
 :host ::ng-deep .fc-event:hover {
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 5px rgba(255, 255, 255, 0.2);
   z-index: 10;
 }
 
-/* Full-width calendar on small screens */
+/* Base popover styling */
+:host ::ng-deep .fc-popover {
+  background: rgba(10, 10, 15, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  max-width: 350px !important;
+  backdrop-filter: blur(10px) !important;
+  /* Remove the transform that might conflict with dragging */
+  /* transform: translateX(20%) !important; */
+  z-index: 100 !important;
+  overflow: hidden !important; /* Keeps content inside rounded corners */
+  transition: box-shadow 0.2s ease !important;
+}
+
+/* Styles for when the popover is being dragged */
+:host ::ng-deep .fc-popover.dragging {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7) !important;
+  opacity: 0.95 !important;
+  transition: none !important;
+  cursor: grabbing !important;
+}
+
+/* Header styling - make it look more like a drag handle */
+:host ::ng-deep .fc-popover-header {
+  padding: 10px 12px !important;
+  background: linear-gradient(to bottom, rgba(80, 100, 180, 0.9), rgba(60, 80, 160, 0.9)) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  display: flex !important;
+  align-items: center !important;
+  cursor: move !important;
+}
+
+
+/* Better appearance for drag handle */
+:host ::ng-deep .drag-handle {
+  cursor: move;
+  font-size: 16px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+:host ::ng-deep .fc-popover-header:hover .drag-handle {
+  opacity: 1;
+}
+
+/* Better styling for popover content */
+:host ::ng-deep .fc-popover-body {
+  padding: 12px !important;
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+
+/* Improved styling for more link to create popover */
+:host ::ng-deep .fc-daygrid-more-link {
+  background-color: rgba(80, 110, 200, 0.8) !important;
+  color: white !important;
+  padding: 3px 10px !important;
+  border-radius: 12px !important;
+  margin: 3px 0 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+
+:host ::ng-deep .fc-daygrid-more-link:hover {
+  background-color: rgba(100, 130, 220, 0.9) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
 @media (max-width: 768px) {
   .page-container {
     padding: 0;
@@ -320,6 +395,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   private calendar: any;
   private eventSubscription?: Subscription;
   private dateDropdownOpen = false;
+  private popoverObserver: MutationObserver | null = null;
 
   // Event management
   eventTypes = ['Warp', 'Garden of Plenty', 'Planar', 'Other'];
@@ -371,7 +447,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
           import('@fullcalendar/list'),
           import('@fullcalendar/interaction')
         ]);
-
+  
         // Initialize calendar with imported plugins
         this.initializeCalendar(Calendar, [
           dayGridPlugin,
@@ -379,6 +455,9 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
           listPlugin,
           interactionPlugin
         ]);
+        
+        // After calendar is initialized, set up popover handling
+        this.setupPopoverHandling();
         
         // Start loading events after calendar is ready
         this.loadEvents();
@@ -397,58 +476,217 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     if (this.calendar) {
       this.calendar.destroy();
     }
+    if (this.popoverObserver) {
+      this.popoverObserver.disconnect();
+    }
   }
 
+  // New method to enhance popover with dragging and positioning
+  private enhancePopover(popover: HTMLElement) {
+    // First, make sure the popover has the right initial styles
+    popover.style.position = 'absolute';
+    popover.style.zIndex = '2000'; // Higher z-index during interaction
+    
+    // Remove any transform from CSS that might conflict
+    popover.style.transform = 'none';
+    
+    // Get initial position
+    const initialLeft = popover.offsetLeft;
+    const initialTop = popover.offsetTop;
+    
+    // Move it to the right by a fixed amount (adjust as needed)
+    popover.style.left = (initialLeft + 50) + 'px';
+    
+    // Make sure we're not too close to the edge
+    const rightEdge = initialLeft + popover.offsetWidth + 50;
+    const viewportWidth = window.innerWidth;
+    
+    if (rightEdge > viewportWidth - 20) {
+      // If too close to the right edge, place it to the left instead
+      popover.style.left = (initialLeft - 50) + 'px';
+    }
+    
+    // Make the header draggable
+    const header = popover.querySelector('.fc-popover-header') as HTMLElement;
+    if (!header) return;
+    
+    // Style the header to indicate it's draggable
+    header.style.cursor = 'move';
+    header.style.userSelect = 'none';
+    
+    // Add a visual drag handle indicator if not already present
+    if (!header.querySelector('.drag-handle')) {
+      const dragHandle = document.createElement('span');
+      dragHandle.className = 'drag-handle';
+      dragHandle.innerHTML = '&#9776;'; // Hamburger icon
+      dragHandle.style.marginRight = '5px';
+      dragHandle.style.color = 'rgba(255, 255, 255, 0.7)';
+      
+      const title = header.querySelector('.fc-popover-title');
+      if (title && title.parentNode) {
+        title.parentNode.insertBefore(dragHandle, title);
+      }
+    }
+    
+    // Variables to track dragging
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let originalX = 0;
+    let originalY = 0;
+    
+    const mouseDownHandler = (e: MouseEvent) => {
+      // Only allow dragging from the header
+      if (!header.contains(e.target as Node)) return;
+      
+      // Start dragging
+      isDragging = true;
+      
+      // Store the initial position
+      startX = e.clientX;
+      startY = e.clientY;
+      originalX = popover.offsetLeft;
+      originalY = popover.offsetTop;
+      
+      // Add a dragging class for visual feedback
+      popover.classList.add('dragging');
+      
+      // Increase z-index during drag
+      const oldZIndex = popover.style.zIndex;
+      popover.style.zIndex = '3000';
+      
+      // Disable transitions during drag for smoother movement
+      popover.style.transition = 'none';
+      
+      // Prevent text selection during drag
+      e.preventDefault();
+      
+      // Set up temporary mousemove and mouseup handlers
+      const mouseMoveHandler = (e: MouseEvent) => {
+        if (!isDragging) return;
+        
+        // Calculate distance moved
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        
+        // Update position
+        popover.style.left = (originalX + dx) + 'px';
+        popover.style.top = (originalY + dy) + 'px';
+      };
+      
+      const mouseUpHandler = () => {
+        if (!isDragging) return;
+        
+        // Stop dragging
+        isDragging = false;
+        
+        // Remove dragging class
+        popover.classList.remove('dragging');
+        
+        // Restore z-index
+        popover.style.zIndex = oldZIndex;
+        
+        // Re-enable transitions
+        popover.style.transition = 'box-shadow 0.2s ease';
+      
+        // Remove the temporary handlers
+        document.removeEventListener('mousemove', mouseMoveHandler);
+        document.removeEventListener('mouseup', mouseUpHandler);
+      };
+      
+      // Add the temporary handlers
+      document.addEventListener('mousemove', mouseMoveHandler);
+      document.addEventListener('mouseup', mouseUpHandler);
+    };
+    
+    // Add mouse down handler to header
+    header.addEventListener('mousedown', mouseDownHandler);
+    
+    // Clean up when popover is closed
+    const closeButton = popover.querySelector('.fc-popover-close');
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        header.removeEventListener('mousedown', mouseDownHandler);
+      });
+    }
+  }
 
-// Updated initializeCalendar method with fixed event click handler
-private initializeCalendar(Calendar: any, plugins: any[]) {
-  const calendarEl = document.querySelector('#calendar');
-  if (calendarEl) {
-    this.calendar = new Calendar(calendarEl, {
-      plugins,
-      initialView: 'dayGridMonth',
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listWeek'
-      },
-      dayMaxEvents: true, // Allow "more" link when too many events
-      events: [],
-      eventTimeFormat: { // Customize the time display
-        hour: '2-digit',
-        minute: '2-digit',
-        meridiem: 'short'
-      },
-      
-      // Fixed event click handler
-      eventClick: (info: EventClickArg) => {
-        // Prevent default behavior first
-        info.jsEvent.preventDefault();
-        
-        // Handle the event click directly without timeout
-        this.handleEventClick(info);
-        
-        return false; // Ensure default browser behavior is prevented
-      },
-      
-      // Optional: Track popover state
-      moreLinkClick: (info: MoreLinkArg) => {
-        console.log('More link clicked for date:', info.date);
-        return 'popover';
-      },
-      
-      eventDidMount: (info: EventMountArg) => {
-        // Improved tooltip handling
-        const tooltip = info.event.extendedProps['description'] || info.event.title;
-        info.el.setAttribute('data-tooltip', tooltip);
-      },
-      
-      eventContent: (info: EventContentArg) => this.renderEventContent(info)
+  // New method for handling popovers using MutationObserver
+  private setupPopoverHandling() {
+    // Listen for the popover's appearance
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'childList') {
+          const popovers = document.querySelectorAll('.fc-popover');
+          Array.from(popovers).forEach(popover => {
+            // Check if we've already processed this popover
+            if (!(popover as HTMLElement).dataset['enhanced']) {
+              this.enhancePopover(popover as HTMLElement);
+              // Mark as enhanced to avoid duplicate processing
+              (popover as HTMLElement).dataset['enhanced'] = 'true';
+            }
+          });
+        }
+      }
     });
-
-    this.calendar.render();
+    
+    // Start observing the document body
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // Store the observer for cleanup
+    this.popoverObserver = observer;
   }
-}
+
+  // Updated initializeCalendar method with fixed event click handler
+  private initializeCalendar(Calendar: any, plugins: any[]) {
+    const calendarEl = document.querySelector('#calendar');
+    if (calendarEl) {
+      this.calendar = new Calendar(calendarEl, {
+        plugins,
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,listWeek'
+        },
+        dayMaxEvents: 2, // Show only 2 events before "more" link
+        events: [],
+        eventTimeFormat: { // Customize the time display
+          hour: '2-digit',
+          minute: '2-digit',
+          meridiem: 'short'
+        },
+        
+        // Fixed event click handler
+        eventClick: (info: EventClickArg) => {
+          // Prevent default behavior first
+          info.jsEvent.preventDefault();
+          
+          // Handle the event click
+          this.handleEventClick(info);
+          
+          return false; // Ensure default browser behavior is prevented
+        },
+        
+        // Improved more link styling and positioning
+        moreLinkContent: (args: any) => {
+          return {
+            html: `<div class="custom-more-link">+${args.num} more</div>`
+          };
+        },
+        
+        eventDidMount: (info: EventMountArg) => {
+          // Improved tooltip handling
+          const tooltip = info.event.extendedProps['description'] || info.event.title;
+          info.el.setAttribute('data-tooltip', tooltip);
+        },
+        
+        eventContent: (info: EventContentArg) => this.renderEventContent(info)
+      });
+
+      this.calendar.render();
+    }
+  }
 
   renderEventContent(info: EventContentArg): { html: string } {
     const type = this.getEventType(info.event.title.replace(' (Start)', '').replace(' (End)', ''));
@@ -659,49 +897,49 @@ private initializeCalendar(Calendar: any, plugins: any[]) {
     }
   }
   
-// Updated handleEventClick method to ensure modal starts at the top
-handleEventClick(info: EventClickArg) {
-  const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
-  const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
-  
-  // Format dates properly from the extended props
-  const startDate = new Date(info.event.extendedProps['startDate']).toLocaleString();
-  const endDate = new Date(info.event.extendedProps['endDate']).toLocaleString();
-  
-  // Get the base event title without the (Start) or (End) suffix
-  const baseTitle = info.event.title
-    .replace(' (Start)', '')
-    .replace(' (End)', '');
-  
-  // Update the selected event object with all properties including imageUrl
-  this.selectedEvent = {
-    title: baseTitle,
-    type: eventType,
-    sentiment: sentiment as 'positive' | 'neutral' | 'negative',
-    startDate: startDate,
-    endDate: endDate,
-    description: info.event.extendedProps['description'] || 'No description available.',
-    imageUrl: info.event.extendedProps['imageUrl'] || ''
-  };
-  
-  // Show the modal
-  this.showEventModal = true;
-  
-  // Ensure any popovers are closed
-  if (this.calendar && typeof this.calendar.el.querySelectorAll === 'function') {
-    const popovers = this.calendar.el.querySelectorAll('.fc-popover');
-    if (popovers.length > 0) {
-      popovers.forEach((popover: HTMLElement) => {
-        popover.style.display = 'none';
-      });
+  // Updated handleEventClick method to ensure modal starts at the top
+  handleEventClick(info: EventClickArg) {
+    const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
+    const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
+    
+    // Format dates properly from the extended props
+    const startDate = new Date(info.event.extendedProps['startDate']).toLocaleString();
+    const endDate = new Date(info.event.extendedProps['endDate']).toLocaleString();
+    
+    // Get the base event title without the (Start) or (End) suffix
+    const baseTitle = info.event.title
+      .replace(' (Start)', '')
+      .replace(' (End)', '');
+    
+    // Update the selected event object with all properties including imageUrl
+    this.selectedEvent = {
+      title: baseTitle,
+      type: eventType,
+      sentiment: sentiment as 'positive' | 'neutral' | 'negative',
+      startDate: startDate,
+      endDate: endDate,
+      description: info.event.extendedProps['description'] || 'No description available.',
+      imageUrl: info.event.extendedProps['imageUrl'] || ''
+    };
+    
+    // Show the modal
+    this.showEventModal = true;
+    
+    // Ensure any popovers are closed
+    if (this.calendar && typeof this.calendar.el.querySelectorAll === 'function') {
+      const popovers = this.calendar.el.querySelectorAll('.fc-popover');
+      if (popovers.length > 0) {
+        popovers.forEach((popover: HTMLElement) => {
+          popover.style.display = 'none';
+        });
+      }
     }
   }
-}
-  
   
   closeEventModal() {
     this.showEventModal = false;
   }
+  
   closeModalOnBackdrop(event: MouseEvent) {
     if ((event.target as HTMLElement).classList.contains('event-modal')) {
       this.closeEventModal();
