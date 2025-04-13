@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+/* Add this to your styles.css or styles.scss global file */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #000000;
+    background-image: url('/assets/images/bg/space-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  app-root {
+    display: block;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Page title styling */
+  .page-title {
+    text-align: center;
+    color: #ffffff;
+    margin: 20px 0;
+    font-size: 32px;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(66, 133, 244, 0.3);
+    letter-spacing: 1px;
+  }
+  
+  /* Add a subtle animation to the title */
+  @keyframes glow {
+    0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(66, 133, 244, 0.3); }
+    50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 30px rgba(66, 133, 244, 0.5); }
+    100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(66, 133, 244, 0.3); }
+  }
+  
+  .page-title {
+    animation: glow 3s ease-in-out infinite;
+  }
+  
+  /* Remove any default margins that might cause white space */
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Make sure fullcalendar container doesn't have any default white background */
+  .fc {
+    background-color: transparent !important;
+  }

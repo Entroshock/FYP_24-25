@@ -49,135 +49,149 @@ import { CommonModule } from '@angular/common';
     </div>
   </div>
 `,
-  styles: [`
-    .event-modal {
-      display: none;
-      position: fixed;
-      z-index: 1001;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.3);
-    }
-  
-    .event-modal.active {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  
+  // Updated styles for event-modal.component.ts
+styles: [`
+  .event-modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+  }
+
+  .event-modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .event-modal-content {
+    background-color: rgba(15, 15, 20, 0.95);
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    max-height: 85vh;
+    overflow-y: auto;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: normal;
+    cursor: pointer;
+    color: #cccccc;
+    z-index: 10;
+  }
+
+  .close-modal:hover {
+    color: #ffffff;
+  }
+
+  .event-title {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .event-image-container {
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    background-color: rgba(25, 25, 30, 0.5);
+    position: relative;
+  }
+
+  .event-image {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .event-meta {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .event-type-badge {
+    display: inline-block;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    min-width: 50px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .event-sentiment {
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 4px 0;
+    font-weight: 500;
+    margin-left: 6px;
+  }
+
+  .sentiment-icon {
+    margin-right: 6px;
+    font-weight: bold;
+  }
+
+  .event-dates {
+    margin: 15px 0;
+    line-height: 1.5;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 6px;
+  }
+
+  .description-title {
+    margin: 18px 0 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #e6e6e6;
+  }
+
+  .description-content {
+    line-height: 1.5;
+    color: #cccccc;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 768px) {
     .event-modal-content {
-      background-color: #fff;
-      margin: auto;
-      padding: 20px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 500px; /* Increased from 400px to accommodate images better */
-      position: relative;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-      max-height: 85vh;
-      overflow-y: auto;
+      width: 95%;
+      padding: 15px;
     }
-  
-    .close-modal {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 24px;
-      font-weight: normal;
-      cursor: pointer;
-      color: #aaa;
-      z-index: 10; /* Ensure it's above the image */
-    }
-  
-    .close-modal:hover {
-      color: #555;
-    }
-  
-    .event-title {
-      margin: 0 0 15px 0;
-      font-size: 18px;
-      font-weight: 600;
-    }
-  
-    .event-image-container {
-      margin-bottom: 20px;
-      text-align: center;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      background-color: #f5f5f5; /* Light background for images that don't fill container */
-      position: relative;
-    }
-  
+    
     .event-image {
-      width: 100%;
-      max-height: 250px;
-      object-fit: contain; /* Changed from cover to contain to show full image */
-      display: block;
-      margin: 0 auto; /* Center image */
+      max-height: 200px;
     }
-  
-    .event-meta {
-      margin-bottom: 15px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 25px; /* Increase gap between badge and sentiment */
-    }
-  
-    .event-type-badge {
-      display: inline-block;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-weight: 500;
-      font-size: 14px;
-      min-width: 50px; /* Ensure minimum width for the badge */
-      text-align: center;
-    }
-  
-    .event-sentiment {
-      display: inline-flex;
-      align-items: center;
-      font-size: 14px;
-      padding: 4px 0;
-      font-weight: 500;
-      margin-left: 6px; /* Add explicit left margin */
-    }
-  
-    .sentiment-icon {
-      margin-right: 6px;
-      font-weight: bold;
-    }
-  
-    .event-dates {
-      margin: 15px 0;
-      line-height: 1.5;
-    }
-  
-    .description-title {
-      margin: 18px 0 10px 0;
-      font-size: 16px;
-      font-weight: 600;
-    }
-  
-    .description-content {
-      line-height: 1.5;
-    }
-  
-    @media (max-width: 768px) {
-      .event-modal-content {
-        width: 95%;
-        padding: 15px;
-      }
-      
-      .event-image {
-        max-height: 200px; /* Smaller for mobile */
-      }
-    }
-  `]
+  }
+`]
 })
 export class EventModalComponent implements OnChanges {
   @Input() isVisible = false;
@@ -196,11 +210,23 @@ export class EventModalComponent implements OnChanges {
 
   // Log inputs when they change
   ngOnChanges(changes: SimpleChanges): void {
+    // Log changes as before
     if (changes['imageUrl']) {
       console.log('Modal imageUrl changed:', this.imageUrl);
     }
+    
+    // Reset scroll position when modal becomes visible
     if (changes['isVisible'] && this.isVisible) {
       console.log('Modal opened with imageUrl:', this.imageUrl);
+      
+      // Use setTimeout to ensure DOM is updated before scrolling
+      setTimeout(() => {
+        // Find the modal content element and reset its scroll position
+        const modalContent = document.querySelector('.event-modal-content');
+        if (modalContent) {
+          modalContent.scrollTop = 0;
+        }
+      }, 0);
     }
   }
 
