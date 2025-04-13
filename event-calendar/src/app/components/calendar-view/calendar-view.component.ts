@@ -206,7 +206,7 @@ styles: [`
 /* FullCalendar Theming for Dark Space Background */
 :host ::ng-deep .fc {
   --fc-border-color: rgba(255, 255, 255, 0.15);
-  --fc-today-bg-color: rgba(66, 133, 244, 0.15);
+  --fc-today-bg-color: rgba(214, 175, 54, 0.12); /* Subtle gold color */
   --fc-neutral-bg-color: rgba(255, 255, 255, 0.05);
   --fc-list-event-hover-bg-color: rgba(255, 255, 255, 0.1);
   --fc-page-bg-color: transparent;
@@ -254,7 +254,8 @@ styles: [`
 }
 
 :host ::ng-deep .fc-day-today .fc-daygrid-day-frame {
-  background-color: rgba(66, 133, 244, 0.15);
+  background-color: rgba(214, 175, 54, 0.12); /* Subtle gold color */
+  border: 1px solid rgba(214, 175, 54, 0.25); 
 }
 
 :host ::ng-deep .fc-daygrid-day-top {
@@ -269,14 +270,9 @@ styles: [`
 }
 
 :host ::ng-deep .fc-day-today .fc-daygrid-day-number {
-  background-color:rgb(0, 0, 0);
-  color: white;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: white; 
+  font-weight: 500;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3); /* Subtle text shadow for legibility */
 }
 
 /* Event styling */
