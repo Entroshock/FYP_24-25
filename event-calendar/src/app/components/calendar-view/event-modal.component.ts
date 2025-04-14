@@ -195,7 +195,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
   :host ::ng-deep .event-subheader {
     font-size: 16px !important;
-    font-weight: 600 !important;
+    font-weight: 400 !important; /* Normal font weight (not bold) */
     color: #e0e0e0 !important;
     margin: 15px 0 8px 0 !important;
     padding-bottom: 8px !important;
@@ -230,8 +230,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   /* ONLY Numbered section headers (1. New Story, etc.) */
   :host ::ng-deep .update-section-header {
     font-size: 16px !important;
-    font-weight: 700 !important; /* Bold text ONLY for main section headers */
-    color: #ffffff !important; /* White text ONLY for headers */
+    font-weight: 700 !important; /* Bold font weight for section headers */
+    color: #ffffff !important; /* White text for headers */
     margin: 16px 0 8px 0 !important;
     padding: 6px 0 !important;
     display: block !important;
@@ -457,8 +457,8 @@ private preprocessText(text: string): string {
   return processedText;
 }
 
-// Main formatting method
-// Main formatting method
+// Updated formatDescription method for event-modal.component.ts
+
 private formatDescription(text: string): SafeHtml {
   if (!text) return this.sanitizer.bypassSecurityTrustHtml('');
 
@@ -519,9 +519,9 @@ private formatDescription(text: string): SafeHtml {
         continue;
       }
       
-      // MAIN SECTION HEADERS: Match ONLY the exact pattern for numbered main sections
-      // This is a more exact pattern now, specifically for the version update format
-      if (/^\d+\.\s+New\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Story"
+      // MAIN SECTION HEADERS: Numbered sections like "4. New Areas"
+      // This pattern matches section headers like "4. New Areas" to make them bold
+      if (/^\d+\.\s+New\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Story" or "4. New Areas"
           /^\d+\.\s+New\s+[A-Z][a-z]+\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Light Cones"
           /^\d+\.\s+Others$/.test(line)) { // Pattern specifically for "6. Others"
         htmlOutput += `<div class="update-section-header">${line}</div>`;
@@ -537,38 +537,61 @@ private formatDescription(text: string): SafeHtml {
         continue;
       }
       
-      // AREA/LOCATION NAMES: Generic pattern for area names in quotes followed by descriptions
-      // This matches any area name in quotes at the start of a line (like "Area Name" Description text)
+      // AREA/LOCATION NAMES: Pattern for area names in quotes like "Demigod Council" Dawncloud
+      // This specifically matches the format in your images
       if (/^\"[^\"]+\"/.test(line)) {
-        // Extract the quoted area name using regex
-        const quoteMatch = line.match(/^\"([^\"]+)\"/);
+        // Extract the quoted area name and location
+        const quoteMatch = line.match(/^\"([^\"]+)\"\s*([^\s].+)/);
         if (quoteMatch) {
-          // Get the full quoted text including quotes
-          const quotedAreaName = quoteMatch[0];
+          // Full area name with quotes
+          const quotedAreaName = `"${quoteMatch[1]}"`;
+          // Location name after the quoted text
+          const locationName = quoteMatch[2];
           
-          // Add the quoted area name as a subheader
-          htmlOutput += `<div class="event-subheader">${quotedAreaName}</div>`;
+          // Add the full line as a subheader (not bold)
+          htmlOutput += `<div class="event-subheader">${quotedAreaName} ${locationName}</div>`;
           
-          // Then add the remaining text as regular content
-          const description = line.substring(quotedAreaName.length).trim();
-          if (description) {
-            htmlOutput += `<div class="update-content">${description}</div>`;
-          }
+          // Mark that we're now in a description block
           inDescriptionBlock = true;
           continue;
+        } else {
+          // If we just have a quoted name without location
+          const simpleQuoteMatch = line.match(/^\"([^\"]+)\"/);
+          if (simpleQuoteMatch) {
+            // Get the full quoted text including quotes
+            const quotedAreaName = simpleQuoteMatch[0];
+            
+            // Add the quoted area name as a subheader
+            htmlOutput += `<div class="event-subheader">${quotedAreaName}</div>`;
+            
+            // Then add the remaining text as regular content if any
+            const description = line.substring(quotedAreaName.length).trim();
+            if (description) {
+              htmlOutput += `<div class="update-content">${description}</div>`;
+            }
+            inDescriptionBlock = true;
+            continue;
+          }
         }
       }
       
-      // CRITICAL: Handle all these specific patterns as regular content
-      // This addresses all the specific content types that should be gray
+      // Area descriptions (like "The spiritual and political center...")
+      // This specifically handles the description lines that follow area names
+      if (inDescriptionBlock && 
+          (line.startsWith("The spiritual") || 
+           line.startsWith("This land of") ||
+           line.length > 20)) {
+        htmlOutput += `<div class="update-content">${line}</div>`;
+        continue;
+      }
+      
+      // CRITICAL: Handle all other specific patterns as regular content
       if (
           // Common patterns for areas that should be regular content
           line.includes("Trailblaze Mission") || 
           line.includes("Castorice is a DPS") ||
           line.includes("Anaxa is a DPS") ||
           line.includes("Obtainable through") ||
-          line.startsWith("The spiritual") ||
-          line.startsWith("This land of") ||
           line.startsWith("Enemies ") ||
           line.startsWith("Gameplay ") ||
           // Game mode descriptions
