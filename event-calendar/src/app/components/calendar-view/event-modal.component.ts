@@ -1,4 +1,3 @@
-// Enhanced event-modal.component.ts with styling to match the target format
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -177,100 +176,180 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     color: #cccccc;
     line-height: 1.6;
     background-color: rgba(20, 20, 25, 0.3);
-    padding: 0;
+    padding: 10px !important;
     border-radius: 6px;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
   }
 
-  /* Deep styling for formatted content elements */
-  :host ::ng-deep .shop-header {
-    font-size: 18px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(50, 50, 50, 0.8);
-  }
-
-  :host ::ng-deep .shop-section {
-    display: block;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(50, 50, 50, 0.8);
-  }
-
-  :host ::ng-deep .release-time {
-    color: #ffffff;
-    padding: 10px 0;
-    margin: 0;
-    display: block;
-  }
-
-  :host ::ng-deep .contract-block {
-    background-color: rgba(40, 65, 100, 0.4);
-    padding: 15px;
-    margin: 0 0 2px 0;
-    display: block;
-    border-left: 3px solid rgba(76, 175, 255, 0.5);
-  }
-
-  :host ::ng-deep .price-block {
-    background-color: rgba(40, 40, 40, 0.5);
-    padding: 12px 15px;
-    margin: 0 0 10px 0;
-    display: block;
-    font-style: italic;
-    color: #aaaaaa;
-  }
-
-  :host ::ng-deep .regular-contract {
-    padding: 15px 0;
-    margin: 0;
-    display: block;
-  }
-
+  /* Common elements styling */
   :host ::ng-deep .event-header {
-    font-size: 18px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 10px 0;
-    border-bottom: 1px solid rgba(50, 50, 50, 0.8);
-    padding: 10px 0;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin: 10px 0 !important;
+    border-bottom: 1px solid rgba(50, 50, 50, 0.8) !important;
+    padding: 10px 0 !important;
+    display: block !important;
   }
 
   :host ::ng-deep .event-subheader {
-    font-size: 16px;
-    font-weight: 600;
-    color: #e0e0e0;
-    margin: 15px 0 8px 0;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(50, 50, 50, 0.8);
-  }
-
-  :host ::ng-deep .intro-text {
-    border-left: 3px solid rgba(76, 175, 80, 0.6);
-    padding: 10px 15px;
-    margin: 10px 0;
-    background-color: rgba(40, 40, 40, 0.3);
-    border-radius: 0 4px 4px 0;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #e0e0e0 !important;
+    margin: 15px 0 8px 0 !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid rgba(50, 50, 50, 0.8) !important;
+    display: block !important;
   }
 
   :host ::ng-deep .bullet-point {
-    display: block;
-    margin: 8px 0;
-    padding-left: 18px;
-    position: relative;
+    display: block !important;
+    margin: 8px 0 !important;
+    padding-left: 18px !important;
+    position: relative !important;
+    color: #b0b0b0 !important;
+    font-weight: normal !important;
   }
 
   :host ::ng-deep .bullet-point::before {
-    content: "•";
-    position: absolute;
-    left: 6px;
-    color: #9e9e9e;
+    content: "•" !important;
+    position: absolute !important;
+    left: 6px !important;
+    color: #9e9e9e !important;
   }
 
   :host ::ng-deep p {
-    margin: 8px 0;
+    margin: 8px 0 !important;
+    color: #b0b0b0 !important;
+    font-weight: normal !important;
+    display: block !important;
   }
 
+  /* VERSION UPDATE STYLING */
+  /* ONLY Numbered section headers (1. New Story, etc.) */
+  :host ::ng-deep .update-section-header {
+    font-size: 16px !important;
+    font-weight: 700 !important; /* Bold text ONLY for main section headers */
+    color: #ffffff !important; /* White text ONLY for headers */
+    margin: 16px 0 8px 0 !important;
+    padding: 6px 0 !important;
+    display: block !important;
+    border-bottom: 1px solid rgba(80, 80, 80, 0.5) !important;
+  }
+
+  /* ALL regular content (character descriptions, body text, etc.) */
+  :host ::ng-deep .update-content {
+    color: #b0b0b0 !important; /* Lighter gray for content */
+    margin: 6px 0 !important;
+    padding: 2px 0 !important;
+    line-height: 1.4 !important;
+    display: block !important;
+    font-weight: normal !important; /* CRITICAL: Ensure content is not bold */
+  }
+
+  /* Special requirement sections (Event Period, etc.) */
+  :host ::ng-deep .update-requirement {
+    color: #cccccc !important;
+    background-color: rgba(30, 30, 35, 0.5) !important;
+    padding: 6px 8px !important;
+    margin: 8px 0 !important;
+    border-radius: 4px !important;
+    font-style: italic !important;
+    display: block !important;
+    font-weight: normal !important; /* Ensure requirements are not bold */
+  }
+
+  /* Notes with ※ symbols */
+  :host ::ng-deep .update-note {
+    padding: 6px 10px !important;
+    margin: 8px 0 !important;
+    color: #aaaaaa !important;
+    font-style: italic !important;
+    background-color: rgba(40, 40, 40, 0.4) !important;
+    border-radius: 4px !important;
+    border-left: 3px solid rgba(180, 180, 180, 0.3) !important;
+    display: block !important;
+    font-weight: normal !important; /* Ensure notes are not bold */
+  }
+
+  /* CONTRACT SHOP STYLING */
+  :host ::ng-deep .release-time {
+    color: #ffffff !important;
+    padding: 6px 8px !important;
+    margin: 8px 0 !important;
+    display: block !important;
+    font-weight: 500 !important;
+    background-color: rgba(30, 30, 35, 0.5) !important;
+    border-radius: 4px !important;
+  }
+
+  /* Completely redone contract styling for consistency */
+  :host ::ng-deep .contract-item {
+    margin: 10px 0 !important;
+    padding: 8px !important;
+    background-color: rgba(30, 30, 35, 0.5) !important;
+    border-radius: 4px !important;
+    border-left: 2px solid rgba(150, 150, 150, 0.5) !important;
+    display: block !important;
+  }
+
+  :host ::ng-deep .contract-header {
+    font-weight: 600 !important;
+    color: #e0e0e0 !important;
+    margin-bottom: 6px !important;
+    display: block !important;
+    font-size: 15px !important;
+  }
+
+  :host ::ng-deep .contract-content {
+    padding: 4px 0 !important;
+    color: #cccccc !important;
+    display: block !important;
+    font-weight: normal !important; /* CRITICAL: Ensure contract content is not bold */
+    margin: 8px 0 !important;
+    line-height: 1.4 !important;
+  }
+
+  :host ::ng-deep .price-info {
+    margin-top: 6px !important;
+    padding: 6px 8px !important;
+    background-color: rgba(40, 40, 40, 0.5) !important;
+    border-radius: 4px !important;
+    font-style: italic !important;
+    color: #aaaaaa !important;
+    display: block !important;
+    font-weight: normal !important; /* Ensure price info is not bold */
+  }
+
+  /* Ensure no content leaks into other sections */
+  :host ::ng-deep .update-content, 
+  :host ::ng-deep .update-requirement,
+  :host ::ng-deep .update-note,
+  :host ::ng-deep .bullet-point,
+  :host ::ng-deep .contract-content,
+  :host ::ng-deep .price-info {
+    white-space: normal !important; /* Allow text to wrap normally */
+    word-break: break-word !important; /* Break words if needed */
+  }
+
+  /* Remove any legacy styles */
+  :host ::ng-deep .contract-block,
+  :host ::ng-deep .price-block,
+  :host ::ng-deep .regular-contract,
+  :host ::ng-deep .shop-header,
+  :host ::ng-deep .shop-section,
+  :host ::ng-deep .intro-text {
+    background-color: rgba(30, 30, 35, 0.5) !important;
+    padding: 8px !important;
+    margin: 8px 0 !important;
+    border-radius: 4px !important;
+    border-left: 2px solid rgba(150, 150, 150, 0.5) !important;
+    display: block !important;
+    font-weight: normal !important;
+  }
+
+  /* Media query for mobile adjustments */
   @media (max-width: 768px) {
     .event-modal-content {
       width: 95%;
@@ -279,6 +358,22 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     
     .event-image {
       max-height: 200px;
+    }
+    
+    /* Mobile-specific styling adjustments */
+    :host ::ng-deep .update-section-header {
+      margin: 14px 0 6px 0 !important;
+      padding: 5px 0 !important;
+    }
+    
+    :host ::ng-deep .event-header {
+      margin: 10px 0 6px 0;
+      padding: 6px 0;
+    }
+    
+    :host ::ng-deep .event-subheader {
+      margin: 8px 0 4px 0;
+      padding-bottom: 3px;
     }
   }
 `]
@@ -344,18 +439,29 @@ export class EventModalComponent implements OnChanges {
     event.target.src = '/assets/images/placeholder.png'; 
   }
 
-  // Format the description to HTML with proper styling
+  // Final formatter with comprehensive pattern matching and consistent styling
   private formatDescription(text: string): SafeHtml {
     if (!text) return this.sanitizer.bypassSecurityTrustHtml('');
 
     console.log('Raw description length:', text.length);
     
-    // Detect content types
-    const isContractShop = text.toLowerCase().includes('contract shop') || 
-                          text.includes('The Herta Contract:');
-                          
-    const isVersionUpdate = text.toLowerCase().includes('version update') ||
-                          text.includes('Update and Compensation Details');
+    // Improved content type detection
+    const isVersionUpdate = text.includes('Version Update Details') || 
+                           text.includes('New Story') ||
+                           /\d+\.\s+New\s+/.test(text) ||
+                           (text.includes('New Characters') && text.includes('5-Star')) ||
+                           (text.includes('Update Time') && text.includes('Requirement:'));
+                              
+    const isContractShop = text.includes('Contract Shop Update') || 
+                           text.includes('Herta Contract:');
+    
+    // Debug logging to help diagnose content type detection
+    console.log('Content type detection:', { 
+      isVersionUpdate, 
+      isContractShop,
+      hasNewStory: text.includes('New Story'),
+      hasNumberedPattern: /\d+\.\s+New\s+/.test(text)
+    });
     
     // Prepare the full text before processing
     let processedText = text;
@@ -372,27 +478,22 @@ export class EventModalComponent implements OnChanges {
       .replace(/([^\n])※/g, '$1\n※')
       // Add line breaks before numbered sections (1., 2., etc.)
       .replace(/([^\n])(\d+\.\s+[A-Z])/g, '$1\n\n$2')
-      // Add line breaks before contract headers
-      .replace(/([^\n])(The Herta Contract:)/g, '$1\n\n$2')
-      // Add line breaks after "Price:" if needed
-      .replace(/(Price:.*?)(×\d+)([^\n])/g, '$1$2\n$3');
+      // Fix for "The Herta Contract:" being split
+      .replace(/\n\s*The\s*\n\s*Herta Contract:/g, '\nThe Herta Contract:')
+      // Make sure contract headers are together with content
+      .replace(/([^\n])(The Herta Contract:|Herta Contract:)/g, '$1\n\n$2');
     
     // FIX FOR PRICES WITH COMMAS
-    // First find all instances of "×" followed by digits then a comma
     const multiplierCommaMatch = processedText.match(/×(\d+),/g);
     if (multiplierCommaMatch) {
       for (const match of multiplierCommaMatch) {
-        // Replace any number after the match that might be the continuation
         const numBeforeComma = match.replace('×', '').replace(',', '');
         const afterMatchPos = processedText.indexOf(match) + match.length;
         const afterText = processedText.substring(afterMatchPos, afterMatchPos + 10);
         
-        // If the next segment has digits
         const digitMatch = afterText.match(/^\s*(\d+)/);
         if (digitMatch) {
-          // Join the parts back - replace both with the combined number
           const fullNumber = `×${numBeforeComma},${digitMatch[1]}`;
-          // Create a pattern to find this specific instance and any following digits
           const searchPattern = new RegExp(`${match.replace(/[×,]/g, '\\$&')}\\s*${digitMatch[1]}`);
           processedText = processedText.replace(searchPattern, fullNumber);
         }
@@ -402,151 +503,139 @@ export class EventModalComponent implements OnChanges {
     // Split into lines for processing
     const lines = processedText.split('\n').map(line => line.trim()).filter(line => line);
     
-    // Process lines into HTML based on content type
+    // Process lines into HTML
     let htmlOutput = '';
     
-    // For shop content - use specific formatting to match the target
-    if (isContractShop) {
-      let inContractBlock = false;
+    // Process based on content type
+    if (isVersionUpdate) {
+      // For version update details
+      let currentSection = '';
       
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
-        const nextLine = i < lines.length - 1 ? lines[i + 1] : '';
         
-        // Shop header
-        if (line.includes('Contract Shop Update')) {
-          htmlOutput += `<div class="shop-header">${line}</div>`;
+        // Major headers (Version Update Details, etc.)
+        if (line.includes('Version Update Details') || line.includes('Update Details')) {
+          htmlOutput += `<div class="event-header">${line}</div>`;
           continue;
         }
         
-        // Release Time
-        if (line.includes('Release Time') || line.includes('After the Version')) {
-          htmlOutput += `<div class="shop-section"><div class="release-time">${line}</div></div>`;
+        // MAIN SECTION HEADERS: ONLY exact pattern for numbered sections (1. New Story)
+        // VERY strictly match ONLY the numbered headers like "1. New Story"
+        if (/^\d+\.\s+New\s+[A-Z][a-z]+$/.test(line) || 
+            /^\d+\.\s+New\s+[A-Z][a-z]+\s+[A-Z][a-z]+$/.test(line) ||
+            /^\d+\.\s+New\s+[A-Z][a-z]+\s+[A-Z][a-z]+\s+[A-Z][a-z]+$/.test(line)) {
+          htmlOutput += `<div class="update-section-header">${line}</div>`;
+          currentSection = line;
           continue;
         }
         
-        // Herta Contract block
-        if (line.includes('The Herta Contract:')) {
-          // If already in a contract block, close it
-          if (inContractBlock) {
-            htmlOutput += `</div>`;
-          }
-          
-          htmlOutput += `<div class="contract-block">${line}`;
-          inContractBlock = true;
-          
-          // Look ahead for price/availability
-          let j = i + 1;
-          let contractContent = '';
-          let foundPrice = false;
-          
-          while (j < lines.length && !lines[j].includes('The Herta Contract:') && !lines[j].includes('Contract Shop Update')) {
-            // If this is a price line or a number (like 720) 
-            if (lines[j].includes('Price:') || /^\d+$/.test(lines[j].trim()) || 
-                lines[j].includes('Oneiric Shards')) {
-              // If we're still building the contract, close it
-              if (inContractBlock) {
-                htmlOutput += `${contractContent}</div>`;
-                contractContent = '';
-                inContractBlock = false;
-              }
-              
-              // Add this as a price block
-              htmlOutput += `<div class="price-block">${lines[j]}`;
-              foundPrice = true;
-              
-              // Look for maximum line
-              if (j + 1 < lines.length && lines[j+1].includes('maximum')) {
-                htmlOutput += `<br>${lines[j+1]}`;
-                j++; // Skip the next line since we used it
-              }
-              
-              htmlOutput += `</div>`;
-            } 
-            else if (foundPrice && (lines[j].includes('Herta Contract:') || j === lines.length - 1)) {
-              // New contract found after price, break
-              break;
-            }
-            else {
-              // Regular content stays in the contract
-              contractContent += (contractContent ? ' ' : '') + lines[j];
-            }
-            j++;
-          }
-          
-          // If we haven't closed the contract block, do it now
-          if (inContractBlock) {
-            htmlOutput += `${contractContent}</div>`;
-            inContractBlock = false;
-          }
-          
-          // Skip ahead since we've processed these lines
-          i = j - 1;
+        // EXPANDED: Any other content starting with category names should be normal content
+        // Fixes for issues in Images 2-3 where "Missions", "System", "Audio" sections are bold
+        if (/^(Missions|System|Audio|Gameplay|Events|Combat|Adjustments|Optimizations)\s/.test(line)) {
+          // These should be normal content, not headers
+          htmlOutput += `<div class="update-content">${line}</div>`;
           continue;
         }
         
-        // Regular contract line (no The Herta Contract: prefix)
-        if (line.includes('Herta Contract:') && !line.includes('The Herta Contract:')) {
-          htmlOutput += `<div class="regular-contract">${line}`;
-          
-          // Look ahead for price/availability
-          let j = i + 1;
-          let contractContent = '';
-          let foundPrice = false;
-          
-          while (j < lines.length && !lines[j].includes('Herta Contract:') && !lines[j].includes('Contract Shop Update')) {
-            // If this is a price line or a number (like 330) 
-            if (lines[j].includes('Price:') || /^\d+$/.test(lines[j].trim()) || 
-                lines[j].includes('Oneiric Shards')) {
-              // Close the regular contract
-              htmlOutput += `${contractContent}</div>`;
-              contractContent = '';
-              
-              // Add this as a price block
-              htmlOutput += `<div class="price-block">${lines[j]}`;
-              foundPrice = true;
-              
-              // Look for maximum line
-              if (j + 1 < lines.length && lines[j+1].includes('maximum')) {
-                htmlOutput += `<br>${lines[j+1]}`;
-                j++; // Skip the next line since we used it
-              }
-              
-              htmlOutput += `</div>`;
-            } 
-            else if (foundPrice && (lines[j].includes('Herta Contract:') || j === lines.length - 1)) {
-              // New contract found after price, break
-              break;
-            }
-            else {
-              // Regular content
-              contractContent += (contractContent ? ' ' : '') + lines[j];
-            }
-            j++;
-          }
-          
-          // If we still have content, add it
-          if (contractContent) {
-            htmlOutput += `${contractContent}</div>`;
-          }
-          
-          // Skip ahead since we've processed these lines
-          i = j - 1;
+        // Character sections ("5-Star character Name") - regular content, not headers
+        if ((line.startsWith('5-Star') || line.startsWith('4-Star')) || 
+            line.startsWith('■ 5-Star') || line.startsWith('■ 4-Star')) {
+          // Remove any bullet symbols but keep as regular content
+          const cleanLine = line.replace(/^[■●]\s*/, '').trim();
+          htmlOutput += `<div class="update-content">${cleanLine}</div>`;
           continue;
         }
         
-        // Price numbers on their own
-        if (/^\d+$/.test(line.trim()) && isContractShop) {
-          // Standalone price
-          htmlOutput += `<div class="price-block">${line}`;
-          
-          // Look for maximum line
-          if (i + 1 < lines.length && lines[i+1].includes('maximum')) {
-            htmlOutput += `<br>${lines[i+1]}`;
-            i++; // Skip the next line since we used it
-          }
-          
-          htmlOutput += `</div>`;
+        // Section headers with ■ symbols (not for character descriptions)
+        if ((line.startsWith('■') || line.includes('■')) && 
+            !line.includes('Star') && !line.includes('character')) {
+          const cleanLine = line.replace('■', '').trim();
+          htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Major section headers (▌ symbols), excluding character descriptions
+        if ((line.startsWith('▌') || line.includes('▌')) && 
+            !line.includes('Star') && !line.includes('character')) {
+          const cleanLine = line.replace('▌', '').trim();
+          htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Event Period/Requirements - special styling
+        if (line.includes('Event Period:') || line.includes('Event Period') || 
+            line.startsWith('Requirement:') || line.includes('Requirement:')) {
+          htmlOutput += `<div class="update-requirement">${line}</div>`;
+          continue;
+        }
+        
+        // Other time/date references
+        if (line.includes('Update Time') || line.includes('Update Time:')) {
+          htmlOutput += `<div class="update-requirement">${line}</div>`;
+          continue;
+        }
+        
+        // Notes with ※ symbols
+        if (line.startsWith('※') || line.includes('※')) {
+          htmlOutput += `<div class="update-note">${line}</div>`;
+          continue;
+        }
+        
+        // Bullet points
+        if (line.startsWith('●') || line.includes('●') || line.startsWith('.')) {
+          const cleanLine = line.replace(/^[●.]\s*/, '').trim();
+          htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Default content for version update - use update-content class for consistent styling
+        htmlOutput += `<div class="update-content">${line}</div>`;
+      }
+    } 
+    else if (isContractShop) {
+      // For contract shop updates - completely reworked approach for consistent formatting
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // Shop/section header (title with Version update)
+        if (line.includes('Version') && (line.includes('Contract Shop Update') || line.includes('Shop Update'))) {
+          htmlOutput += `<div class="event-header">${line}</div>`;
+          continue;
+        }
+        
+        // Time/period header
+        if (line.includes('Release Time') || line.includes('After the Version') || line.includes('Event Period')) {
+          htmlOutput += `<div class="release-time">${line}</div>`;
+          continue;
+        }
+        
+        // Section headers (■ symbols)
+        if (line.startsWith('■') || line.includes('■')) {
+          const cleanLine = line.replace('■', '').trim();
+          htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Major section headers (▌ symbols)
+        if (line.startsWith('▌') || line.includes('▌')) {
+          const cleanLine = line.replace('▌', '').trim();
+          htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Bullet points
+        if (line.startsWith('●') || line.includes('●')) {
+          const cleanLine = line.replace('●', '').trim();
+          htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // NEW APPROACH FOR CONTRACT ITEMS: Process entire contract as a single block
+        if (line.includes('Herta Contract:')) {
+          const contractBlock = this.processContractBlock(lines, i);
+          htmlOutput += contractBlock.html;
+          i = contractBlock.endIndex; // Skip to the end of this contract block
           continue;
         }
         
@@ -554,62 +643,121 @@ export class EventModalComponent implements OnChanges {
         htmlOutput += `<p>${line}</p>`;
       }
     }
-    // For version updates and other content
     else {
-      let foundFirstSection = false;
-      let introLines = [];
-      
+      // Default generic processing for other event types
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         
-        // Check for major headers
-        if (line.includes('▌') || line.match(/^Version \d+\.\d+ .* Update Details$/)) {
-          if (introLines.length > 0 && !foundFirstSection) {
-            // If we collected intro lines, add them first
-            htmlOutput += `<div class="intro-text">${introLines.join(' ')}</div>`;
-            introLines = [];
-          }
-          
-          htmlOutput += `<div class="event-header">${line.replace('▌', '')}</div>`;
-          foundFirstSection = true;
-        } 
-        else if (line.toLowerCase().includes('update and compensation details')) {
-          if (introLines.length > 0 && !foundFirstSection) {
-            // If we collected intro lines, add them first
-            htmlOutput += `<div class="intro-text">${introLines.join(' ')}</div>`;
-            introLines = [];
-          }
-          
-          htmlOutput += `<div class="event-header">${line}</div>`;
-          foundFirstSection = true;
+        // Section headers (■ symbols)
+        if (line.startsWith('■') || line.includes('■')) {
+          const cleanLine = line.replace('■', '').trim();
+          htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+          continue;
         }
-        else if (line.includes('■') || 
-                (foundFirstSection && line.match(/^(Update Time|Compensation Details|How to Update|Reset Time|Reset Details)/i))) {
-          htmlOutput += `<div class="event-subheader">${line.replace('■', '')}</div>`;
+        
+        // Major section headers (▌ symbols)
+        if (line.startsWith('▌') || line.includes('▌')) {
+          const cleanLine = line.replace('▌', '').trim();
+          htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+          continue;
         }
-        else if (line.includes('●')) {
-          htmlOutput += `<div class="bullet-point">${line.replace('●', '')}</div>`;
+        
+        // Bullet points
+        if (line.startsWith('●') || line.includes('●')) {
+          const cleanLine = line.replace('●', '').trim();
+          htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+          continue;
         }
-        else if (!foundFirstSection) {
-          // Collect intro lines
-          introLines.push(line);
-        }
-        else {
-          // Regular paragraphs
-          htmlOutput += `<p>${line}</p>`;
-        }
-      }
-      
-      // If we have intro lines left, add them
-      if (introLines.length > 0) {
-        htmlOutput = `<div class="intro-text">${introLines.join(' ')}</div>` + htmlOutput;
+        
+        // Default case - regular content
+        htmlOutput += `<p>${line}</p>`;
       }
     }
     
     // Add a wrapper for consistent styling
     htmlOutput = `<div class="formatted-content">${htmlOutput}</div>`;
     
+    // Ensure we don't break content across "×" multipliers (fixing the Fuel × 10 issue)
+    htmlOutput = htmlOutput.replace(/([×]\s*)(<\/div>)(<div[^>]*>)(\d+)/g, '$1$4$2');
+    
     // Return sanitized HTML
     return this.sanitizer.bypassSecurityTrustHtml(htmlOutput);
+  }
+
+  // Helper method to process a complete contract block
+  private processContractBlock(lines: string[], startIndex: number): { html: string, endIndex: number } {
+    let htmlOutput = '';
+    let currentIndex = startIndex;
+    const contractLine = lines[startIndex];
+    
+    // Ensure consistent contract naming (always include "The")
+    let contractHeader = contractLine;
+    if (!contractLine.startsWith('The ') && contractLine.includes('Herta Contract:')) {
+      contractHeader = 'The ' + contractLine;
+    }
+    
+    // Start contract container
+    htmlOutput += `<div class="contract-item">`;
+    
+    // Add contract header
+    htmlOutput += `<div class="contract-header">${contractHeader}</div>`;
+    
+    // Collect all content from this contract until the next contract or major section
+    let contractContentLines = [];
+    let priceInfo = null;
+    let maxPurchases = null;
+    let currentLine;
+    
+    // Move to next line
+    currentIndex++;
+    
+    // Process until we hit another contract, section header, or end of lines
+    while (currentIndex < lines.length && 
+           !lines[currentIndex].includes('Herta Contract:') && 
+           !lines[currentIndex].includes('■') && 
+           !lines[currentIndex].includes('▌')) {
+      
+      currentLine = lines[currentIndex];
+      
+      // Check for price info
+      if (currentLine.includes('Price:')) {
+        priceInfo = currentLine;
+      }
+      // Check for maximum purchase info
+      else if (currentLine.includes('maximum') || 
+               (currentLine.startsWith('A maximum') || currentLine.startsWith('. A maximum'))) {
+        maxPurchases = currentLine;
+      }
+      // Otherwise collect as regular content
+      else if (currentLine.trim() !== '') {
+        contractContentLines.push(currentLine);
+      }
+      
+      currentIndex++;
+    }
+    
+    // Add contract content as one block
+    if (contractContentLines.length > 0) {
+      htmlOutput += `<div class="contract-content">${contractContentLines.join(' ')}</div>`;
+    }
+    
+    // Add price info
+    if (priceInfo) {
+      htmlOutput += `<div class="price-info">${priceInfo}</div>`;
+    }
+    
+    // Add maximum purchases info
+    if (maxPurchases) {
+      htmlOutput += `<div class="price-info">${maxPurchases}</div>`;
+    }
+    
+    // Close the contract block
+    htmlOutput += `</div>`;
+    
+    // Return the HTML and the new index position
+    return {
+      html: htmlOutput,
+      endIndex: currentIndex - 1 // Return to the last processed line
+    };
   }
 }
