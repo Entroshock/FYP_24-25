@@ -892,46 +892,80 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
         return '#757575'; // Gray for neutral
     }
   }
-  
-  // Updated handleEventClick method to ensure modal starts at the top
-  handleEventClick(info: EventClickArg) {
-    const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
-    const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
+
+  preprocessDescription(description: string): string {
+    if (!description) return '';
     
-    // Format dates properly from the extended props
-    const startDate = new Date(info.event.extendedProps['startDate']).toLocaleString();
-    const endDate = new Date(info.event.extendedProps['endDate']).toLocaleString();
+    // Add line breaks before section markers if not already present
+    let formatted = description
+      // Add line breaks before ▌ markers
+      .replace(/([^\n])▌/g, '$1\n\n▌')
+      // Add line breaks before ■ markers
+      .replace(/([^\n])■/g, '$1\n\n■')
+      // Add line breaks before ● markers
+      .replace(/([^\n])●/g, '$1\n\n●')
+      // Add line breaks before ※ markers
+      .replace(/([^\n])※/g, '$1\n※')
+      // Add line breaks after each Update Time, Compensation Details, etc.
+      .replace(/(Update Time|Compensation Details|How to Update|Version Update Details)/g, '$1\n');
     
-    // Get the base event title without the (Start) or (End) suffix
-    const baseTitle = info.event.title
-      .replace(' (Start)', '')
-      .replace(' (End)', '');
+    // Make sure each number with dot has a line break before it if it's a section number
+    formatted = formatted.replace(/([^\n])(\d+\.\s+[A-Z])/g, '$1\n\n$2');
     
-    // Update the selected event object with all properties including imageUrl
-    this.selectedEvent = {
-      title: baseTitle,
-      type: eventType,
-      sentiment: sentiment as 'positive' | 'neutral' | 'negative',
-      startDate: startDate,
-      endDate: endDate,
-      description: info.event.extendedProps['description'] || 'No description available.',
-      imageUrl: info.event.extendedProps['imageUrl'] || ''
-    };
+    // Add line breaks before "Event Period:"
+    formatted = formatted.replace(/([^\n])(Event Period:)/g, '$1\n\n$2');
     
-    // Show the modal
-    this.showEventModal = true;
+    // Add line break before "Requirement:"
+    formatted = formatted.replace(/([^\n])(Requirement:)/g, '$1\n$2');
     
-    // Ensure any popovers are closed
-    if (this.calendar && typeof this.calendar.el.querySelectorAll === 'function') {
-      const popovers = this.calendar.el.querySelectorAll('.fc-popover');
-      if (popovers.length > 0) {
-        popovers.forEach((popover: HTMLElement) => {
-          popover.style.display = 'none';
-        });
-      }
-    }
+    console.log('Preprocessed description with length:', formatted.length);
+    return formatted;
   }
   
+  // Updated handleEventClick method to ensure modal starts at the top
+// Add this preprocessing step to your calendar-view.component.ts in the handleEventClick method
+
+// Update the handleEventClick method to preprocess the description
+handleEventClick(info: EventClickArg) {
+  const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
+  const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
+  
+  // Format dates properly from the extended props
+  const startDate = new Date(info.event.extendedProps['startDate']).toLocaleString();
+  const endDate = new Date(info.event.extendedProps['endDate']).toLocaleString();
+  
+  // Get the base event title without the (Start) or (End) suffix
+  const baseTitle = info.event.title
+    .replace(' (Start)', '')
+    .replace(' (End)', '');
+  
+  // Get description and preprocess it to add proper line breaks
+  let description = info.event.extendedProps['description'] || 'No description available.';
+  
+  // Update the selected event object with all properties
+  this.selectedEvent = {
+    title: baseTitle,
+    type: eventType,
+    sentiment: sentiment as 'positive' | 'neutral' | 'negative',
+    startDate: startDate,
+    endDate: endDate,
+    description: description,
+    imageUrl: info.event.extendedProps['imageUrl'] || ''
+  };
+  
+  // Show the modal
+  this.showEventModal = true;
+  
+  // Ensure any popovers are closed
+  if (this.calendar && typeof this.calendar.el.querySelectorAll === 'function') {
+    const popovers = this.calendar.el.querySelectorAll('.fc-popover');
+    if (popovers.length > 0) {
+      popovers.forEach((popover: HTMLElement) => {
+        popover.style.display = 'none';
+      });
+    }
+  }
+}
   closeEventModal() {
     this.showEventModal = false;
   }
