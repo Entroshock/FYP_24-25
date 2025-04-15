@@ -7,10 +7,9 @@
     "endDate": "2025-05-20T03:59:00",
     "startTimestamp": 1744192800000,
     "endTimestamp": 1747709940000,
-    "lastUpdated": "2025-04-12T20:50:52.199257",
+    "lastUpdated": "2025-04-15T15:47:52.135797",
     "sentiment": "neutral",
-    "version": "3.2",
-    "imageUrl": "/assets/images/events/event_38119901.png"
+    "version": "3.2"
   },
   {
     "eventId": "38107267",
@@ -20,10 +19,9 @@
     "endDate": "2025-04-30T11:59:00",
     "startTimestamp": 1744192800000,
     "endTimestamp": 1746010740000,
-    "lastUpdated": "2025-04-12T20:50:54.823917",
+    "lastUpdated": "2025-04-15T15:47:54.506199",
     "sentiment": "negative",
-    "version": "3.2",
-    "imageUrl": "/assets/images/events/event_38107267.png"
+    "version": "3.2"
   },
   {
     "eventId": "38073215",
@@ -33,22 +31,20 @@
     "endDate": "2025-05-19T03:59:00",
     "startTimestamp": 1744192800000,
     "endTimestamp": 1747623540000,
-    "lastUpdated": "2025-04-12T20:50:59.083118",
+    "lastUpdated": "2025-04-15T15:47:58.719408",
     "sentiment": "neutral",
-    "version": "3.2",
-    "imageUrl": "/assets/images/events/event_38073215.png"
+    "version": "3.2"
   },
   {
     "eventId": "38056278",
     "title": "\"To The Ones That Blaze\": Obtain Stellar Jade ×1,600 & Fuel ×10",
-    "description": "To the ones that blaze, may the star rail guide you, and may the universe sing with you. ▌ Event Period After Version 3.2 Update — 2025/05/21 06:00:00 (UTC+8) ▌Participation Requirement Unlock Travel Log ▌Event Rewards",
+    "description": "To the ones that blaze, may the star rail guide you, and may the universe sing with you. ▌ Event Period After Version 3.2 Update — 2025/05/21 06:00:00 (UTC+8) ▌Participation Requirement Unlock Travel Log ▌ Event Rewards ▌ Event Details ● During the period from after Version 3.2 update until 2025/04/26 12:00:00 (UTC+8), Trailblazers can select a character as their invitation recipient to receive a letter and gifts from them in the \"To The Ones That Blaze\" event page. During this period, you can modify your chosen character, but after this time, no selection or modification will be possible. ● From 2025/04/26 12:00:00 to 2025/05/21 06:00:00 (UTC+8), on the \"To The Ones That Blaze\" event page, Trailblazers will receive a letter from their invited character with Stellar Jade ×1,600 and Fuel ×10 as rewards. ● If you haven't invited a character before 2025/04/26 12:00:00 (UTC+8), you will receive a letter from a random invitable character. ● After the event ends, you can no longer receive the letter from the character or collect rewards.",
     "startDate": "2025-04-26T12:00:00",
     "endDate": "2025-05-21T06:00:00",
     "startTimestamp": 1745665200000,
     "endTimestamp": 1747803600000,
-    "lastUpdated": "2025-04-12T20:51:04.224647",
-    "sentiment": "neutral",
-    "imageUrl": "/assets/images/events/event_38056278.jpg"
+    "lastUpdated": "2025-04-15T15:48:05.275737",
+    "sentiment": "neutral"
   },
   {
     "eventId": "37896318",
@@ -58,194 +54,178 @@
     "endDate": "2025-05-20T14:59:00",
     "startTimestamp": 1744192800000,
     "endTimestamp": 1747749540000,
-    "lastUpdated": "2025-04-12T20:51:14.315387",
+    "lastUpdated": "2025-04-15T15:48:17.668293",
     "sentiment": "positive",
-    "version": "3.2",
-    "imageUrl": "/assets/images/events/event_37896318.jpg"
+    "version": "3.2"
   },
   {
     "eventId": "37871013",
     "title": "Realm of the Strange Event: Cavern Relic Drop Rate Doubled For a Limited Time",
-    "description": "Hello, Trailblazers! ▌ Event Period 2025/03/28 04:00:00 - 2025/04/04 03:59:00 (server time) ▌Participation Requirement Unlock Cavern of Corrosion: Path of Drifting ▌Event Details ● During the Realm of the Strange event, get double rewards when you challenge and beat Cavern of Corrosion. ● You will get an additional set of rewards on top of default drops after consuming an event double reward opportunity and Trailblaze Power. ● During the event, the number of daily double reward opportunities is limited. The maximum and currently remaining numbers of opportunities will be displayed in the Realm of the Strange event page. ● Double reward opportunities refresh daily at 04:00. Make sure to use them before they're gone!",
+    "description": "Hello, Trailblazers! ▌ Event Period 2025/03/28 04:00:00 - 2025/04/04 03:59:00 (server time) ▌Participation Requirement Unlock Cavern of Corrosion: Path of Drifting ▌ Event Details ● During the Realm of the Strange event, get double rewards when you challenge and beat Cavern of Corrosion. ● You will get an additional set of rewards on top of default drops after consuming an event double reward opportunity and Trailblaze Power. ● During the event, the number of daily double reward opportunities is limited. The maximum and currently remaining numbers of opportunities will be displayed in the Realm of the Strange event page. ● Double reward opportunities refresh daily at 04:00. Make sure to use them before they're gone!",
     "startDate": "2025-03-28T04:00:00",
     "endDate": "2025-04-04T03:59:00",
     "startTimestamp": 1743134400000,
     "endTimestamp": 1743735540000,
-    "lastUpdated": "2025-04-12T20:51:24.160263",
-    "sentiment": "negative",
-    "imageUrl": "/assets/images/events/event_37871013.png"
+    "lastUpdated": "2025-04-15T15:48:25.938355",
+    "sentiment": "negative"
   },
   {
     "eventId": "37702787",
     "title": "Version 3.1 Event Warp (II)",
-    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2025/03/19 12:00:00 - 2025/04/08 15:00:00 (server time), and includes the following content: ※ Among the above characters and Light Cones, limited characters and limited Light Cones will not be available in the Stellar Warp event. ※ During the event, the limited 5-star character Mydei (Destruction: Imaginary) can only be obtained from the Character Event Warp \"Fiery Lionheart,\" and the limited 5-star character Huohuo (Abundance: Wind) can only be obtained from the Character Event Warp \"Bloom in Gloom.\" ※ During the event, the limited 5-star Light Cone \"Flame of Blood, Blaze My Path (Destruction)\" can only be obtained from the Light Cone Event Warp \"Brilliant Fixation : Flame of Blood, Blaze My Path\", and the limited 5-star Light Cone \"Night of Fright (Abundance)\" can only be obtained from the Light Cone Event Warp \"Bygone Reminiscence: Night of Fright.\" ※ \"Fiery Lionheart\" and \"Bloom in Gloom\" are considered Character Event Warps. The cumulative Warp count for a guaranteed 5-star character in any Character Event Warp will always be carried over to other Character Event Warps, but is independent of and unaffected by other types of Warps. ※ \"Brilliant Fixation: Flame of Blood, Blaze My Path\" and \"Bygone Reminiscence: Night of Fright\" are considered Light Cone Event Warps. The cumulative Warp count for a guaranteed 5-star Light Cone in any Light Cone Event Warp will always be carried over to other Light Cone Event Warps, but is independent of and unaffected by other types of Warps. ※ For more information, please head to the Warp screen. ▌ Character Trial Event: Aptitude Showcase",
+    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2025/03/19 12:00:00 - 2025/04/08 15:00:00 (server time), and includes the following content: ※ Among the above characters and Light Cones, limited characters and limited Light Cones will not be available in the Stellar Warp event. ※ During the event, the limited 5-star character Mydei (Destruction: Imaginary) can only be obtained from the Character Event Warp \"Fiery Lionheart,\" and the limited 5-star character Huohuo (Abundance: Wind) can only be obtained from the Character Event Warp \"Bloom in Gloom.\" ※ During the event, the limited 5-star Light Cone \"Flame of Blood, Blaze My Path (Destruction)\" can only be obtained from the Light Cone Event Warp \"Brilliant Fixation : Flame of Blood, Blaze My Path\", and the limited 5-star Light Cone \"Night of Fright (Abundance)\" can only be obtained from the Light Cone Event Warp \"Bygone Reminiscence: Night of Fright.\" ※ \"Fiery Lionheart\" and \"Bloom in Gloom\" are considered Character Event Warps. The cumulative Warp count for a guaranteed 5-star character in any Character Event Warp will always be carried over to other Character Event Warps, but is independent of and unaffected by other types of Warps. ※ \"Brilliant Fixation: Flame of Blood, Blaze My Path\" and \"Bygone Reminiscence: Night of Fright\" are considered Light Cone Event Warps. The cumulative Warp count for a guaranteed 5-star Light Cone in any Light Cone Event Warp will always be carried over to other Light Cone Event Warps, but is independent of and unaffected by other types of Warps. ※ For more information, please head to the Warp screen. ▌ Character Trial Event: Aptitude Showcase ● Requirement: Unlock Travel Log ● Event Period: 2025/03/19 12:00:00 - 2025/04/08 15:00:00 (server time) ● Event Details: Trial characters \"Mydei (Destruction: Imaginary),\" \"Huohuo (Abundance: Wind),\" \"Arlan (Destruction: Lightning),\" \"Xueyi (Destruction: Quantum),\" and \"Natasha (Abundance: Physical)\" can be used to experience stages. Upon completing the challenges, players can obtain Stellar Jade, Adventure Log, Universal Enhancement Material, and credits.",
     "startDate": "2025-03-19T12:00:00",
     "endDate": "2025-04-08T15:00:00",
     "startTimestamp": 1742385600000,
     "endTimestamp": 1744120800000,
-    "lastUpdated": "2025-04-12T20:51:29.280244",
-    "sentiment": "neutral",
-    "imageUrl": "/assets/images/events/event_37702787.png"
+    "lastUpdated": "2025-04-15T15:48:31.705589",
+    "sentiment": "neutral"
   },
   {
     "eventId": "37561378",
     "title": "Planar Fissure Event: Planar Ornaments Drop Rate Doubled for a Limited Time",
-    "description": "Hello, Trailblazers! ▌ Event Period 2025/03/12 04:00:00 - 2025/03/19 03:59:00 (server time) ▌Participation Requirement Unlock Simulated Universe: World 3 ▌Event Details ● During the Planar Fissure event, get double rewards from the Simulated Universe or Divergent Universe. ● You will get additional rewards on top of default drops after consuming an event double reward opportunity and Immersifiers (or Trailblaze Power). ● During the event, the number of double reward opportunities is limited and can be viewed in the Planar Fissure event page. ● The double reward count will not reset during the event. Be sure to schedule your time for this challenge accordingly, Trailblazers.",
+    "description": "Hello, Trailblazers! ▌ Event Period 2025/03/12 04:00:00 - 2025/03/19 03:59:00 (server time) ▌Participation Requirement Unlock Simulated Universe: World 3 ▌ Event Details ● During the Planar Fissure event, get double rewards from the Simulated Universe or Divergent Universe. ● You will get additional rewards on top of default drops after consuming an event double reward opportunity and Immersifiers (or Trailblaze Power). ● During the event, the number of double reward opportunities is limited and can be viewed in the Planar Fissure event page. ● The double reward count will not reset during the event. Be sure to schedule your time for this challenge accordingly, Trailblazers.",
     "startDate": "2025-03-12T04:00:00",
     "endDate": "2025-03-19T03:59:00",
     "startTimestamp": 1741752000000,
     "endTimestamp": 1742356740000,
-    "lastUpdated": "2025-04-12T20:51:35.110868",
-    "sentiment": "negative",
-    "imageUrl": "/assets/images/events/event_37561378.png"
+    "lastUpdated": "2025-04-15T15:48:36.197144",
+    "sentiment": "negative"
   },
   {
     "eventId": "37189509",
     "title": "Version 3.1 Store & Nameless Honor Update",
-    "description": "Hello, Trailblazers! After the 3.1 version update, Nameless Honor and the store will be updated, with details as follows. ▌ Version 3.1 Nameless Honor Details During the event, Trailblazers can increase their Nameless Honor level to obtain rewards such as Star Rail Passes, Wishful Resin, Self-Modeling Resins, and Tracks of Destiny. After unlocking Nameless Glory, you will immediately obtain Stellar Jade ×680. By increasing Nameless Honor levels, you can additionally receive rewards such as Star Rail Special Pass ×4, a selected 4-star Light Cone, Variable Dice ×1, Wishful Resin ×1, Self-Modeling Resin ×1, Relic Remains, universal Path material Tears of Dreams, and more! If the Trailblazer unlocks Nameless Medal, in addition to the previous rewards, they will immediately increase their Honor level by 10 and will also obtain the avatars \"Tribbie: Delicacies\" and \"Mydei: Delicacies\", Stellar Jade ×200, and Fuel Rewards! ■ Opening Time After the Version 3.1 update – 2025/04/07 03:59:00 (Server Time) ■ Requirements Trailblaze Level ≥ 12 and have completed the Trailblaze Mission \"Jarilo-VI — Long Wait for the Blade's Edge\" ■ Nameless Honor Description ● After Nameless Honor is unlocked, the Nameless Gift will automatically be unlocked. Trailblazers can obtain EXP and increase their Nameless Honor level via This Week's Missions and This Period's Missions. The maximum Nameless Honor level is capped at Level 70. Attaining specific levels will allow the Trailblazer to obtain Star Rail Passes, Self-Modeling Resin, Tracks of Destiny, and more. ● This Week's Missions will reset every Monday at 04:00 (server time). ● Trailblazers who have unlocked Nameless Glory can purchase the Honor Badge to upgrade to Nameless Medal. ■ Reminders ● After reaching level cap, EXP will no longer be awarded through missions during this period. ● In the event of special circumstances leading to the repeated purchase of Nameless Glory or Nameless Medal, The Nameless EXP will not be accumulated, and Oneiric Shard ×750 (or Oneiric Shard ×1,410) will be refunded based on the price of the purchase. ● In the event of special circumstances leading to the repeated purchase of the Honor Badge, Oneiric Shards ×860 will be refunded. ● The purchase of Nameless Glory, Nameless Medal, and Honor Badge will be closed for this period at 2025/04/07 02:59:00 (Server Time). After the purchase is closed, Trailblazers can still complete the Nameless Honor missions and receive rewards. Please note the available purchase time and event period. ● In the webpage top-up center, the purchase deadline for Nameless Glory, Nameless Medal, and Honor Badge is 2025/04/06 03:59:00 (UTC+8). Trailblazers who top up via webpage should note the available purchase time.",
+    "description": "Hello, Trailblazers! After the 3.1 version update, Nameless Honor and the store will be updated, with details as follows. ▌ Version 3.1 Nameless Honor Details During the event, Trailblazers can increase their Nameless Honor level to obtain rewards such as Star Rail Passes, Wishful Resin, Self-Modeling Resins, and Tracks of Destiny. After unlocking Nameless Glory, you will immediately obtain Stellar Jade ×680. By increasing Nameless Honor levels, you can additionally receive rewards such as Star Rail Special Pass ×4, a selected 4-star Light Cone, Variable Dice ×1, Wishful Resin ×1, Self-Modeling Resin ×1, Relic Remains, universal Path material Tears of Dreams, and more! If the Trailblazer unlocks Nameless Medal, in addition to the previous rewards, they will immediately increase their Honor level by 10 and will also obtain the avatars \"Tribbie: Delicacies\" and \"Mydei: Delicacies\", Stellar Jade ×200, and Fuel Rewards! ■ Opening Time After the Version 3.1 update – 2025/04/07 03:59:00 (Server Time) ■ Requirements Trailblaze Level ≥ 12 and have completed the Trailblaze Mission \"Jarilo-VI — Long Wait for the Blade's Edge\" ■ Nameless Honor Description ● After Nameless Honor is unlocked, the Nameless Gift will automatically be unlocked. Trailblazers can obtain EXP and increase their Nameless Honor level via This Week's Missions and This Period's Missions. The maximum Nameless Honor level is capped at Level 70. Attaining specific levels will allow the Trailblazer to obtain Star Rail Passes, Self-Modeling Resin, Tracks of Destiny, and more. ● This Week's Missions will reset every Monday at 04:00 (server time). ● Trailblazers who have unlocked Nameless Glory can purchase the Honor Badge to upgrade to Nameless Medal. ■ Reminders ● After reaching level cap, EXP will no longer be awarded through missions during this period. ● In the event of special circumstances leading to the repeated purchase of Nameless Glory or Nameless Medal, The Nameless EXP will not be accumulated, and Oneiric Shard ×750 (or Oneiric Shard ×1,410) will be refunded based on the price of the purchase. ● In the event of special circumstances leading to the repeated purchase of the Honor Badge, Oneiric Shards ×860 will be refunded. ● The purchase of Nameless Glory, Nameless Medal, and Honor Badge will be closed for this period at 2025/04/07 02:59:00 (Server Time). After the purchase is closed, Trailblazers can still complete the Nameless Honor missions and receive rewards. Please note the available purchase time and event period. ● In the webpage top-up center, the purchase deadline for Nameless Glory, Nameless Medal, and Honor Badge is 2025/04/06 03:59:00 (UTC+8). Trailblazers who top up via webpage should note the available purchase time. ▌ New Herta Contract Bundles ■ Availability Period After the Version 3.1 update – 2025/04/08 15:00:00 (Server Time) ■ Herta Contract: Roaming Refill Content: Traveler's Guide ×20, Refined Aether ×15, and credit ×60,000 Price: Oneiric Shard ×330. A maximum of 8 can be purchased per account while the item is available. ■ Herta Contract: Resource Supply V2 Content: Universal Path material Tears of Dreams ×150 and credit ×60,000 Price: Oneiric Shard ×660. A maximum of 5 can be purchased per account while the item is available. ▌ Outfit \"Nascent Spring\" Now Available ■ Availability Period After the Version 3.1 update ■ Outfit Description ● The outfit \"Nascent Spring\" is now available in the Contract Shop. The outfit is priced at Oneiric Shard ×1,680. ● \"Nascent Spring\" can only be used by March 7th (Preservation). ● Obtaining the outfit will unlock the outfit as well as the corresponding avatar. ● This outfit is limited to 1 piece per account and cannot be acquired repeatedly. ● After changing into \"Nascent Spring,\" March 7th will wear the corresponding outfit during exploration and in battle. ● Outfits worn will not change the outfit of March 7th during cinematics. ▌ New at Herta's Store ■ New Arrival Time After the Version 3.1 update ■ New Content ● 5-Star Light Cone \"Memory's Curtain Never Falls (Remembrance)\" ● Phone Wallpaper \"Task in Progress\" ● Avatar \"Hi, Come for a Test\" ● Collection \"Road of the Mundanite\" ● Collection \"Herta: Collector's Edition\" ● Collection \"Dr. Ratio — Bespoke Version\" ▌ New at Embers Exchange ■ New Arrival Time After the Version 3.1 update ※ Please note the exchange limit. Item availability will reset on the 1st day of every month at 04:00 (server time). ■ New Content Enemy dropped material \"Ethereal Omen\"",
     "startDate": "2025-02-26T11:00:00",
     "endDate": "2025-04-07T03:59:00",
     "startTimestamp": 1740567600000,
     "endTimestamp": 1743994740000,
-    "lastUpdated": "2025-04-12T20:51:46.850374",
+    "lastUpdated": "2025-04-15T15:48:44.936166",
     "sentiment": "neutral",
-    "version": "3.1",
-    "imageUrl": "/assets/images/events/event_37189509.png"
+    "version": "3.1"
   },
   {
     "eventId": "37034847",
     "title": "Garden of Plenty Event: Calyx Drop Rate Doubled for a Limited Time",
-    "description": "Hello, Trailblazers! ▌Event Period 2025/02/14 04:00:00 - 2025/02/21 03:59:00 (server time) ▌Participation Requirement Complete the Adventure Mission \"Calyx (Golden): Bud of Memories\" ▌Event Details",
+    "description": "Hello, Trailblazers! ▌ Event Period 2025/02/14 04:00:00 - 2025/02/21 03:59:00 (server time) ▌Participation Requirement Complete the Adventure Mission \"Calyx (Golden): Bud of Memories\" ▌ Event Details ● During the Garden of Plenty event, beat Calyx (Golden) and Calyx (Crimson) challenges to receive double rewards. ● You will get an additional set of rewards on top of default drops after consuming an event double reward opportunity and Trailblaze Power. ● The number of daily double reward opportunities is limited and can be viewed in the Garden of Plenty event page. ● Double reward opportunities refresh daily at 04:00 (server time). Make sure to use them before they're gone!",
     "startDate": "2025-02-14T04:00:00",
     "endDate": "2025-02-21T03:59:00",
     "startTimestamp": 1739505600000,
     "endTimestamp": 1740110340000,
-    "lastUpdated": "2025-04-12T20:51:52.970999",
-    "sentiment": "negative",
-    "imageUrl": "/assets/images/events/event_37034847.png"
+    "lastUpdated": "2025-04-15T15:48:52.601476",
+    "sentiment": "negative"
   },
   {
     "eventId": "36844003",
     "title": "Light Cone Event Warp: \"Brilliant Fixation\" & \"Coalesced Truths\"",
-    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time), and includes the following content: ▌ Light Cone Event Warp: \"Brilliant Fixation\"",
+    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time), and includes the following content: ▌ Light Cone Event Warp: \"Brilliant Fixation\" ● During the event, the drop rates of the exclusive 5-star Light Cone \"Time Woven Into Gold (Remembrance)\" and 4-star Light Cones \"Geniuses' Greetings (Remembrance),\" \"Subscribe for More! (The Hunt),\" and \"Dance! Dance! Dance! (Harmony)\" will be boosted. ■Event Period 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ■Drop Rate Boost: 5-Star Light Cone Time Woven Into Gold (Remembrance) ■Drop Rate Boost: 4-Star Light Cones Geniuses' Greetings (Remembrance) Subscribe for More! (The Hunt) Dance! Dance! Dance! (The Harmony) ▌ \"Coalesced Truths: Sailing Towards a Second Life\" Light Cone Event Warp ● During the event, the drop rates of the exclusive 5-star Light Cone \"Sailing Towards a Second Life (The Hunt)\" and 4-star Light Cones \"Geniuses' Greetings (Remembrance),\" \"Subscribe for More! (The Hunt),\" and \"Dance! Dance! Dance! (Harmony)\" will be boosted. ■Event Period 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ■Drop Rate Boost: 5-Star Light Cone Sailing Towards a Second Life (The Hunt) ■Drop Rate Boost: 4-Star Light Cones Geniuses' Greetings (Remembrance) Subscribe for More! (The Hunt) Dance! Dance! Dance! (The Harmony) ▌ \"Coalesced Truths: Flowing Nightglow\" Light Cone Event Warp ● During the event, the drop rates of the exclusive 5-star Light Cone \"Flowing Nightglow (Harmony)\" and 4-star Light Cones \"Geniuses' Greetings (Remembrance),\" \"Subscribe for More! (The Hunt),\" and \"Dance! Dance! Dance! (Harmony)\" will be boosted. ■Event Period 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ■Drop Rate Boost: 5-Star Light Cone Flowing Nightglow (Harmony) ■Drop Rate Boost: 4-Star Light Cones Geniuses' Greetings (Remembrance) Subscribe for More! (The Hunt) Dance! Dance! Dance! (The Harmony) ▌ \"Coalesced Truths: Incessant Rain\" Light Cone Event Warp ● During the event, the drop rates of the exclusive 5-star Light Cone \"Incessant Rain (Nihility)\" and 4-star Light Cones \"Geniuses' Greetings (Remembrance),\" \"Subscribe for More! (The Hunt),\" and \"Dance! Dance! Dance! (Harmony)\" will be boosted. ■Event Period 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ■Drop Rate Boost: 5-Star Light Cone Incessant Rain (Nihility) ■Drop Rate Boost: 4-Star Light Cones Geniuses' Greetings (Remembrance) Subscribe for More! (The Hunt) Dance! Dance! Dance! (The Harmony) ※ Among the above Light Cones, the limited Light Cone will not become available in the Stellar Warp event. ※ During the event, the limited 5-star Light Cone \"Time Woven Into Gold (Remembrance)\" can only be obtained from the Light Cone Event Warp Brilliant Fixation, while the limited 5-star Light Cone \"Sailing Towards a Second Life (The Hunt),\" \"Flowing Nightglow (Harmony),\" and \"Incessant Rain (Nihility)\" can only be obtained from the Light Cone Event Warp Coalesced Truths. ※ After the event ends, 4-star Light Cone \"Geniuses' Greetings (Remembrance)\" will be added to Version 3.1's Stellar Warp but will not be added to Departure Warp. ※ This event is considered a Light Cone Event Warp. The cumulative Warp count for a guaranteed 5-star Light Cone in any Light Cone Event Warp will always be carried over to other Light Cone Event Warps, but is independent of and unaffected by other types of Warps. ※ \"Coalesced Truths\" Light Cone Event Warp will become available during irregular periods in future version updates. For more details, please stay tuned for official announcements. ※ For more information, please head to the Warp screen.",
     "startDate": "2025-02-05T12:00:00",
     "endDate": "2025-02-25T15:00:00",
     "startTimestamp": 1738756800000,
     "endTimestamp": 1740495600000,
-    "lastUpdated": "2025-04-12T20:51:58.845018",
-    "sentiment": "negative",
-    "imageUrl": "/assets/images/events/event_36844003.png"
+    "lastUpdated": "2025-04-15T15:48:59.479548",
+    "sentiment": "negative"
   },
   {
     "eventId": "36843932",
     "title": "Character Event Warp: Tailored Fate & Indelible Coterie",
-    "description": "Hello, Trailblazers! Character Event Warp Period for this phase is 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time), and includes the following content: ▌ \"Tailored Fate\" Character Event Warp",
+    "description": "Hello, Trailblazers! Character Event Warp Period for this phase is 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time), and includes the following content: ▌ \"Tailored Fate\" Character Event Warp ● During the event, the drop rates of the limited 5-star character Aglaea (Remembrance: Lightning) and the 4-star characters Tingyun (Harmony: Lightning), Hanya (Harmony: Physical), and Sushang (The Hunt: Physical) will be boosted for a limited time. ■Event Period 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ■Drop Rate Boost: 5-Star Character Aglaea (Remembrance: Lightning) ■Drop Rate Boost: 4-Star Characters Tingyun (Harmony: Lightning) Hanya (Harmony: Physical) Sushang (The Hunt: Physical) ▌ \"Indelible Coterie: Boothill\" Character Event Warp ● During the event, the drop rates of the limited 5-star character Boothill (The Hunt: Physical) and the 4-star characters Tingyun (Harmony: Lightning), Hanya (Harmony: Physical), and Sushang (The Hunt: Physical) will be boosted for a limited time. ■Event Period 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ■Drop Rate Boost: 5-Star Character Boothill (The Hunt: Physical) ■Drop Rate Boost: 4-Star Characters Tingyun (Harmony: Lightning) Hanya (Harmony: Physical) Sushang (The Hunt: Physical) ▌ \"Indelible Coterie: Robin\" Character Event Warp ● During the event, the drop rates of the limited 5-star character Robin (Harmony: Physical) and the 4-star characters Tingyun (Harmony: Lightning), Hanya (Harmony: Physical), and Sushang (The Hunt: Physical) will be boosted for a limited time. ■Event Period 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ■Drop Rate Boost: 5-Star Character Robin (Harmony: Physical) ■Drop Rate Boost: 4-Star Characters Tingyun (Harmony: Lightning) Hanya (Harmony: Physical) Sushang (The Hunt: Physical) ▌ \"Indelible Coterie: Silver Wolf\" Character Event Warp ● During the event, the drop rates of the limited 5-star character Silver Wolf (Nihility: Quantum) and the 4-star characters Tingyun (Harmony: Lightning), Hanya (Harmony: Physical), and Sushang (The Hunt: Physical) will be boosted for a limited time. ■Event Period 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ■Drop Rate Boost: 5-Star Character Silver Wolf (Nihility: Quantum) ■Drop Rate Boost: 4-Star Characters Tingyun (Harmony: Lightning) Hanya (Harmony: Physical) Sushang (The Hunt: Physical) ※ Among the above characters, the limited character will not be available in the Stellar Warp event. ※ During the event, the limited 5-star character Aglaea (Remembrance: Lightning) can only be obtained from the Character Event Warp \"Tailored Fate,\" while the limited 5-star character Boothill (The Hunt: Physical), Robin (Harmony: Physical), and Silver Wolf (Nihility: Quantum) can only be obtained from the Character Event Warp \"Indelible Coterie.\" ※ This Warp is considered a Character Event Warp. The cumulative Warp count for a guaranteed 5-star character in any Character Event Warp will always be carried over to other Character Event Warps, but is independent of and unaffected by other types of Warps. ※ \"Indelible Coterie\" Character Event Warp will become available during irregular periods in future version updates. For more details, please stay tuned for official announcements. ※ For more information, please head to the Warp screen. ▌Character Trial Event: Aptitude Showcase ● Requirement: Unlock Travel Log ● Event Period: 2025/02/05 12:00:00 – 2025/02/25 15:00:00 (server time) ● Event Details: Trial characters Aglaea (Remembrance: Lightning), Boothill (The Hunt: Physical), Robin (Harmony: Physical), Silver Wolf (Nihility: Quantum), Tingyun (Harmony: Lightning), Hanya (Harmony: Physical), Sushang (The Hunt: Physical) can be used to experience stages. Upon completing the challenges, Trailblazers can obtain Stellar Jade, Adventure Log, Universal Enhancement Material, and Credit.",
     "startDate": "2025-02-05T12:00:00",
     "endDate": "2025-02-25T15:00:00",
     "startTimestamp": 1738756800000,
     "endTimestamp": 1740495600000,
-    "lastUpdated": "2025-04-12T20:52:05.925793",
-    "sentiment": "neutral",
-    "imageUrl": "/assets/images/events/event_36843932.png"
+    "lastUpdated": "2025-04-15T15:49:05.050321",
+    "sentiment": "neutral"
   },
   {
     "eventId": "36767294",
     "title": "Enscrolled Crepusculum: Defeat the enemies in stories and obtain Tracks of Destiny and other rewards",
-    "description": "A lost child has appeared in the bustling market of Okhema. She glances around, seemingly trying to find something... ▌ Event Period 2025/02/03 12:00:00 – 2025/02/24 03:59:00 (server time) ▌Participation Requirement",
+    "description": "A lost child has appeared in the bustling market of Okhema. She glances around, seemingly trying to find something... ▌ Event Period 2025/02/03 12:00:00 – 2025/02/24 03:59:00 (server time) ▌Participation Requirement Trailblaze Level ≥ 21 ※ This content can be unlocked and experienced in advance through the Finality's Vision function. ※ It is recommended that Trailblazers complete Trailblaze Mission \"\"Amphoreus — Hero, Bear Thy Coreflame\" before experiencing this content. ▌ Event Rewards ▌ Event Details ● In this event, there are five scrolls to collect, corresponding to 5 combat stages. The Trailblazer needs to locate them in different areas, then defeat story opponents. ● Each stage from Stages 1–4 features a key enemy that possesses a corresponding Mutation Mechanic. Targeting the enemy's Mutation Mechanic is an efficient way to defeat the enemy. ● Every stage from Stages 1–4 all have their corresponding Stage Buffs. During battle, triggering the Mutation Mechanic will increase your Stage Buff rank and increase your characters' combat effectiveness. ● Stages 1–4 consist of the Buff Buildup and Final Showdown phases. ● In the Buff Buildup phase, there is a countdown of 3 Cycles where the enemies will continuously spawn. In this phase, you need to exploit key enemies' Mutation Mechanic to raise the Stage Buff rank as much as possible. ● In the Final Showdown, Trailblazers must defeat as many enemies as they can for a higher score in 4 Cycles. If you have leftover Cycles when you pass the stage, you will receive extra scores. Additionally, Stage Buff ranks cannot be increased during the Final Showdown. ● Stage 5 is the Titan challenge boss fight. Before you enter the stage, select any 2 accumulated Stage Buff from Stages 1–4 and use them for the final boss fight. (You can inherit the highest Stage Buff rank you've historically obtained in Stages 1–4). Defeat as many waves of enemies as possible within 4 Cycles to receive a higher score. If you have leftover Cycles when you pass the stage, you will receive extra scores. ▌ Attention ● The 5 combat stages will be gradually unlocked on a daily basis, and the fifth stage will only be unlocked after you have scored in the first four stages. ● Increasing the Equilibrium Level will also increase enemy levels. ● In the Enscrolled Crepusculum game mode, when ally targets defeat enemy targets, they regenerate only 50% of the Energy that they would normally do in regular battles.",
     "startDate": "2025-02-03T12:00:00",
     "endDate": "2025-02-24T03:59:00",
     "startTimestamp": 1738584000000,
     "endTimestamp": 1740369540000,
-    "lastUpdated": "2025-04-12T20:52:10.860087",
-    "sentiment": "neutral",
-    "imageUrl": "/assets/images/events/event_36767294.jpg"
+    "lastUpdated": "2025-04-15T15:49:10.780417",
+    "sentiment": "neutral"
   },
   {
     "eventId": "36634082",
     "title": "Planar Fissure Event: Planar Ornaments Drop Rate Doubled for a Limited Time",
-    "description": "Hello, Trailblazers! ▌ Event Period 2025/01/27 04:00:00 – 2025/02/03 03:59:00 (server time) ▌Participation Requirement Unlock Simulated Universe: World 3 ▌Event Details ● During the Planar Fissure event period, get double rewards from the Simulated Universe or Divergent Universe. ● You will get additional rewards on top of default drops after consuming an event double reward opportunity and Immersifiers (or Trailblaze Power). ● During the event, the number of double reward opportunities is limited and can be viewed in the Planar Fissure event page. ● The double reward count will not reset during the event. Be sure to schedule your time for this challenge accordingly, Trailblazers.",
+    "description": "Hello, Trailblazers! ▌ Event Period 2025/01/27 04:00:00 – 2025/02/03 03:59:00 (server time) ▌Participation Requirement Unlock Simulated Universe: World 3 ▌ Event Details ● During the Planar Fissure event period, get double rewards from the Simulated Universe or Divergent Universe. ● You will get additional rewards on top of default drops after consuming an event double reward opportunity and Immersifiers (or Trailblaze Power). ● During the event, the number of double reward opportunities is limited and can be viewed in the Planar Fissure event page. ● The double reward count will not reset during the event. Be sure to schedule your time for this challenge accordingly, Trailblazers.",
     "startDate": "2025-01-27T04:00:00",
     "endDate": "2025-02-03T03:59:00",
     "startTimestamp": 1737950400000,
     "endTimestamp": 1738555140000,
-    "lastUpdated": "2025-04-12T20:52:16.095068",
-    "sentiment": "negative",
-    "imageUrl": "/assets/images/events/event_36634082.png"
+    "lastUpdated": "2025-04-15T15:49:16.105637",
+    "sentiment": "negative"
   },
   {
     "eventId": "36633597",
     "title": "Cosmic Lucky Prize Event Details",
-    "description": "Hello, Trailblazers! ▌ Event Period Event Period: 2025/01/27 04:00:00 (server time) – 2025/02/26 06:00:00 (UTC+8) Prize Draw Period: 2025/01/27 04:00:00 – 2025/02/02 23:59:00 (server time) Draw Entry Time: Starting from Phase 2, each phase refreshes at 00:00 (Server Time) daily. ● Phase 1: 2025/01/27 04:00:00 – 2025/01/27 23:59:00 (server time) ● Phases 2–7: Daily from 00:00 to 23:59 (Server Time), 2025/01/28 through 2025/02/02 Winner Announcement Time: Results for each phase will be revealed at 21:00 (UTC+8) the following day. Here are the times for each server: ● America Server: Following day at 08:00 (Server Time) ● Europe Server: Following day at 14:00 (Server Time) ● Asia Server: Following day at 21:00 (Server Time) ● TW,HK,MO Server: Following day at 21:00 (Server Time) ※ When the prize draw phase ends, Trailblazers can still claim fixed rewards for the event. View the rules below for exact rules. ▌ Event Participation Rules",
+    "description": "Hello, Trailblazers! ▌ Event Period Event Period: 2025/01/27 04:00:00 (server time) – 2025/02/26 06:00:00 (UTC+8) Prize Draw Period: 2025/01/27 04:00:00 – 2025/02/02 23:59:00 (server time) Draw Entry Time: Starting from Phase 2, each phase refreshes at 00:00 (Server Time) daily. ● Phase 1: 2025/01/27 04:00:00 – 2025/01/27 23:59:00 (server time) ● Phases 2–7: Daily from 00:00 to 23:59 (Server Time), 2025/01/28 through 2025/02/02 Winner Announcement Time: Results for each phase will be revealed at 21:00 (UTC+8) the following day. Here are the times for each server: ● America Server: Following day at 08:00 (Server Time) ● Europe Server: Following day at 14:00 (Server Time) ● Asia Server: Following day at 21:00 (Server Time) ● TW,HK,MO Server: Following day at 21:00 (Server Time) ※ When the prize draw phase ends, Trailblazers can still claim fixed rewards for the event. View the rules below for exact rules. ▌ Event Participation Rules ● The event is divided into 7 phases, with a new phase of the prize draw being released each day starting from the 1st day of the event. ● Trailblazers can choose to participate in the prize draw or directly claim a fixed reward of 100 Stellar Jades before the deadline of each phase (specific times are shown on the event interface). Only one option can be selected. Different options can be picked for each phase's prize draw. ● If no action is taken during the prize draw period, the default reward of fixed Stellar Jades will be granted, and the prize draw will not be participated in. If Trailblazers did not log in to the game during the prize draw phases, logging into the game before the event ends allows them to claim 800 Stellar Jades at once. ● Each phase's prize draw results will be announced the following day, with specific times displayed on the event interface. ● All rewards must be claimed from the event page during the event. ● Any rewards earned but not claimed during the event period will be forfeited and cannot be recovered or reissued. ● The America, Europe, Asia, and TW,HK,MO servers share a single prize pool. A total of 20 Trailblazers can become Lucky Superstars across the 7 phases. ▌ Prize Draw Reward ● Lucky Superstar: 500,000 Stellar Jades ● First Prize: 600 Stellar Jades ● Second Prize: 50 Stellar Jades ▌ Prize Draw Rules ● In phases 1, 2, and 3, there will be 2 Trailblazers per phase who have a chance to become the Lucky Superstar. In phases 4, 5, and 6, there will be 3 Trailblazers per phase who have a chance to become the Lucky Superstar. In phase 7, 5 Trailblazers will have a chance to become the Lucky Superstar. ● In each phase's prize draw, if a Trailblazer participates but does not become the Lucky Superstar, there will be a 10% chance to win the First Prize and a 90% chance to win the Second Prize. ● In each phase, Trailblazers can only win one of the following: Lucky Superstar, First Prize, or Second Prize. The rewards cannot overlap. ● Across all 7 phases, a Trailblazer can only become the Lucky Superstar once. The same Trailblazer cannot be selected as the Lucky Superstar multiple times. ▌ Lucky Superstar Rules Reminder ● If you have violated the HoYoverse Terms of Service while using HoYoverse's services, you will automatically forfeit your eligibility to win the Lucky Superstar reward. ● You must comply with all applicable laws in your country or region to participate in this event. ● If you are a minor in your country or region, you must obtain guardian consent as required by applicable laws before participating in this prize draw event. ● If you are selected as a Lucky Superstar, HoYoverse may need to collect and process your personal information in accordance with applicable laws and with your explicit consent. ● Matters not covered in this event, as well as subsequent player actions, will remain subject to the Honkai: Star Rail Game Terms of Service you have confirmed. ※ For complete event rules, please check the in-game event details. ▌ Lucky Superstar Phase 1 ▌ Lucky Superstar Phase 2 ▌ Lucky Superstar Phase 3 ▌ Lucky Superstar Phase 4 ▌ Lucky Superstar Phase 5 ▌ Lucky Superstar Phase 6 ▌ Lucky Superstar Phase 7 ※ Official winner list is subject to in-game announcements. ※ The above list only showcases Lucky Superstars from America, Europe, Asia, and TW, HK, MO servers.",
     "startDate": "2025-01-27T04:00:00",
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1737950400000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-04-12T20:52:20.985953",
-    "sentiment": "neutral",
-    "imageUrl": "/assets/images/events/event_36633597.png"
+    "lastUpdated": "2025-04-15T15:49:21.398785",
+    "sentiment": "neutral"
   },
   {
     "eventId": "36471191",
     "title": "Hypogeum Enigma: Participate in exploring the hypogeum to obtain Tracks of Destiny and get a 4-star character",
-    "description": "Hello, Trailblazers! The explorer Damionis is preparing to explore the ancient city ruins... He seems to have forgotten to invite you? ▌ Limited-Time Event Period 2025/01/22 12:00:00 – 2025/02/24 03:59:00 (server time) ※ After the limited-time event concludes, Hypogeum Enigma will be moved to Conventional Memoir, where Trailblazers can continue to experience its gameplay. ▌Participation Requirement",
+    "description": "Hello, Trailblazers! The explorer Damionis is preparing to explore the ancient city ruins... He seems to have forgotten to invite you? ▌ Limited-Time Event Period 2025/01/22 12:00:00 – 2025/02/24 03:59:00 (server time) ※ After the limited-time event concludes, Hypogeum Enigma will be moved to Conventional Memoir, where Trailblazers can continue to experience its gameplay. ▌Participation Requirement Trailblaze Level ≥ 21 ※ This content can be unlocked and experienced in advance through the Finality's Vision function. ※ It's recommended that Trailblazers experience this content after finishing the Trailblaze Mission \"Amphoreus — A Witch's Scientific Repose.\" ▌ Event Rewards ■ Limited-Time Rewards ※ Fateful Crossings: Hypogeum Enigma — You can select a character out of the 4-star characters Guinaifen (Nihility: Fire), Hanya (Harmony: Physical), Tingyun (Harmony: Lightning), and Hook (Destruction: Fire). ■ Regular Rewards ▌ Event Details ● This event has 4 game modes in total and 20 stages to clear. ● Every game mode is separated between the Shallow Hypogeum and Deep Hypogeum difficulties. After completing Shallow Hypogeum, Deep Hypogeum will be unlocked. ● The game modes Prophecy Tablet and Golden Scapegoat include 3 Shallow Hypogeum rooms and 3 Deep Hypogeum rooms. The game modes Hand of Zagreus and Oronyx's Miracle include 2 Shallow Hypogeum rooms and 2 Deep Hypogeum rooms. ● After the event begins, the first room to the Prophecy Tablet mode in Shallow Hypogeum will open. Remove the room's seal to unlock the next room. Explore all rooms under this difficulty for the game mode to unlock the next mode and so on. ▌ Note ● After the limited event period has concluded, Trailblazers will no longer be able to obtain the limited-time event rewards. However, they can still go to Damionis in the Eternal Holy City Okhema to experience the event and earn regular rewards.",
     "startDate": "2025-01-22T12:00:00",
     "endDate": "2025-02-24T03:59:00",
     "startTimestamp": 1737547200000,
     "endTimestamp": 1740369540000,
-    "lastUpdated": "2025-04-12T20:52:25.948894",
-    "sentiment": "negative",
-    "imageUrl": "/assets/images/events/event_36471191.jpg"
+    "lastUpdated": "2025-04-15T15:49:26.755777",
+    "sentiment": "negative"
   },
   {
     "eventId": "36341346",
     "title": "Light Cone Event Warp: Brilliant Fixation & Coalesced Truths",
-    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is after the Version 3.0 update – 2025/02/05 11:59:00 (server time), and includes the following content: ▌ Light Cone Event Warp: \"Brilliant Fixation\"",
+    "description": "Hello, Trailblazers! Light Cone Event Warp Period for this phase is after the Version 3.0 update – 2025/02/05 11:59:00 (server time), and includes the following content: ▌ Light Cone Event Warp: \"Brilliant Fixation\" ● During the event, the drop rates of the limited 5-star Light Cone \"Into the Unreachable Veil (Erudition)\" and 4-star Light Cones \"Only Silence Remains (The Hunt),\" \"Landau's Choice (Preservation),\" and \"Geniuses' Repose (Erudition)\" will be boosted. ■Event Period After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ■Drop Rate Boost: 5-Star Light Cone Into the Unreachable Veil (Erudition) ■Drop Rate Boost: 4-Star Light Cones Only Silence Remains (The Hunt) Landau's Choice (Preservation) Geniuses' Repose (Erudition) ▌ \"Coalesced Truths: Scent Alone Stays True\" Light Cone Event Warp ● During the event, the drop rates of the limited 5-star Light Cone \"Scent Alone Stays True (Abundance)\" and 4-star Light Cones \"Only Silence Remains (The Hunt),\" \"Landau's Choice (Preservation),\" and \"Geniuses' Repose (Erudition)\" will be boosted. ■Event Period After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ■Drop Rate Boost: 5-Star Light Cone Scent Alone Stays True (Abundance) ■Drop Rate Boost: 4-Star Light Cones Only Silence Remains (The Hunt) Landau's Choice (Preservation) Geniuses' Repose (Erudition) ▌ \"Coalesced Truths: I Venture Forth to Hunt\" Light Cone Event Warp ● During the event, the drop rates of the limited 5-star Light Cone \"I Venture Forth to Hunt (The Hunt)\" and 4-star Light Cones \"Only Silence Remains (The Hunt),\" \"Landau's Choice (Preservation),\" and \"Geniuses' Repose (Erudition)\" will be boosted. ■Event Period After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ■Drop Rate Boost: 5-Star Light Cone I Venture Forth to Hunt (The Hunt) ■Drop Rate Boost: 4-Star Light Cones Only Silence Remains (The Hunt) Landau's Choice (Preservation) Geniuses' Repose (Erudition) ▌ \"Coalesced Truths: Yet Hope Is Priceless\" Light Cone Event Warp ● During the event, the drop rates of the limited 5-star Light Cone \"Yet Hope Is Priceless (Erudition)\" and 4-star Light Cones \"Only Silence Remains (The Hunt),\" \"Landau's Choice (Preservation),\" and \"Geniuses' Repose (Erudition)\" will be boosted. ■Event Period After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ■Drop Rate Boost: 5-Star Light Cone Yet Hope Is Priceless (Erudition) ■Drop Rate Boost: 4-Star Light Cones Only Silence Remains (The Hunt) Landau's Choice (Preservation) Geniuses' Repose (Erudition) ※ Among the above Light Cones, the limited Light Cone will not become available in the Stellar Warp event. ※ During the event, the limited 5-star Light Cone \"Into the Unreachable Veil (Erudition)\" can only be obtained from the Light Cone Event Warp Brilliant Fixation, while the limited 5-star Light Cone \"Scent Alone Stays True (Abundance),\" \"I Venture Forth to Hunt (The Hunt),\" and \"Yet Hope Is Priceless (Erudition)\" can only be obtained from the Light Cone Event Warp Coalesced Truths. ※ This event is considered a Light Cone Event Warp. The cumulative Warp count for a guaranteed 5-star Light Cone in any Light Cone Event Warp will always be carried over to other Light Cone Event Warps, but is independent of and unaffected by other types of Warps. ※ \"Coalesced Truths\" Light Cone Event Warp will become available during irregular periods in future version updates. For more details, please stay tuned for official announcements. ※ For more information, please head to the Warp screen.",
     "startDate": "2025-01-15T11:00:00",
     "endDate": "2025-02-05T11:59:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1738756740000,
-    "lastUpdated": "2025-04-12T20:52:35.677298",
+    "lastUpdated": "2025-04-15T15:49:35.940167",
     "sentiment": "neutral",
-    "version": "3.0",
-    "imageUrl": "/assets/images/events/event_36341346.png"
+    "version": "3.0"
   },
   {
     "eventId": "36341290",
     "title": "Character Event Warp: Message From Beyond & Indelible Coterie",
-    "description": "Hello, Trailblazers! Character Event Warp Period for this phase is after the Version 3.0 update – 2025/02/05 11:59:00 (server time), and includes the following content: ▌ \"Message From Beyond\" Character Event Warp",
+    "description": "Hello, Trailblazers! Character Event Warp Period for this phase is after the Version 3.0 update – 2025/02/05 11:59:00 (server time), and includes the following content: ▌ \"Message From Beyond\" Character Event Warp ● During the event, the drop rates of the limited 5-star character The Herta (Erudition: Ice) and 4-star characters Natasha (Abundance: Physical), Asta (Harmony: Fire), and Moze (The Hunt: Lightning) will be boosted. ■Event Period After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ■Drop Rate Boost: 5-Star Character The Herta (Erudition: Ice) ■Drop Rate Boost: 4-Star Characters Natasha (Abundance: Physical) Asta (Harmony: Fire) Moze (The Hunt: Lightning) ▌ \"Indelible Coterie: Lingsha\" Character Event Warp ● During the event, the drop rates of the limited 5-star character Lingsha (Abundance: Fire) and 4-star characters Natasha (Abundance: Physical), Asta (Harmony: Fire), and Moze (The Hunt: Lightning) will be boosted. ■Event Period After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ■Drop Rate Boost: 5-Star Character Lingsha (Abundance: Fire) ■Drop Rate Boost: 4-Star Characters Natasha (Abundance: Physical) Asta (Harmony: Fire) Moze (The Hunt: Lightning) ▌ \"Indelible Coterie: Feixiao\" Character Event Warp ● During the event, the drop rates of the limited 5-star character Feixiao (The Hunt: Wind) and 4-star characters Natasha (Abundance: Physical), Asta (Harmony: Fire), and Moze (The Hunt: Lightning) will be boosted. ■Event Period After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ■Drop Rate Boost: 5-Star Character Feixiao (The Hunt: Wind) ■Drop Rate Boost: 4-Star Characters Natasha (Abundance: Physical) Asta (Harmony: Fire) Moze (The Hunt: Lightning) ▌ \"Indelible Coterie: Jade\" Character Event Warp ● During the event, the drop rates of the limited 5-star character Jade (Erudition: Quantum) and 4-star characters Natasha (Abundance: Physical), Asta (Harmony: Fire), and Moze (The Hunt: Lightning) will be boosted. ■Event Period After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ■Drop Rate Boost: 5-Star Character Jade (Erudition: Quantum) ■Drop Rate Boost: 4-Star Characters Natasha (Abundance: Physical) Asta (Harmony: Fire) Moze (The Hunt: Lightning) ※ Among the above characters, the limited character will not be available in the Stellar Warp event. ※ During the event, the limited 5-star character The Herta (Erudition: Ice) can only be obtained from the Character Event Warp \"Message From Beyond,\" while the limited 5-star character Lingsha (Abundance: Fire), Feixiao (The Hunt: Wind), and Jade (Erudition: Quantum) can only be obtained from the Character Event Warp \"Indelible Coterie.\" ※ This Warp is considered a Character Event Warp. The cumulative Warp count for a guaranteed 5-star character in any Character Event Warp will always be carried over to other Character Event Warps, but is independent of and unaffected by other types of Warps. ※ \"Indelible Coterie\" Character Event Warp will become available during irregular periods in future version updates. For more details, please stay tuned for official announcements. ※ For more information, please head to the Warp screen. ▌Character Trial Event: Aptitude Showcase ● Requirement: Unlock Travel Log ● Event Period: After the Version 3.0 update – 2025/02/05 11:59:00 (server time) ● Event Details: Trial characters The Herta (Erudition: Ice), Lingsha (Abundance: Fire), Feixiao (The Hunt: Wind), Jade (Erudition: Quantum), Natasha (Abundance: Physical), Asta (Harmony: Fire), and Moze (The Hunt: Lightning) can be used to experience stages. Upon completing the challenges, Trailblazers can obtain Stellar Jade, Adventure Log, Universal Enhancement Material, and Credit.",
     "startDate": "2025-01-15T11:00:00",
     "endDate": "2025-02-05T11:59:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1738756740000,
-    "lastUpdated": "2025-04-12T20:52:43.373670",
+    "lastUpdated": "2025-04-15T15:49:42.498221",
     "sentiment": "neutral",
-    "version": "3.0",
-    "imageUrl": "/assets/images/events/event_36341290.png"
+    "version": "3.0"
   },
   {
     "eventId": "36323609",
     "title": "Mem's Gift: During the event period, log into the game to get Star Rail Special Pass ×10 and Variable Dice ×1!",
-    "description": "Hello, Trailblazers! Mem brought you a generous gift. Take it, and don't forget to thank them. ▌Event Period After the version 3.0 update – 2025/02/26 06:00:00 (UTC+8) ▌Participation Requirement Unlock Travel Log ▌Event Details When logging into the game during the event period, Trailblazers can obtain rewards from the Travel Log — Mem's Gift: Star Rail Special Pass ×10 and Variable Dice ×1!",
+    "description": "\nHello, Trailblazers!\nMem brought you a generous gift. Take it, and don't forget to thank them.\n\n▌ Event Period\nAfter the version 3.0 update – 2025/02/26 06:00:00 (UTC+8)\n\n▌Participation Requirement\nUnlock Travel Log\n\n▌ Event Details\nWhen logging into the game during the event period, Trailblazers can obtain rewards from the Travel Log — Mem's Gift: Star Rail Special Pass ×10 and Variable Dice ×1!\n",
     "startDate": "2025-01-15T11:00:00",
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-04-12T20:52:48.588866",
+    "lastUpdated": "2025-04-15T15:49:49.552099",
     "sentiment": "neutral",
-    "version": "3.0",
-    "imageUrl": "/assets/images/events/event_36323609.png"
+    "version": "3.0"
   },
   {
     "eventId": "36026844",
     "title": "\"Fashion Guide of the Cosmos\" Event Details",
-    "description": "Log into the game during V3.0 and unlock the Characters function to obtain March 7th: Preservation's outfit Nascent Spring! ▌Event Period After the version 3.0 update – 2025/02/26 06:00:00 (UTC+8) ▌Participation Requirement Characters function Unlocked ▌Event Details ● Log into the game during V3.0 and unlock the Characters function to obtain March 7th: Preservation's outfit Nascent Spring! ● After the event concludes, the outfit Nascent Spring will become available for purchase in the Contract Shop for Oneiric Shard ×1680. ● Obtaining the outfit will unlock the outfit, as well as the corresponding avatar. ● This outfit is limited to 1 piece per account and cannot be acquired repeatedly. ● Nascent Spring can only be used by March 7th (Preservation). ● After changing into Nascent Spring, March 7th will wear the corresponding outfit during exploration and combat. ● Outfits wore will not change the outfit shown on March 7th during cinematics.",
+    "description": "Log into the game during V3.0 and unlock the Characters function to obtain March 7th: Preservation's outfit Nascent Spring! ▌ Event Period After the version 3.0 update – 2025/02/26 06:00:00 (UTC+8) ▌Participation Requirement Characters function Unlocked ▌ Event Details ● Log into the game during V3.0 and unlock the Characters function to obtain March 7th: Preservation's outfit Nascent Spring! ● After the event concludes, the outfit Nascent Spring will become available for purchase in the Contract Shop for Oneiric Shard ×1680. ● Obtaining the outfit will unlock the outfit, as well as the corresponding avatar. ● This outfit is limited to 1 piece per account and cannot be acquired repeatedly. ● Nascent Spring can only be used by March 7th (Preservation). ● After changing into Nascent Spring, March 7th will wear the corresponding outfit during exploration and combat. ● Outfits wore will not change the outfit shown on March 7th during cinematics.",
     "startDate": "2025-01-15T11:00:00",
     "endDate": "2025-02-26T06:00:00",
     "startTimestamp": 1736938800000,
     "endTimestamp": 1740549600000,
-    "lastUpdated": "2025-04-12T20:52:55.542225",
+    "lastUpdated": "2025-04-15T15:49:56.042932",
     "sentiment": "neutral",
-    "version": "3.0",
-    "imageUrl": "/assets/images/events/event_36026844.jpg"
+    "version": "3.0"
   }
 ]

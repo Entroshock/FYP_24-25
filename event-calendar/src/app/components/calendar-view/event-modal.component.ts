@@ -439,332 +439,369 @@ export class EventModalComponent implements OnChanges {
     event.target.src = '/assets/images/placeholder.png'; 
   }
 
-// Complete solution for the formatDescription method
-
-// First add this preprocessing method to fix broken content
-private preprocessText(text: string): string {
-  let processedText = text;
-  
-  // Fix broken "Skill Lv. +" lines where numbers might appear at start of next line
-  processedText = processedText.replace(/Skill Lv\. \+\s*\n\s*(\d+)/g, 'Skill Lv. +$1');
-  
-  // Fix any other broken lines that might have been split at unfortunate positions
-  processedText = processedText.replace(/([a-z])\s*\n\s*(\d+\.\s+[A-Z])/g, '$1 $2');
-  
-  // Fix lines that might've been broken in the middle of a content section
-  processedText = processedText.replace(/([a-z])\s*\n\s*(\d+\.\s+After)/g, '$1 $2');
-  
-  return processedText;
-}
-
-// Updated formatDescription method for event-modal.component.ts
-
-private formatDescription(text: string): SafeHtml {
-  if (!text) return this.sanitizer.bypassSecurityTrustHtml('');
-
-  console.log('Raw description length:', text.length);
-  
-  // Apply preprocessing to fix broken lines
-  text = this.preprocessText(text);
-  
-  // Improved content type detection
-  const isVersionUpdate = text.includes('Version Update Details') || 
-                         text.includes('New Story') ||
-                         /\d+\.\s+New\s+/.test(text) ||
-                         (text.includes('New Characters') && text.includes('5-Star')) ||
-                         (text.includes('Update Time') && text.includes('Requirement:'));
-                            
-  const isContractShop = text.includes('Contract Shop Update') || 
-                         text.includes('Herta Contract:');
-  
-  // Prepare the full text before processing
-  let processedText = text;
-  
-  // Fix special character issues and ensure newlines for parsing
-  processedText = processedText
-    // Add line breaks before section markers (▌)
-    .replace(/([^\n])▌/g, '$1\n\n▌')
-    // Add line breaks before subsection markers (■)
-    .replace(/([^\n])■/g, '$1\n\n■')
-    // Add line breaks before bullet points (●)
-    .replace(/([^\n])●/g, '$1\n\n●')
-    // Add line breaks before notes (※)
-    .replace(/([^\n])※/g, '$1\n※')
-    // Add line breaks before numbered sections (1., 2., etc.) that are ACTUAL section headers
-    .replace(/([^\n])(\d+\.\s+New\s+[A-Z])/g, '$1\n\n$2')
-    // Fix for "The Herta Contract:" being split
-    .replace(/\n\s*The\s*\n\s*Herta Contract:/g, '\nThe Herta Contract:')
-    // Make sure contract headers are together with content
-    .replace(/([^\n])(The Herta Contract:|Herta Contract:)/g, '$1\n\n$2');
-  
-  // Split into lines for processing
-  const lines = processedText.split('\n').map(line => line.trim()).filter(line => line);
-  
-  // Process lines into HTML
-  let htmlOutput = '';
-  
-  // Process based on content type
-  if (isVersionUpdate) {
-    // For version update details
-    let currentSection = '';
-    let inDescriptionBlock = false;
+  private preprocessText(text: string): string {
+    let processedText = text;
     
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
+    // Fix broken "Skill Lv. +" lines where numbers might appear at start of next line
+    processedText = processedText.replace(/Skill Lv\. \+\s*\n\s*(\d+)/g, 'Skill Lv. +$1');
+    
+    // Carefully ensure section markers are properly spaced
+    // ONLY fix if there's no space after the marker
+    processedText = processedText.replace(/▌([A-Za-z])/g, '▌ $1');
+    
+    // Carefully ensure bullet points are properly spaced
+    // ONLY fix if there's no space after the bullet
+    processedText = processedText.replace(/●([A-Za-z])/g, '● $1');
+    
+    return processedText;
+  }
+  
+  private formatDescription(text: string): SafeHtml {
+    if (!text) return this.sanitizer.bypassSecurityTrustHtml('');
+  
+    console.log('Raw description length:', text.length);
+    
+    // Apply preprocessing to fix broken lines
+    text = this.preprocessText(text);
+    
+    // Improved content type detection
+    const isVersionUpdate = text.includes('Version Update Details') || 
+                           text.includes('Update Details') || 
+                           text.includes('New Story') ||
+                           /\d+\.\s+New\s+/.test(text) ||
+                           (text.includes('New Characters') && text.includes('5-Star')) ||
+                           (text.includes('Update Time') && text.includes('Requirement:'));
+                              
+    const isContractShop = text.includes('Contract Shop Update') || 
+                           text.includes('Herta Contract:');
+                           
+    const isStandardEvent = text.includes('Event Period') && 
+                           text.includes('Event Details') &&
+                           text.includes('●') &&  // Has bullet points
+                           !isVersionUpdate && !isContractShop;
+    
+    // Prepare the full text before processing
+    let processedText = text;
+    
+    // Fix special character issues and ensure newlines for parsing
+    processedText = processedText
+      // Add line breaks before section markers (▌)
+      .replace(/([^\n])▌/g, '$1\n\n▌')
+      // Add line breaks before subsection markers (■)
+      .replace(/([^\n])■/g, '$1\n\n■')
+      // Add line breaks before bullet points (●)
+      .replace(/([^\n])●/g, '$1\n\n●')
+      // Add line breaks before notes (※)
+      .replace(/([^\n])※/g, '$1\n※')
+      // Add line breaks before numbered sections (1., 2., etc.) that are ACTUAL section headers
+      .replace(/([^\n])(\d+\.\s+New\s+[A-Z])/g, '$1\n\n$2')
+      // Fix for "The Herta Contract:" being split
+      .replace(/\n\s*The\s*\n\s*Herta Contract:/g, '\nThe Herta Contract:')
+      // Make sure contract headers are together with content
+      .replace(/([^\n])(The Herta Contract:|Herta Contract:)/g, '$1\n\n$2');
+    
+    // Split into lines for processing
+    const lines = processedText.split('\n').map(line => line.trim()).filter(line => line);
+    
+    // Process lines into HTML
+    let htmlOutput = '';
+    
+    // Process based on content type
+    if (isStandardEvent) {
+      // For standard events like "To The Ones That Blaze"
+      let inEventDetailsSection = false;
       
-      // Major headers (Version Update Details, etc.)
-      if (line.includes('Version Update Details') || line.includes('Update Details')) {
-        htmlOutput += `<div class="event-header">${line}</div>`;
-        inDescriptionBlock = false;
-        continue;
-      }
-      
-      // MAIN SECTION HEADERS: Numbered sections like "4. New Areas"
-      // This pattern matches section headers like "4. New Areas" to make them bold
-      if (/^\d+\.\s+New\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Story" or "4. New Areas"
-          /^\d+\.\s+New\s+[A-Z][a-z]+\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Light Cones"
-          /^\d+\.\s+Others$/.test(line)) { // Pattern specifically for "6. Others"
-        htmlOutput += `<div class="update-section-header">${line}</div>`;
-        currentSection = line;
-        inDescriptionBlock = false;
-        continue;
-      }
-      
-      // Bug Fixes and Adjustments sections
-      if (/^▌\s*(Bug Fixes|Adjustments and Optimizations)/.test(line)) {
-        htmlOutput += `<div class="event-header">${line}</div>`;
-        inDescriptionBlock = false;
-        continue;
-      }
-      
-      // AREA/LOCATION NAMES: Pattern for area names in quotes like "Demigod Council" Dawncloud
-      // This specifically matches the format in your images
-      if (/^\"[^\"]+\"/.test(line)) {
-        // Extract the quoted area name and location
-        const quoteMatch = line.match(/^\"([^\"]+)\"\s*([^\s].+)/);
-        if (quoteMatch) {
-          // Full area name with quotes
-          const quotedAreaName = `"${quoteMatch[1]}"`;
-          // Location name after the quoted text
-          const locationName = quoteMatch[2];
-          
-          // Add the full line as a subheader (not bold)
-          htmlOutput += `<div class="event-subheader">${quotedAreaName} ${locationName}</div>`;
-          
-          // Mark that we're now in a description block
-          inDescriptionBlock = true;
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // Section headers (▌ symbols)
+        if (line.startsWith('▌') || line.includes('▌')) {
+          const cleanLine = line.replace('▌', '').trim();
+          htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+          inEventDetailsSection = cleanLine.includes('Event Details');
           continue;
-        } else {
-          // If we just have a quoted name without location
-          const simpleQuoteMatch = line.match(/^\"([^\"]+)\"/);
-          if (simpleQuoteMatch) {
-            // Get the full quoted text including quotes
-            const quotedAreaName = simpleQuoteMatch[0];
+        }
+        
+        // Bullet points (● symbols)
+        if (line.startsWith('●') || line.includes('●')) {
+          const cleanLine = line.replace('●', '').trim();
+          htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Event period lines
+        if (line.includes('After Version') && line.includes('Update') && 
+            (line.includes('UTC+8') || line.includes('—'))) {
+          htmlOutput += `<div class="update-requirement">${line}</div>`;
+          continue;
+        }
+        
+        // Default case - regular content
+        htmlOutput += `<div class="update-content">${line}</div>`;
+      }
+    }
+    else if (isVersionUpdate) {
+      // For version update details - KEEP ORIGINAL LOGIC
+      let currentSection = '';
+      let inDescriptionBlock = false;
+      
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // Major headers (Version Update Details, etc.)
+        if (line.includes('Version Update Details') || line.includes('Update Details')) {
+          htmlOutput += `<div class="event-header">${line}</div>`;
+          inDescriptionBlock = false;
+          continue;
+        }
+        
+        // MAIN SECTION HEADERS: Match ONLY the exact pattern for numbered main sections
+        // This is a more exact pattern now, specifically for the version update format
+        if (/^\d+\.\s+New\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Story"
+            /^\d+\.\s+New\s+[A-Z][a-z]+\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Light Cones"
+            /^\d+\.\s+Others$/.test(line)) { // Pattern specifically for "6. Others"
+          htmlOutput += `<div class="update-section-header">${line}</div>`;
+          currentSection = line;
+          inDescriptionBlock = false;
+          continue;
+        }
+        
+        // Bug Fixes and Adjustments sections
+        if (/^▌\s*(Bug Fixes|Adjustments and Optimizations)/.test(line)) {
+          htmlOutput += `<div class="event-header">${line}</div>`;
+          inDescriptionBlock = false;
+          continue;
+        }
+        
+        // AREA/LOCATION NAMES: Generic pattern for area names in quotes followed by descriptions
+        // This matches any area name in quotes at the start of a line (like "Area Name" Description text)
+        if (/^\"[^\"]+\"/.test(line)) {
+          // Extract the quoted area name using regex
+          const quoteMatch = line.match(/^\"([^\"]+)\"\s*([^\s].+)/);
+          if (quoteMatch) {
+            // Full area name with quotes
+            const quotedAreaName = `"${quoteMatch[1]}"`;
+            // Location name after the quoted text
+            const locationName = quoteMatch[2];
             
-            // Add the quoted area name as a subheader
-            htmlOutput += `<div class="event-subheader">${quotedAreaName}</div>`;
+            // Add the full line as a subheader (not bold)
+            htmlOutput += `<div class="event-subheader">${quotedAreaName} ${locationName}</div>`;
             
-            // Then add the remaining text as regular content if any
-            const description = line.substring(quotedAreaName.length).trim();
-            if (description) {
-              htmlOutput += `<div class="update-content">${description}</div>`;
-            }
+            // Mark that we're now in a description block
             inDescriptionBlock = true;
             continue;
+          } else {
+            // If we just have a quoted name without location
+            const simpleQuoteMatch = line.match(/^\"([^\"]+)\"/);
+            if (simpleQuoteMatch) {
+              // Get the full quoted text including quotes
+              const quotedAreaName = simpleQuoteMatch[0];
+              
+              // Add the quoted area name as a subheader
+              htmlOutput += `<div class="event-subheader">${quotedAreaName}</div>`;
+              
+              // Then add the remaining text as regular content if any
+              const description = line.substring(quotedAreaName.length).trim();
+              if (description) {
+                htmlOutput += `<div class="update-content">${description}</div>`;
+              }
+              inDescriptionBlock = true;
+              continue;
+            }
           }
         }
-      }
-      
-      // Area descriptions (like "The spiritual and political center...")
-      // This specifically handles the description lines that follow area names
-      if (inDescriptionBlock && 
-          (line.startsWith("The spiritual") || 
-           line.startsWith("This land of") ||
-           line.length > 20)) {
+        
+        // Area descriptions (like "The spiritual and political center...")
+        if (inDescriptionBlock && 
+            (line.startsWith("The spiritual") || 
+             line.startsWith("This land of") ||
+             line.length > 20)) {
+          htmlOutput += `<div class="update-content">${line}</div>`;
+          continue;
+        }
+        
+        // CRITICAL: Handle all these specific patterns as regular content
+        // This addresses all the specific content types that should be gray
+        if (
+            // Common patterns for areas that should be regular content
+            line.includes("Trailblaze Mission") || 
+            line.includes("Castorice is a DPS") ||
+            line.includes("Anaxa is a DPS") ||
+            line.includes("Obtainable through") ||
+            line.startsWith("The spiritual") ||
+            line.startsWith("This land of") ||
+            line.startsWith("Enemies ") ||
+            line.startsWith("Gameplay ") ||
+            // Game mode descriptions
+            line.includes("Shadow:") ||
+            line.includes("Fiction:") ||
+            line.includes("Chaos:") ||
+            // Any line that contains "Skill Lv" is content
+            line.includes("Skill Lv")
+        ) {
+          htmlOutput += `<div class="update-content">${line}</div>`;
+          inDescriptionBlock = true;
+          continue;
+        }
+        
+        // Character sections (5-Star, 4-Star) - always regular content
+        if (line.startsWith('5-Star') || line.startsWith('4-Star') ||
+            line.startsWith('■ 5-Star') || line.startsWith('■ 4-Star')) {
+          const cleanLine = line.replace(/^[■●]\s*/, '').trim();
+          htmlOutput += `<div class="update-content">${cleanLine}</div>`;
+          inDescriptionBlock = true;
+          continue;
+        }
+        
+        // Other section headers with ■ symbols (not for character descriptions)
+        if ((line.startsWith('■') || line.includes('■')) && 
+            !line.includes('Star') && !line.includes('character')) {
+          const cleanLine = line.replace('■', '').trim();
+          htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+          inDescriptionBlock = false;
+          continue;
+        }
+        
+        // Major section headers (▌ symbols), excluding character descriptions
+        if ((line.startsWith('▌') || line.includes('▌')) && 
+            !line.includes('Star') && !line.includes('character')) {
+          const cleanLine = line.replace('▌', '').trim();
+          htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+          inDescriptionBlock = false;
+          continue;
+        }
+        
+        // Event Period/Requirements - special styling
+        if (line.includes('Event Period:') || line.includes('Event Period') || 
+            line.startsWith('Requirement:') || line.includes('Requirement:')) {
+          htmlOutput += `<div class="update-requirement">${line}</div>`;
+          continue;
+        }
+        
+        // Other time/date references
+        if (line.includes('Update Time') || line.includes('Update Time:')) {
+          htmlOutput += `<div class="update-requirement">${line}</div>`;
+          continue;
+        }
+        
+        // Notes with ※ symbols
+        if (line.startsWith('※') || line.includes('※')) {
+          htmlOutput += `<div class="update-note">${line}</div>`;
+          continue;
+        }
+        
+        // Bullet points - handle both traditional bullets and bullet point numbers
+        if (line.startsWith('●') || line.includes('●') || 
+            line.startsWith('.') || line.startsWith('•')) {
+          const cleanLine = line.replace(/^[●.•]\s*/, '').trim();
+          htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Handle any lines that appear to be descriptive content
+        // This is a broad fallback to catch anything that looks like description
+        if (inDescriptionBlock || 
+            line.length > 20 || 
+            line.includes(":") ||
+            /^[A-Z][a-z]/.test(line)) { // Starts with capital letter followed by lowercase
+          htmlOutput += `<div class="update-content">${line}</div>`;
+          continue;
+        }
+        
+        // Default content fallback - if all else fails, treat as regular content
         htmlOutput += `<div class="update-content">${line}</div>`;
-        continue;
       }
-      
-      // CRITICAL: Handle all other specific patterns as regular content
-      if (
-          // Common patterns for areas that should be regular content
-          line.includes("Trailblaze Mission") || 
-          line.includes("Castorice is a DPS") ||
-          line.includes("Anaxa is a DPS") ||
-          line.includes("Obtainable through") ||
-          line.startsWith("Enemies ") ||
-          line.startsWith("Gameplay ") ||
-          // Game mode descriptions
-          line.includes("Shadow:") ||
-          line.includes("Fiction:") ||
-          line.includes("Chaos:") ||
-          // Any line that contains "Skill Lv" is content
-          line.includes("Skill Lv")
-      ) {
-        htmlOutput += `<div class="update-content">${line}</div>`;
-        inDescriptionBlock = true;
-        continue;
+    } 
+    else if (isContractShop) {
+      // Contract shop processing logic
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // Shop/section header (title with Version update)
+        if (line.includes('Version') && (line.includes('Contract Shop Update') || line.includes('Shop Update'))) {
+          htmlOutput += `<div class="event-header">${line}</div>`;
+          continue;
+        }
+        
+        // Time/period header
+        if (line.includes('Release Time') || line.includes('After the Version') || line.includes('Event Period')) {
+          htmlOutput += `<div class="release-time">${line}</div>`;
+          continue;
+        }
+        
+        // Section headers (■ symbols)
+        if (line.startsWith('■') || line.includes('■')) {
+          const cleanLine = line.replace('■', '').trim();
+          htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Major section headers (▌ symbols)
+        if (line.startsWith('▌') || line.includes('▌')) {
+          const cleanLine = line.replace('▌', '').trim();
+          htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Bullet points
+        if (line.startsWith('●') || line.includes('●')) {
+          const cleanLine = line.replace('●', '').trim();
+          htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Contract items
+        if (line.includes('Herta Contract:')) {
+          const contractBlock = this.processContractBlock(lines, i);
+          htmlOutput += contractBlock.html;
+          i = contractBlock.endIndex; // Skip to the end of this contract block
+          continue;
+        }
+        
+        // Default case - regular content
+        htmlOutput += `<p>${line}</p>`;
       }
-      
-      // Character sections (5-Star, 4-Star) - always regular content
-      if (line.startsWith('5-Star') || line.startsWith('4-Star') ||
-          line.startsWith('■ 5-Star') || line.startsWith('■ 4-Star')) {
-        const cleanLine = line.replace(/^[■●]\s*/, '').trim();
-        htmlOutput += `<div class="update-content">${cleanLine}</div>`;
-        inDescriptionBlock = true;
-        continue;
-      }
-      
-      // Other section headers with ■ symbols (not for character descriptions)
-      if ((line.startsWith('■') || line.includes('■')) && 
-          !line.includes('Star') && !line.includes('character')) {
-        const cleanLine = line.replace('■', '').trim();
-        htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
-        inDescriptionBlock = false;
-        continue;
-      }
-      
-      // Major section headers (▌ symbols), excluding character descriptions
-      if ((line.startsWith('▌') || line.includes('▌')) && 
-          !line.includes('Star') && !line.includes('character')) {
-        const cleanLine = line.replace('▌', '').trim();
-        htmlOutput += `<div class="event-header">${cleanLine}</div>`;
-        inDescriptionBlock = false;
-        continue;
-      }
-      
-      // Event Period/Requirements - special styling
-      if (line.includes('Event Period:') || line.includes('Event Period') || 
-          line.startsWith('Requirement:') || line.includes('Requirement:')) {
-        htmlOutput += `<div class="update-requirement">${line}</div>`;
-        continue;
-      }
-      
-      // Other time/date references
-      if (line.includes('Update Time') || line.includes('Update Time:')) {
-        htmlOutput += `<div class="update-requirement">${line}</div>`;
-        continue;
-      }
-      
-      // Notes with ※ symbols
-      if (line.startsWith('※') || line.includes('※')) {
-        htmlOutput += `<div class="update-note">${line}</div>`;
-        continue;
-      }
-      
-      // Bullet points - handle both traditional bullets and bullet point numbers
-      if (line.startsWith('●') || line.includes('●') || 
-          line.startsWith('.') || line.startsWith('•')) {
-        const cleanLine = line.replace(/^[●.•]\s*/, '').trim();
-        htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
-        continue;
-      }
-      
-      // Handle any lines that appear to be descriptive content
-      // This is a broad fallback to catch anything that looks like description
-      if (inDescriptionBlock || 
-          line.length > 20 || 
-          line.includes(":") ||
-          /^[A-Z][a-z]/.test(line)) { // Starts with capital letter followed by lowercase
-        htmlOutput += `<div class="update-content">${line}</div>`;
-        continue;
-      }
-      
-      // Default content fallback - if all else fails, treat as regular content
-      htmlOutput += `<div class="update-content">${line}</div>`;
     }
-  } 
-  else if (isContractShop) {
-    // Contract shop processing logic remains the same
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      
-      // Shop/section header (title with Version update)
-      if (line.includes('Version') && (line.includes('Contract Shop Update') || line.includes('Shop Update'))) {
-        htmlOutput += `<div class="event-header">${line}</div>`;
-        continue;
+    else {
+      // Default generic processing for other event types
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // Section headers (■ symbols)
+        if (line.startsWith('■') || line.includes('■')) {
+          const cleanLine = line.replace('■', '').trim();
+          htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Major section headers (▌ symbols)
+        if (line.startsWith('▌') || line.includes('▌')) {
+          const cleanLine = line.replace('▌', '').trim();
+          htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Bullet points
+        if (line.startsWith('●') || line.includes('●')) {
+          const cleanLine = line.replace('●', '').trim();
+          htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+          continue;
+        }
+        
+        // Default case - regular content
+        htmlOutput += `<p>${line}</p>`;
       }
-      
-      // Time/period header
-      if (line.includes('Release Time') || line.includes('After the Version') || line.includes('Event Period')) {
-        htmlOutput += `<div class="release-time">${line}</div>`;
-        continue;
-      }
-      
-      // Section headers (■ symbols)
-      if (line.startsWith('■') || line.includes('■')) {
-        const cleanLine = line.replace('■', '').trim();
-        htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
-        continue;
-      }
-      
-      // Major section headers (▌ symbols)
-      if (line.startsWith('▌') || line.includes('▌')) {
-        const cleanLine = line.replace('▌', '').trim();
-        htmlOutput += `<div class="event-header">${line}</div>`;
-        continue;
-      }
-      
-      // Bullet points
-      if (line.startsWith('●') || line.includes('●')) {
-        const cleanLine = line.replace('●', '').trim();
-        htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
-        continue;
-      }
-      
-      // Contract items
-      if (line.includes('Herta Contract:')) {
-        const contractBlock = this.processContractBlock(lines, i);
-        htmlOutput += contractBlock.html;
-        i = contractBlock.endIndex; // Skip to the end of this contract block
-        continue;
-      }
-      
-      // Default case - regular content
-      htmlOutput += `<p>${line}</p>`;
     }
+    
+    // Add a wrapper for consistent styling
+    htmlOutput = `<div class="formatted-content">${htmlOutput}</div>`;
+    
+    // Ensure we don't break content across "×" multipliers (fixing the Fuel × 10 issue)
+    htmlOutput = htmlOutput.replace(/([×]\s*)(<\/div>)(<div[^>]*>)(\d+)/g, '$1$4$2');
+    
+    // Return sanitized HTML
+    return this.sanitizer.bypassSecurityTrustHtml(htmlOutput);
   }
-  else {
-    // Default generic processing for other event types
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      
-      // Section headers (■ symbols)
-      if (line.startsWith('■') || line.includes('■')) {
-        const cleanLine = line.replace('■', '').trim();
-        htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
-        continue;
-      }
-      
-      // Major section headers (▌ symbols)
-      if (line.startsWith('▌') || line.includes('▌')) {
-        const cleanLine = line.replace('▌', '').trim();
-        htmlOutput += `<div class="event-header">${cleanLine}</div>`;
-        continue;
-      }
-      
-      // Bullet points
-      if (line.startsWith('●') || line.includes('●')) {
-        const cleanLine = line.replace('●', '').trim();
-        htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
-        continue;
-      }
-      
-      // Default case - regular content
-      htmlOutput += `<p>${line}</p>`;
-    }
-  }
-  
-  // Add a wrapper for consistent styling
-  htmlOutput = `<div class="formatted-content">${htmlOutput}</div>`;
-  
-  // Ensure we don't break content across "×" multipliers (fixing the Fuel × 10 issue)
-  htmlOutput = htmlOutput.replace(/([×]\s*)(<\/div>)(<div[^>]*>)(\d+)/g, '$1$4$2');
-  
-  // Return sanitized HTML
-  return this.sanitizer.bypassSecurityTrustHtml(htmlOutput);
-}
-
   // Helper method to process a complete contract block
   private processContractBlock(lines: string[], startIndex: number): { html: string, endIndex: number } {
     let htmlOutput = '';
