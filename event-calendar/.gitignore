@@ -40,3 +40,14 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase
+serviceAccountKey.json
+.firebase/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+env/
+venv/
