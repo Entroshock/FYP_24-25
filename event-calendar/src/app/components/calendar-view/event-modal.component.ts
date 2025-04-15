@@ -757,13 +757,14 @@ private formatDescription(text: string): SafeHtml {
         // Store current section to track context
         currentSection = cleanLine;
         
-        // IMPROVED: Direct check for Event Rewards section
+        // FIXED: Separate section header from image completely
+        // Don't use the cleanLine in the alt text to prevent text duplication
         if (cleanLine === 'Event Rewards' && this.sectionImages['Event Rewards']) {
           const imageUrl = this.sectionImages['Event Rewards'];
           console.log('Found Event Rewards image:', imageUrl);
           
           htmlOutput += `<div class="section-image-container">
-            <img src="${imageUrl}" alt="Event Rewards" class="section-image" 
+            <img src="${imageUrl}" alt="Rewards" class="section-image" 
                  onerror="this.onerror=null; this.src='/assets/images/placeholder.png';">
           </div>`;
         }
@@ -778,8 +779,9 @@ private formatDescription(text: string): SafeHtml {
             console.log(`Found image for section ${cleanLine} via match with ${sectionKey}`);
             const imageUrl = this.sectionImages[sectionKey];
             
+            // Avoid using cleanLine in the alt text to prevent duplication
             htmlOutput += `<div class="section-image-container">
-              <img src="${imageUrl}" alt="${cleanLine}" class="section-image" 
+              <img src="${imageUrl}" alt="Section Image" class="section-image" 
                    onerror="this.onerror=null; this.src='/assets/images/placeholder.png';">
             </div>`;
           }
