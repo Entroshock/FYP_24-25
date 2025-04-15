@@ -81,6 +81,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     overflow-y: auto;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
   }
 
   .close-modal {
@@ -172,6 +173,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     color: #e6e6e6;
   }
 
+  /* Improved description content styles */
   .description-content {
     color: #cccccc;
     line-height: 1.6;
@@ -180,6 +182,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     border-radius: 6px;
     font-size: 14px !important;
     line-height: 1.5 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    hyphens: none !important;
+    white-space: pre-wrap !important;
+    max-width: 100% !important;
+    font-family: 'Arial', sans-serif !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 
   /* Section image styles */
@@ -213,7 +222,16 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     animation: fadeIn 0.3s ease-out;
   }
 
-  /* Common elements styling */
+  /* Helper class for text containers */
+  .text-wrapper {
+    display: inline-block;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-break: normal;
+    white-space: pre-wrap;
+  }
+
+  /* Common elements styling with improved text wrapping */
   :host ::ng-deep .event-header {
     font-size: 18px !important;
     font-weight: 600 !important;
@@ -222,6 +240,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     border-bottom: 1px solid rgba(50, 50, 50, 0.8) !important;
     padding: 10px 0 !important;
     display: block !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   :host ::ng-deep .event-subheader {
@@ -232,6 +254,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     padding-bottom: 8px !important;
     border-bottom: 1px solid rgba(50, 50, 50, 0.8) !important;
     display: block !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   :host ::ng-deep .bullet-point {
@@ -241,6 +267,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     position: relative !important;
     color: #b0b0b0 !important;
     font-weight: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   :host ::ng-deep .bullet-point::before {
@@ -255,6 +285,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     color: #b0b0b0 !important;
     font-weight: normal !important;
     display: block !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   /* VERSION UPDATE STYLING */
@@ -267,6 +301,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     padding: 6px 0 !important;
     display: block !important;
     border-bottom: 1px solid rgba(80, 80, 80, 0.5) !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   /* ALL regular content (character descriptions, body text, etc.) */
@@ -277,6 +315,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     line-height: 1.4 !important;
     display: block !important;
     font-weight: normal !important; /* CRITICAL: Ensure content is not bold */
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   /* Special requirement sections (Event Period, etc.) */
@@ -289,6 +331,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     font-style: italic !important;
     display: block !important;
     font-weight: normal !important; /* Ensure requirements are not bold */
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   /* Notes with ※ symbols */
@@ -302,6 +348,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     border-left: 3px solid rgba(180, 180, 180, 0.3) !important;
     display: block !important;
     font-weight: normal !important; /* Ensure notes are not bold */
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   /* CONTRACT SHOP STYLING */
@@ -313,6 +363,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     font-weight: 500 !important;
     background-color: rgba(30, 30, 35, 0.5) !important;
     border-radius: 4px !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   /* Completely redone contract styling for consistency */
@@ -323,6 +377,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     border-radius: 4px !important;
     border-left: 2px solid rgba(150, 150, 150, 0.5) !important;
     display: block !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   :host ::ng-deep .contract-header {
@@ -331,6 +389,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     margin-bottom: 6px !important;
     display: block !important;
     font-size: 15px !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   :host ::ng-deep .contract-content {
@@ -340,6 +402,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     font-weight: normal !important; /* CRITICAL: Ensure contract content is not bold */
     margin: 8px 0 !important;
     line-height: 1.4 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   :host ::ng-deep .price-info {
@@ -351,17 +417,19 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     color: #aaaaaa !important;
     display: block !important;
     font-weight: normal !important; /* Ensure price info is not bold */
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
-  /* Ensure no content leaks into other sections */
-  :host ::ng-deep .update-content, 
-  :host ::ng-deep .update-requirement,
-  :host ::ng-deep .update-note,
-  :host ::ng-deep .bullet-point,
-  :host ::ng-deep .contract-content,
-  :host ::ng-deep .price-info {
-    white-space: normal !important; /* Allow text to wrap normally */
-    word-break: break-word !important; /* Break words if needed */
+  /* Fix for ensuring all text elements have consistent wrapping */
+  :host ::ng-deep .description-content *,
+  :host ::ng-deep .event-modal-content * {
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   /* Remove any legacy styles */
@@ -378,6 +446,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     border-left: 2px solid rgba(150, 150, 150, 0.5) !important;
     display: block !important;
     font-weight: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    hyphens: none !important;
   }
 
   /* Media query for mobile adjustments */
@@ -472,20 +544,94 @@ export class EventModalComponent implements OnChanges {
     event.target.src = '/assets/images/placeholder.png'; 
   }
 
-// Updated preprocessText method with better bullet point handling
+// Updated preprocessText method with better handling of text breaks
+/**
+ * Enhanced preprocessText function to fix all word wrapping issues
+ * This handles date/time formats, trailing characters, and special terms
+ */
 private preprocessText(text: string): string {
+  if (!text) return '';
+  
   let processedText = text;
   
-  // Fix broken "Skill Lv. +" lines where numbers might appear at start of next line
-  processedText = processedText.replace(/Skill Lv\. \+\s*\n\s*(\d+)/g, 'Skill Lv. +$1');
+  // ===== FIX DATE AND TIME FORMATS =====
+  
+  // Fix ISO dates with times (main issue from screenshots)
+  processedText = processedText.replace(
+    /(\d{4}\/\d{2}\/\d{2})\s+(\d{2}):\s*(\d{2}):\s*(\d{2})/g, 
+    '$1 <span style="white-space:nowrap">$2:$3:$4</span>'
+  );
+  
+  // Fix date ranges with em-dashes or hyphens
+  processedText = processedText.replace(
+    /(<span[^>]*>\d{2}:\d{2}:\d{2}<\/span>)\s*[–\-]\s*(\d{4}\/\d{2}\/\d{2})/g,
+    '$1 – <span style="white-space:nowrap">$2'
+  );
+  
+  // Fix "server time" and "UTC+8" parentheses staying with the time
+  processedText = processedText.replace(
+    /(<\/span>)\s*\((server time|UTC\+8)\)/g,
+    '$1 <span style="white-space:nowrap">($2)</span>'
+  );
+  
+  // Fix period after version updates
+  processedText = processedText.replace(
+    /(After\s+Version\s+\d+\.\d+\s+[Uu]pdate)/g,
+    '<span style="white-space:nowrap">$1</span>'
+  );
+  
+  // ===== FIX EVENT TITLES AND DESCRIPTIONS =====
+  
+  // Fix trailing 's' characters after event names
+  processedText = processedText.replace(
+    /(Shadow|Fiction|Chaos|Locust|Rule|Othershor):\s+([^\n]+)\n\s*([se])/g,
+    '$1: $2'
+  );
+  
+  // Fix "Apocalyptic Shadow" not wrapping properly
+  processedText = processedText.replace(
+    /(•|●)\s*(Apocalyptic Shadow:|Pure Fiction:|Memory of Chaos:)/g,
+    '$1 <span style="white-space:nowrap">$2</span>'
+  );
+  
+  // ===== FIX SPECIAL TERMS =====
+  
+  // Fix "Compensation" breaking
+  processedText = processedText.replace(
+    /([Ss]erver\s+)?[Mm]aintenance\s+[Cc]ompensation/g, 
+    '<span style="white-space:nowrap">$&</span>'
+  );
+  
+  processedText = processedText.replace(
+    /[Bb]ug\s+[Cc]ompensation/g, 
+    '<span style="white-space:nowrap">$&</span>'
+  );
+  
+  // Fix "Eligible Recipients" breaking
+  processedText = processedText.replace(
+    /Eligible\s+Recipients/g, 
+    '<span style="white-space:nowrap">Eligible Recipients</span>'
+  );
+  
+  // Fix quantities with × symbol
+  processedText = processedText.replace(
+    /(×|x)\s*(\d+)/g, 
+    '<span style="white-space:nowrap">$1$2</span>'
+  );
+  
+  // ===== STANDARD FORMATTING FIXES =====
+  
+  // Standardize bullet points (change ● to •)
+  processedText = processedText.replace(/●/g, '•');
   
   // Carefully ensure section markers are properly spaced
-  // ONLY fix if there's no space after the marker
   processedText = processedText.replace(/▌([A-Za-z])/g, '▌ $1');
   
   // Carefully ensure bullet points are properly spaced
-  // ONLY fix if there's no space after the bullet
-  processedText = processedText.replace(/●([A-Za-z])/g, '● $1');
+  processedText = processedText.replace(/•([A-Za-z])/g, '• $1');
+  
+  // Fix broken "Skill Lv. +" lines where numbers might appear at start of next line
+  processedText = processedText.replace(/Skill Lv\. \+\s*\n\s*(\d+)/g, 'Skill Lv. +$1');
   
   // Make sure Event Details section is properly formatted
   if (processedText.includes('▌ Event Details') || processedText.includes('▌Event Details')) {
@@ -495,8 +641,35 @@ private preprocessText(text: string): string {
     processedText = processedText.replace(/▌\s*Event Details([^\n])/g, '▌ Event Details\n$1');
     
     // Make sure bullet points are on their own lines
-    processedText = processedText.replace(/([^\n])●/g, '$1\n●');
+    processedText = processedText.replace(/([^\n])•/g, '$1\n•');
   }
+  
+  // ===== EVENT-SPECIFIC PATTERN FIXES =====
+  
+  
+  // Fix "Event Period" lines
+  processedText = processedText.replace(
+    /▌\s*Event Period/g,
+    '▌ <span style="white-space:nowrap">Event Period</span>'
+  );
+  
+  // Fix "Event Details" lines
+  processedText = processedText.replace(
+    /▌\s*Event Details/g,
+    '▌ <span style="white-space:nowrap">Event Details</span>'
+  );
+  
+  // Fix "Event Rewards" lines
+  processedText = processedText.replace(
+    /▌\s*Event Rewards/g,
+    '▌ <span style="white-space:nowrap">Event Rewards</span>'
+  );
+  
+  // Fix "Participation Requirement" lines
+  processedText = processedText.replace(
+    /▌\s*Participation Requirement/g,
+    '▌ <span style="white-space:nowrap">Participation Requirement</span>'
+  );
   
   return processedText;
 }
@@ -579,7 +752,7 @@ private formatDescription(text: string): SafeHtml {
       // Section headers with ▌ symbol (Event Period, Participation Requirement, Event Details, etc.)
       if (line.startsWith('▌') || line.includes('▌')) {
         const cleanLine = line.replace('▌', '').trim();
-        htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+        htmlOutput += `<div class="event-header text-wrapper">${cleanLine}</div>`;
         
         // Store current section to track context
         currentSection = cleanLine;
@@ -618,19 +791,19 @@ private formatDescription(text: string): SafeHtml {
       // Bullet points with ● symbol
       if (line.startsWith('●') || line.includes('●')) {
         const cleanLine = line.replace('●', '').trim();
-        htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+        htmlOutput += `<div class="bullet-point text-wrapper">${cleanLine}</div>`;
         continue;
       }
       
       // Event period lines
       if (line.includes('After Version') && line.includes('Update') && 
           (line.includes('UTC+8') || line.includes('—'))) {
-        htmlOutput += `<div class="update-requirement">${line}</div>`;
+        htmlOutput += `<div class="update-requirement text-wrapper">${line}</div>`;
         continue;
       }
       
       // Default case - regular content
-      htmlOutput += `<div class="update-content">${line}</div>`;
+      htmlOutput += `<div class="update-content text-wrapper">${line}</div>`;
     }
   }
   else if (isVersionUpdate) {
@@ -643,7 +816,7 @@ private formatDescription(text: string): SafeHtml {
       
       // Major headers (Version Update Details, etc.)
       if (line.includes('Version Update Details') || line.includes('Update Details')) {
-        htmlOutput += `<div class="event-header">${line}</div>`;
+        htmlOutput += `<div class="event-header text-wrapper">${line}</div>`;
         inDescriptionBlock = false;
         continue;
       }
@@ -652,7 +825,7 @@ private formatDescription(text: string): SafeHtml {
       if (/^\d+\.\s+New\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Story"
           /^\d+\.\s+New\s+[A-Z][a-z]+\s+[A-Z][a-z]+$/.test(line) || // Pattern like "1. New Light Cones"
           /^\d+\.\s+Others$/.test(line)) { // Pattern specifically for "6. Others"
-        htmlOutput += `<div class="update-section-header">${line}</div>`;
+        htmlOutput += `<div class="update-section-header text-wrapper">${line}</div>`;
         currentSection = line;
         inDescriptionBlock = false;
         continue;
@@ -660,7 +833,7 @@ private formatDescription(text: string): SafeHtml {
       
       // Bug Fixes and Adjustments sections
       if (/^▌\s*(Bug Fixes|Adjustments and Optimizations)/.test(line)) {
-        htmlOutput += `<div class="event-header">${line}</div>`;
+        htmlOutput += `<div class="event-header text-wrapper">${line}</div>`;
         inDescriptionBlock = false;
         continue;
       }
@@ -676,7 +849,7 @@ private formatDescription(text: string): SafeHtml {
           const locationName = quoteMatch[2];
           
           // Add the full line as a subheader (not bold)
-          htmlOutput += `<div class="event-subheader">${quotedAreaName} ${locationName}</div>`;
+          htmlOutput += `<div class="event-subheader text-wrapper">${quotedAreaName} ${locationName}</div>`;
           
           // Mark that we're now in a description block
           inDescriptionBlock = true;
@@ -689,12 +862,12 @@ private formatDescription(text: string): SafeHtml {
             const quotedAreaName = simpleQuoteMatch[0];
             
             // Add the quoted area name as a subheader
-            htmlOutput += `<div class="event-subheader">${quotedAreaName}</div>`;
+            htmlOutput += `<div class="event-subheader text-wrapper">${quotedAreaName}</div>`;
             
             // Then add the remaining text as regular content if any
             const description = line.substring(quotedAreaName.length).trim();
             if (description) {
-              htmlOutput += `<div class="update-content">${description}</div>`;
+              htmlOutput += `<div class="update-content text-wrapper">${description}</div>`;
             }
             inDescriptionBlock = true;
             continue;
@@ -707,7 +880,7 @@ private formatDescription(text: string): SafeHtml {
           (line.startsWith("The spiritual") || 
            line.startsWith("This land of") ||
            line.length > 20)) {
-        htmlOutput += `<div class="update-content">${line}</div>`;
+        htmlOutput += `<div class="update-content text-wrapper">${line}</div>`;
         continue;
       }
       
@@ -726,7 +899,7 @@ private formatDescription(text: string): SafeHtml {
           line.includes("Chaos:") ||
           line.includes("Skill Lv")
       ) {
-        htmlOutput += `<div class="update-content">${line}</div>`;
+        htmlOutput += `<div class="update-content text-wrapper">${line}</div>`;
         inDescriptionBlock = true;
         continue;
       }
@@ -735,7 +908,7 @@ private formatDescription(text: string): SafeHtml {
       if (line.startsWith('5-Star') || line.startsWith('4-Star') ||
           line.startsWith('■ 5-Star') || line.startsWith('■ 4-Star')) {
         const cleanLine = line.replace(/^[■●]\s*/, '').trim();
-        htmlOutput += `<div class="update-content">${cleanLine}</div>`;
+        htmlOutput += `<div class="update-content text-wrapper">${cleanLine}</div>`;
         inDescriptionBlock = true;
         continue;
       }
@@ -744,7 +917,7 @@ private formatDescription(text: string): SafeHtml {
       if ((line.startsWith('■') || line.includes('■')) && 
           !line.includes('Star') && !line.includes('character')) {
         const cleanLine = line.replace('■', '').trim();
-        htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+        htmlOutput += `<div class="event-subheader text-wrapper">${cleanLine}</div>`;
         inDescriptionBlock = false;
         continue;
       }
@@ -753,7 +926,7 @@ private formatDescription(text: string): SafeHtml {
       if ((line.startsWith('▌') || line.includes('▌')) && 
           !line.includes('Star') && !line.includes('character')) {
         const cleanLine = line.replace('▌', '').trim();
-        htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+        htmlOutput += `<div class="event-header text-wrapper">${cleanLine}</div>`;
         inDescriptionBlock = false;
         continue;
       }
@@ -761,19 +934,19 @@ private formatDescription(text: string): SafeHtml {
       // Event Period/Requirements - special styling
       if (line.includes('Event Period:') || line.includes('Event Period') || 
           line.startsWith('Requirement:') || line.includes('Requirement:')) {
-        htmlOutput += `<div class="update-requirement">${line}</div>`;
+        htmlOutput += `<div class="update-requirement text-wrapper">${line}</div>`;
         continue;
       }
       
       // Other time/date references
       if (line.includes('Update Time') || line.includes('Update Time:')) {
-        htmlOutput += `<div class="update-requirement">${line}</div>`;
+        htmlOutput += `<div class="update-requirement text-wrapper">${line}</div>`;
         continue;
       }
       
       // Notes with ※ symbols
       if (line.startsWith('※') || line.includes('※')) {
-        htmlOutput += `<div class="update-note">${line}</div>`;
+        htmlOutput += `<div class="update-note text-wrapper">${line}</div>`;
         continue;
       }
       
@@ -781,7 +954,7 @@ private formatDescription(text: string): SafeHtml {
       if (line.startsWith('●') || line.includes('●') || 
           line.startsWith('.') || line.startsWith('•')) {
         const cleanLine = line.replace(/^[●.•]\s*/, '').trim();
-        htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+        htmlOutput += `<div class="bullet-point text-wrapper">${cleanLine}</div>`;
         continue;
       }
       
@@ -790,12 +963,12 @@ private formatDescription(text: string): SafeHtml {
           line.length > 20 || 
           line.includes(":") ||
           /^[A-Z][a-z]/.test(line)) { // Starts with capital letter followed by lowercase
-        htmlOutput += `<div class="update-content">${line}</div>`;
+        htmlOutput += `<div class="update-content text-wrapper">${line}</div>`;
         continue;
       }
       
       // Default content fallback
-      htmlOutput += `<div class="update-content">${line}</div>`;
+      htmlOutput += `<div class="update-content text-wrapper">${line}</div>`;
     }
   } 
   else if (isContractShop) {
@@ -805,27 +978,27 @@ private formatDescription(text: string): SafeHtml {
       
       // Shop/section header (title with Version update)
       if (line.includes('Version') && (line.includes('Contract Shop Update') || line.includes('Shop Update'))) {
-        htmlOutput += `<div class="event-header">${line}</div>`;
+        htmlOutput += `<div class="event-header text-wrapper">${line}</div>`;
         continue;
       }
       
       // Time/period header
       if (line.includes('Release Time') || line.includes('After the Version') || line.includes('Event Period')) {
-        htmlOutput += `<div class="release-time">${line}</div>`;
+        htmlOutput += `<div class="release-time text-wrapper">${line}</div>`;
         continue;
       }
       
       // Section headers (■ symbols)
       if (line.startsWith('■') || line.includes('■')) {
         const cleanLine = line.replace('■', '').trim();
-        htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+        htmlOutput += `<div class="event-subheader text-wrapper">${cleanLine}</div>`;
         continue;
       }
       
       // Major section headers (▌ symbols)
       if (line.startsWith('▌') || line.includes('▌')) {
         const cleanLine = line.replace('▌', '').trim();
-        htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+        htmlOutput += `<div class="event-header text-wrapper">${cleanLine}</div>`;
         
         // Check for section images
         if (cleanLine === 'Event Rewards' && this.sectionImages['Event Rewards']) {
@@ -842,7 +1015,7 @@ private formatDescription(text: string): SafeHtml {
       // Bullet points
       if (line.startsWith('●') || line.includes('●')) {
         const cleanLine = line.replace('●', '').trim();
-        htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+        htmlOutput += `<div class="bullet-point text-wrapper">${cleanLine}</div>`;
         continue;
       }
       
@@ -855,7 +1028,7 @@ private formatDescription(text: string): SafeHtml {
       }
       
       // Default case - regular content
-      htmlOutput += `<p>${line}</p>`;
+      htmlOutput += `<div class="update-content text-wrapper">${line}</div>`;
     }
   }
   else {
@@ -866,14 +1039,14 @@ private formatDescription(text: string): SafeHtml {
       // Section headers (■ symbols)
       if (line.startsWith('■') || line.includes('■')) {
         const cleanLine = line.replace('■', '').trim();
-        htmlOutput += `<div class="event-subheader">${cleanLine}</div>`;
+        htmlOutput += `<div class="event-subheader text-wrapper">${cleanLine}</div>`;
         continue;
       }
       
       // Major section headers (▌ symbols)
       if (line.startsWith('▌') || line.includes('▌')) {
         const cleanLine = line.replace('▌', '').trim();
-        htmlOutput += `<div class="event-header">${cleanLine}</div>`;
+        htmlOutput += `<div class="event-header text-wrapper">${cleanLine}</div>`;
         
         // Check for section images
         if (cleanLine === 'Event Rewards' && this.sectionImages['Event Rewards']) {
@@ -890,12 +1063,12 @@ private formatDescription(text: string): SafeHtml {
       // Bullet points
       if (line.startsWith('●') || line.includes('●')) {
         const cleanLine = line.replace('●', '').trim();
-        htmlOutput += `<div class="bullet-point">${cleanLine}</div>`;
+        htmlOutput += `<div class="bullet-point text-wrapper">${cleanLine}</div>`;
         continue;
       }
       
       // Default case - regular content
-      htmlOutput += `<p>${line}</p>`;
+      htmlOutput += `<div class="update-content text-wrapper">${line}</div>`;
     }
   }
   
@@ -908,6 +1081,7 @@ private formatDescription(text: string): SafeHtml {
   // Return sanitized HTML
   return this.sanitizer.bypassSecurityTrustHtml(htmlOutput);
 }
+
   // Helper method to process a complete contract block
   private processContractBlock(lines: string[], startIndex: number): { html: string, endIndex: number } {
     let htmlOutput = '';
@@ -924,7 +1098,7 @@ private formatDescription(text: string): SafeHtml {
     htmlOutput += `<div class="contract-item">`;
     
     // Add contract header
-    htmlOutput += `<div class="contract-header">${contractHeader}</div>`;
+    htmlOutput += `<div class="contract-header text-wrapper">${contractHeader}</div>`;
     
     // Collect all content from this contract until the next contract or major section
     let contractContentLines = [];
@@ -962,17 +1136,17 @@ private formatDescription(text: string): SafeHtml {
     
     // Add contract content as one block
     if (contractContentLines.length > 0) {
-      htmlOutput += `<div class="contract-content">${contractContentLines.join(' ')}</div>`;
+      htmlOutput += `<div class="contract-content text-wrapper">${contractContentLines.join(' ')}</div>`;
     }
     
     // Add price info
     if (priceInfo) {
-      htmlOutput += `<div class="price-info">${priceInfo}</div>`;
+      htmlOutput += `<div class="price-info text-wrapper">${priceInfo}</div>`;
     }
     
     // Add maximum purchases info
     if (maxPurchases) {
-      htmlOutput += `<div class="price-info">${maxPurchases}</div>`;
+      htmlOutput += `<div class="price-info text-wrapper">${maxPurchases}</div>`;
     }
     
     // Close the contract block
@@ -984,4 +1158,5 @@ private formatDescription(text: string): SafeHtml {
       endIndex: currentIndex - 1 // Return to the last processed line
     };
   }
+
 }
