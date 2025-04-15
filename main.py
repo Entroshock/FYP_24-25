@@ -446,7 +446,7 @@ def analyze_sentiment(comments):
     return sentiment
 
 def get_article_content(post_id):
-    """Fetch detailed article content with better structured content parsing"""
+    """Fetch detailed article content with complete extraction of all sections including Event Details"""
     add_delay()  # Add delay before each request
     
     api_url = f"https://bbs-api-os.hoyolab.com/community/post/wapi/getPostFull?post_id={post_id}&read=1&scene=1"
@@ -461,62 +461,101 @@ def get_article_content(post_id):
         # Get image_list from the correct location
         image_list = data.get('data', {}).get('post', {}).get('image_list', [])
         
-        # Get basic content fields
+        # Try to get content from different possible sources
         structured_content = post_data.get('structured_content', '')
         desc = post_data.get('desc', '')
-        cover = post_data.get('cover', '')
-        
-        # Get multilanguage content if available
         multi_lang = post_data.get('multi_language_info', {})
         lang_content = multi_lang.get('lang_content', {}).get('en-us', '')
         
-        # Parse the structured_content JSON to extract all text properly
+        # Also get cover field which might contain an image
+        cover = post_data.get('cover', '')
+        
+        # Extract section images from structured content
+        section_images = {}
+        
+        # Create a complete text representation from structured content
         full_text = ""
+        bullet_points = []
+        
         if structured_content:
             try:
-                content_json = json.loads(structured_content)
+                print(f"Parsing structured content for post {post_id}")
+                content_data = json.loads(structured_content)
                 
-                # Process each insert block to extract text
-                for item in content_json:
-                    if 'insert' in item:
-                        insert_value = item['insert']
+                # Process structured content to extract all text and images
+                for i in range(len(content_data)):
+                    item = content_data[i]
+                    
+                    # Skip empty items
+                    if 'insert' not in item:
+                        continue
                         
-                        # Handle plain text inserts
-                        if isinstance(insert_value, str):
-                            full_text += insert_value
+                    insert_value = item['insert']
+                    
+                    # Handle plain text inserts
+                    if isinstance(insert_value, str):
+                        # Add to full text
+                        full_text += insert_value
                         
-                        # Handle object inserts (like images or formatted text)
-                        elif isinstance(insert_value, dict):
-                            # Skip images
-                            if 'image' in insert_value:
-                                continue
-                                
-                            # Get text content from other object types
-                            if 'text' in insert_value:
-                                full_text += insert_value['text']
-                                
-            except json.JSONDecodeError:
-                print(f"Error parsing structured content JSON for post {post_id}")
+                        # Check for bullet points (● symbol)
+                        if '●' in insert_value:
+                            bullet_points.append(insert_value)
+                            print(f"Found bullet point: {insert_value[:50]}...")
+                        
+                        # Check for Event Rewards section followed by an image
+                        if '▌Event Rewards' in insert_value and i + 1 < len(content_data):
+                            next_item = content_data[i + 1]
+                            if (isinstance(next_item.get('insert'), dict) and 
+                                'image' in next_item.get('insert', {})):
+                                section_images['Event Rewards'] = next_item['insert']['image']
+                                print(f"Found Event Rewards image: {next_item['insert']['image']}")
+                    
+                    # Handle object inserts (like images)
+                    elif isinstance(insert_value, dict):
+                        # Skip image inserts for text content
+                        if 'image' in insert_value:
+                            continue
+                            
+                        # Get text content from other objects
+                        if 'text' in insert_value:
+                            full_text += insert_value['text']
+                
+                print(f"Extracted text with length: {len(full_text)}")
+                print(f"Found {len(bullet_points)} bullet points")
+                
+                # If we found bullet points, make sure they're in the full text
+                if bullet_points and '●' not in full_text:
+                    print("Adding missing bullet points to full text")
+                    # Add missing bullet points to the full text
+                    full_text += "\n▌Event Details\n" + "\n".join(bullet_points)
+                
+            except (json.JSONDecodeError, TypeError) as e:
+                print(f"Error parsing structured content: {e}")
                 # Fall back to unstructured content
-                full_text = ' '.join(filter(None, [desc, structured_content, lang_content]))
+                full_text = ' '.join(filter(None, [desc, structured_content]))
         else:
-            # Fall back to unstructured content
+            # Fall back to unstructured content if no structured content
             full_text = ' '.join(filter(None, [desc, lang_content]))
         
-        # Clean up any HTML tags that might be in the content
+        # Clean up HTML tags
         full_text = re.sub(r'<[^>]+>', ' ', full_text)
         
         # Clean up excess whitespace
         full_text = re.sub(r'\s+', ' ', full_text).strip()
         
-        # Ensure section markers and bullet points are properly formatted
+        # Ensure proper formatting of section markers and bullet points
         full_text = full_text.replace("▌Event", "▌ Event")
         full_text = full_text.replace("●During", "● During")
         full_text = full_text.replace("●From", "● From")
         full_text = full_text.replace("●If", "● If")
         full_text = full_text.replace("●After", "● After")
         
-        print(f"Extracted full text (first 200 chars): {full_text[:200]}...")
+        # Add explicit formatting for event details section if missing
+        if 'Event Details' not in full_text and len(bullet_points) > 0:
+            full_text += "\n▌ Event Details\n" + "\n".join(bullet_points)
+        
+        # Print the final full text for debugging
+        print(f"Final full text excerpt (first 200 chars): {full_text[:200]}...")
         
         return {
             'description': desc,
@@ -525,61 +564,62 @@ def get_article_content(post_id):
             'structured_content': structured_content,
             'raw_post_data': post_data,
             'image_list': image_list,
-            'cover': cover
+            'cover': cover,
+            'section_images': section_images
         }
     
     except requests.exceptions.RequestException as e:
         print(f"Error fetching article content: {e}")
         return None
-    
 
 def format_event_for_firestore(article, dates):
-    """Format article data with improved structured content parsing"""
+    """Format article data with sentiment analysis, validated dates, and enhanced image extraction"""
     # Get raw post data for better description and image extraction
     raw_post_data = article.get('raw_post_data', {})
     clean_description = raw_post_data.get('desc', '') or article.get('description', '')
     
-    # Get structured content for better parsing
-    structured_content = raw_post_data.get('structured_content', '')
-    
-    # Parse the full event text more carefully
+    # Get the full text including all sections and bullet points
     full_text = article.get('full_text', '')
     
-    # If we still don't have good content, try to extract from structured_content JSON
-    if not full_text or '●' not in full_text:
-        if structured_content:
-            try:
-                content_json = json.loads(structured_content)
-                extracted_text = []
+    # Parse structured content for better event details extraction
+    structured_content = raw_post_data.get('structured_content', '') or article.get('structured_content', '')
+    
+    # Extract bullet points and event details if not already in full text
+    if structured_content and ('▌ Event Details' not in full_text or '● ' not in full_text):
+        try:
+            content_data = json.loads(structured_content)
+            bullet_points = []
+            event_details_text = ""
+            
+            # Process structured content to extract event details
+            in_event_details = False
+            for item in content_data:
+                if 'insert' not in item:
+                    continue
+                    
+                insert_value = item['insert']
                 
-                # Extract text from each insert block
-                for item in content_json:
-                    if 'insert' in item:
-                        insert_value = item['insert']
-                        if isinstance(insert_value, str):
-                            extracted_text.append(insert_value)
-                        elif isinstance(insert_value, dict) and 'text' in insert_value:
-                            extracted_text.append(insert_value['text'])
-                
-                # Join all extracted text
-                full_text = ''.join(extracted_text)
-                
-                # Fix common formatting issues
-                full_text = full_text.replace("▌Event", "▌ Event")
-                full_text = full_text.replace("●During", "● During")
-                full_text = full_text.replace("●From", "● From")
-                full_text = full_text.replace("●If", "● If")
-                full_text = full_text.replace("●After", "● After")
-                
-                print(f"Successfully parsed structured content for event: {article.get('title')}")
-            except json.JSONDecodeError:
-                print(f"Failed to parse structured content JSON for: {article.get('title')}")
+                # Check for Event Details section
+                if isinstance(insert_value, str):
+                    if '▌Event Details' in insert_value:
+                        in_event_details = True
+                        event_details_text += insert_value
+                    elif in_event_details and '●' in insert_value:
+                        bullet_points.append(insert_value)
+                        event_details_text += insert_value
+            
+            # If we have event details and they're not in the full text, add them
+            if event_details_text and '▌ Event Details' not in full_text:
+                print(f"Adding missing event details to description")
+                full_text += "\n" + event_details_text
+        except (json.JSONDecodeError, TypeError) as e:
+            print(f"Error extracting event details from structured content: {e}")
     
     # Create base event data
     event_data = {
         'eventId': article.get('id'),
         'title': article.get('title'),
-        'description': full_text or clean_description,  # Use the full parsed text if available
+        'description': full_text,  # Use the complete full text with all sections
         'startDate': dates['startDate'],
         'endDate': dates['endDate'],
         'startTimestamp': dates['startTimestamp'],
@@ -596,8 +636,130 @@ def format_event_for_firestore(article, dates):
     if 'version' in dates:
         event_data['version'] = dates['version']
     
-    # Image extraction (keep existing image extraction logic)
-    # ...
+    # Handle section-specific images
+    section_images = article.get('section_images', {})
+    section_image_paths = {}
+    
+    # Download section-specific images
+    for section_name, image_url in section_images.items():
+        try:
+            # Create directory if it doesn't exist
+            os.makedirs('src/assets/images/events/sections', exist_ok=True)
+            
+            # Parse URL to get file extension
+            from urllib.parse import urlparse
+            parsed_url = urlparse(image_url)
+            path = parsed_url.path
+            ext = os.path.splitext(path)[1]
+            if not ext:
+                ext = '.jpg'  # Default to .jpg if no extension
+            
+            # Create a unique filename based on event ID and section name
+            safe_section_name = re.sub(r'[^a-zA-Z0-9]', '_', section_name.lower())
+            local_filename = f"src/assets/images/events/sections/event_{article.get('id')}_{safe_section_name}{ext}"
+            
+            # Download the image
+            print(f"⏳ Downloading section image for {section_name} from {image_url}")
+            img_response = requests.get(image_url, stream=True)
+            img_response.raise_for_status()
+            
+            with open(local_filename, 'wb') as f:
+                for chunk in img_response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            # Use path that will work in Angular
+            asset_path = f"/assets/images/events/sections/event_{article.get('id')}_{safe_section_name}{ext}"
+            section_image_paths[section_name] = asset_path
+            print(f"✓ Downloaded section image to: {local_filename}")
+        except Exception as e:
+            print(f"⚠ Error downloading section image: {e}")
+            # Store the original URL as fallback in case download failed
+            section_image_paths[section_name] = image_url
+    
+    # Add section images to event data
+    if section_image_paths:
+        event_data['sectionImages'] = section_image_paths
+        print(f"✓ Added {len(section_image_paths)} section images to event data")
+    
+    # Enhanced image extraction with better logging
+    print(f"\n▶ Extracting main image for event: {article.get('title')}")
+    image_url = None
+    
+    # METHOD 1: Check image_list first (most direct and reliable)
+    image_list = article.get('image_list', [])
+    if image_list and len(image_list) > 0:
+        image_url = image_list[0].get('url')
+        print(f"✓ Found image URL in image_list: {image_url}")
+    
+    # METHOD 2: Check cover field if no image in image_list
+    if not image_url and article.get('cover'):
+        image_url = article.get('cover')
+        print(f"✓ Found image URL in cover field: {image_url}")
+    
+    # METHOD 3: Try to extract from structured_content if still no image
+    if not image_url and 'structured_content' in raw_post_data:
+        structured_content = raw_post_data.get('structured_content', '')
+        try:
+            content_data = json.loads(structured_content)
+            if isinstance(content_data, list):
+                for item in content_data:
+                    # Make sure item is a dict and insert is also a dict before accessing its attributes
+                    if isinstance(item, dict) and 'insert' in item:
+                        insert_value = item.get('insert')
+                        # Check if insert_value is a dictionary before trying to access its attributes
+                        if isinstance(insert_value, dict) and insert_value.get('type') == 'image':
+                            image_url = insert_value.get('attributes', {}).get('src')
+                            if image_url:
+                                print(f"✓ Found image URL in structured_content: {image_url}")
+                                break
+        except (json.JSONDecodeError, TypeError) as e:
+            print(f"⚠ Error parsing structured_content: {e}")
+    
+    # If no image found after all attempts
+    if not image_url:
+        print(f"⚠ No image found for event: {article.get('title')}")
+    
+    # If found an image URL, download it and store local path
+    local_image_path = None
+    if image_url:
+        try:
+            # Create directory if it doesn't exist
+            os.makedirs('src/assets/images/events', exist_ok=True)
+            
+            # Parse URL to get file extension
+            from urllib.parse import urlparse
+            parsed_url = urlparse(image_url)
+            path = parsed_url.path
+            ext = os.path.splitext(path)[1]
+            if not ext:
+                ext = '.jpg'  # Default to .jpg if no extension
+            
+            # Save to Angular assets directory for easy access
+            local_filename = f"src/assets/images/events/event_{article.get('id')}{ext}"
+            
+            # Download the image
+            print(f"⏳ Downloading image from {image_url}")
+            img_response = requests.get(image_url, stream=True)
+            img_response.raise_for_status()
+            
+            with open(local_filename, 'wb') as f:
+                for chunk in img_response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            # Use path that will work in Angular
+            local_image_path = f"/assets/images/events/event_{article.get('id')}{ext}"
+            print(f"✓ Downloaded image to: {local_filename}")
+        except Exception as e:
+            print(f"⚠ Error downloading image: {e}")
+            traceback.print_exc()  # Add stack trace for better debugging
+    
+    # Add image URL to event data
+    if local_image_path:
+        event_data['imageUrl'] = local_image_path
+        print(f"✓ Added imageUrl to event: {local_image_path}")
+    elif image_url:
+        event_data['imageUrl'] = image_url
+        print(f"⚠ Using remote imageUrl (download failed): {image_url}")
     
     return event_data
 

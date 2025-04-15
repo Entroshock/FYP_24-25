@@ -26,7 +26,8 @@ interface GameEvent {
   endTimestamp: number;
   lastUpdated: string;
   sentiment: 'positive' | 'neutral' | 'negative';
-  imageUrl?: string; // Add optional image URL property
+  imageUrl?: string;
+  sectionImages?: {[key: string]: string}; // Add this new optional property for section images
 }
 @Component({
   selector: 'app-calendar-view',
@@ -74,6 +75,7 @@ template: `
       [endDate]="selectedEvent.endDate"
       [description]="selectedEvent.description"
       [imageUrl]="selectedEvent.imageUrl"
+      [sectionImages]="selectedEvent.sectionImages"
       (closeModal)="closeEventModal()">
     </app-event-modal>
   </div>
@@ -408,7 +410,8 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     startDate: string;
     endDate: string;
     description: string;
-    imageUrl: string; // Add image URL property
+    imageUrl: string;
+    sectionImages: {[key: string]: string}; // Add this new property
   } = {
     title: '',
     type: '',
@@ -416,7 +419,8 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     startDate: '',
     endDate: '',
     description: '',
-    imageUrl: '' // Initialize as empty string
+    imageUrl: '',
+    sectionImages: {} // Initialize as empty object
   };
 
   constructor(
@@ -804,9 +808,10 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
         startDate: event.startDate,
         endDate: event.endDate,
         imageUrl: event.imageUrl || '',
+        sectionImages: event.sectionImages || {}, // Add this line
         relatedEventId: event.eventId
       };
-      
+
       // Create an event for the start date
       calendarEvents.push({
         id: `${event.eventId}-start`,
@@ -925,7 +930,6 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
   // Updated handleEventClick method to ensure modal starts at the top
 // Add this preprocessing step to your calendar-view.component.ts in the handleEventClick method
 
-// Update the handleEventClick method to preprocess the description
 handleEventClick(info: EventClickArg) {
   const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
   const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
@@ -939,8 +943,11 @@ handleEventClick(info: EventClickArg) {
     .replace(' (Start)', '')
     .replace(' (End)', '');
   
-  // Get description and preprocess it to add proper line breaks
+  // Get description
   let description = info.event.extendedProps['description'] || 'No description available.';
+  
+  // Get section images if available
+  const sectionImages = info.event.extendedProps['sectionImages'] || {};
   
   // Update the selected event object with all properties
   this.selectedEvent = {
@@ -950,7 +957,8 @@ handleEventClick(info: EventClickArg) {
     startDate: startDate,
     endDate: endDate,
     description: description,
-    imageUrl: info.event.extendedProps['imageUrl'] || ''
+    imageUrl: info.event.extendedProps['imageUrl'] || '',
+    sectionImages: sectionImages
   };
   
   // Show the modal
@@ -966,6 +974,8 @@ handleEventClick(info: EventClickArg) {
     }
   }
 }
+
+
   closeEventModal() {
     this.showEventModal = false;
   }
