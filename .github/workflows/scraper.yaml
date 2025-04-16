@@ -1,0 +1,36 @@
+name: Run Honkai Star Rail Event Scraper
+
+on:
+  schedule:
+    # Run daily at 12:00 UTC
+    - cron: '0 */6 * * *'
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests firebase-admin transformers torch
+
+      - name: Create service account key file
+        run: |
+          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > serviceAccountKey.json
+
+      - name: Run scraper
+        run: python main.py
+        
+      - name: Clean up service account key
+        if: always()
+        run: rm -f serviceAccountKey.json
