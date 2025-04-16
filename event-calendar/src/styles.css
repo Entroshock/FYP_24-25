@@ -1,0 +1,87 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #000000;
+    background-image: url('/assets/images/bg/space-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  app-root {
+    display: block;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .page-title {
+    text-align: center;
+    color: #ffffff;
+    margin: 20px 0;
+    font-size: 32px;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(66, 133, 244, 0.3);
+    letter-spacing: 1px;
+  }
+  
+  @keyframes glow {
+    0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(66, 133, 244, 0.3); }
+    50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 30px rgba(66, 133, 244, 0.5); }
+    100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(66, 133, 244, 0.3); }
+  }
+  
+  .page-title {
+    animation: glow 3s ease-in-out infinite;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+ 
+  .fc {
+    background-color: transparent !important;
+  }
+
+
+/* Add these styles to make the description text more readable */
+.description-content {
+  white-space: pre-wrap !important;  /* Preserve whitespace and line breaks */
+  font-family: 'Arial', sans-serif !important;
+  line-height: 1.6 !important;
+  padding: 12px !important;
+  font-size: 14px !important;
+  max-width: 100% !important;
+  /* CHANGED THESE TWO PROPERTIES - THIS FIXES THE ISSUE */
+  word-break: normal !important;     /* Changed from keep-all to normal */
+  overflow-wrap: break-word !important;  /* Changed from anywhere to break-word */
+  hyphens: none !important;
+  background-color: rgba(25, 25, 30, 0.4) !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+/* Add spacing before section markers */
+.description-content::before {
+  content: ""; 
+  white-space: pre-wrap !important;
+}
+
+/* Apply general styling to make text more legible */
+.event-modal .description-content {
+  letter-spacing: 0.3px !important;
+  word-spacing: 1px !important;
+}
+
+/* Display string to help with debugging */
+.format-info {
+  font-size: 10px;
+  color: #888;
+  margin-top: 5px;
+  font-style: italic;
+}
