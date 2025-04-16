@@ -493,7 +493,7 @@ export class EventModalComponent implements OnChanges {
   @Input() endDate = '';
   @Input() description = '';
   @Input() imageUrl = '';
-  @Input() sectionImages: {[key: string]: string} = {}; // New input for section images
+  @Input() sectionImages: {[key: string]: string} = {}; // input for section images
   
   @Output() closeModal = new EventEmitter<void>();
 
@@ -544,7 +544,7 @@ export class EventModalComponent implements OnChanges {
     event.target.src = '/assets/images/placeholder.png'; 
   }
 
-// Updated preprocessText method with better handling of text breaks
+
 /**
  * Enhanced preprocessText function to fix all word wrapping issues
  * This handles date/time formats, trailing characters, and special terms
@@ -556,7 +556,7 @@ private preprocessText(text: string): string {
   
   // ===== FIX DATE AND TIME FORMATS =====
   
-  // Fix ISO dates with times (main issue from screenshots)
+  // Fix ISO dates with times 
   processedText = processedText.replace(
     /(\d{4}\/\d{2}\/\d{2})\s+(\d{2}):\s*(\d{2}):\s*(\d{2})/g, 
     '$1 <span style="white-space:nowrap">$2:$3:$4</span>'
@@ -582,13 +582,13 @@ private preprocessText(text: string): string {
   
   // ===== FIX EVENT TITLES AND DESCRIPTIONS =====
   
-  // Fix trailing 's' characters after event names
+  // Fix trailing characters after event names
   processedText = processedText.replace(
     /(Shadow|Fiction|Chaos|Locust|Rule|Othershor):\s+([^\n]+)\n\s*([se])/g,
     '$1: $2'
   );
   
-  // Fix "Apocalyptic Shadow" not wrapping properly
+  // Fix "Apocalyptic Shadow" not wrapping properly <- gonna have to fix later for generalized future proofing
   processedText = processedText.replace(
     /(•|●)\s*(Apocalyptic Shadow:|Pure Fiction:|Memory of Chaos:)/g,
     '$1 <span style="white-space:nowrap">$2</span>'
@@ -974,7 +974,7 @@ private formatDescription(text: string): SafeHtml {
     }
   } 
   else if (isContractShop) {
-    // Contract shop processing logic
+    // Contract shop processing logic (Paid stuff news)
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       

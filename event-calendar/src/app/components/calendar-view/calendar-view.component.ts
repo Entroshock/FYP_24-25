@@ -27,13 +27,12 @@ interface GameEvent {
   lastUpdated: string;
   sentiment: 'positive' | 'neutral' | 'negative';
   imageUrl?: string;
-  sectionImages?: {[key: string]: string}; // Add this new optional property for section images
+  sectionImages?: {[key: string]: string}; 
 }
 @Component({
   selector: 'app-calendar-view',
   standalone: true,
-  imports: [CommonModule, EventModalComponent], // Import the modal component
-  // Update the calendar-view.component.ts template
+  imports: [CommonModule, EventModalComponent], 
 template: `
 <div class="page-container">
   <h1 class="page-title">Honkai: Star Rail Events</h1>
@@ -411,7 +410,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     endDate: string;
     description: string;
     imageUrl: string;
-    sectionImages: {[key: string]: string}; // Add this new property
+    sectionImages: {[key: string]: string}; 
   } = {
     title: '',
     type: '',
@@ -481,11 +480,11 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  // New method to enhance popover with dragging and positioning
+  // Method to enhance popover with dragging and positioning
   private enhancePopover(popover: HTMLElement) {
-    // First, make sure the popover has the right initial styles
+    // Make sure the popover has the right initial styles
     popover.style.position = 'absolute';
-    popover.style.zIndex = '2000'; // Higher z-index during interaction
+    popover.style.zIndex = '2000';  // This derermines stacking order of elements / higher number = bigger prio
     
     // Remove any transform from CSS that might conflict
     popover.style.transform = 'none';
@@ -494,7 +493,7 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     const initialLeft = popover.offsetLeft;
     const initialTop = popover.offsetTop;
     
-    // Move it to the right by a fixed amount (adjust as needed)
+    // Move it to the right by a fixed amount (adjust as needed!!)
     popover.style.left = (initialLeft + 50) + 'px';
     
     // Make sure we're not too close to the edge
@@ -927,9 +926,6 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     return formatted;
   }
   
-  // Updated handleEventClick method to ensure modal starts at the top
-// Add this preprocessing step to your calendar-view.component.ts in the handleEventClick method
-
 handleEventClick(info: EventClickArg) {
   const eventType = info.event.extendedProps['type'] || this.getEventType(info.event.title);
   const sentiment = info.event.extendedProps['sentiment'] || 'neutral';
@@ -974,7 +970,6 @@ handleEventClick(info: EventClickArg) {
     }
   }
 }
-
 
   closeEventModal() {
     this.showEventModal = false;
