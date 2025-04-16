@@ -764,6 +764,7 @@ def format_event_for_firestore(article, dates):
     return event_data
 
 
+# Replace the conflict section with this:
 def scrape_hoyolab(article_limit=10):
     """Main scraping function with two-pass processing and image extraction"""
     all_articles = []
