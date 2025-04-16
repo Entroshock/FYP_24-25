@@ -130,7 +130,7 @@ def parse_event_dates(text, version_updates=None):
                 print(f"Warning: Version {version} not found in version_updates")
                 return None
         
-        # IMPROVED: Multiple approaches to find start date
+        # Multiple approaches to find start date
         
         # Approach 1: Look for explicit start-end date pattern
         start_date_patterns = [
@@ -183,7 +183,7 @@ def parse_event_dates(text, version_updates=None):
                     continue  # Skip invalid dates
         
         # If we still couldn't find a start date, we'll use a fallback approach
-        # For events like Planar Fissure, sometimes the start date is mentioned right before the end date
+        # For events like Planar Fissure, the start date is usually mentioned right before the end date
         # Let's try to use the first date as start date if there are at least two dates
         if len(all_dates) >= 2:
             try:
@@ -210,7 +210,7 @@ def parse_event_dates(text, version_updates=None):
     
 
 def is_event_article(article):
-    """Check if the article is about an event"""
+    # Check if article is about any of these events
     keywords = [
         "Event Period",
         "Period:",
@@ -234,7 +234,7 @@ def is_event_article(article):
     )
 
 def get_article_list(last_id=""):
-    """Fetch articles with rate limiting"""
+    # Fetch articles with rate limiting
     add_delay()  # Add delay before each request
     
     base_url = "https://bbs-api-os.hoyolab.com/community/post/wapi/getNewsList"
@@ -386,7 +386,7 @@ def get_article_comments(post_id):
         return []
 
 def analyze_sentiment(comments):
-    """Analyze sentiment of comments using BERT with improved handling of long texts"""
+    # Analyze sentiment of comments using BERT with improved handling of long texts
     # Initialize sentiment analysis pipeline
     sentiment_analyzer = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
     
@@ -406,7 +406,7 @@ def analyze_sentiment(comments):
             continue
         
         # Truncate long comments to avoid BERT token limit issues
-        # BERT typically has a 512 token limit, so we'll truncate to be safe
+        # BERT typically has a 512 token limit, be careful
         # A rough estimate is about 3-4 chars per token for many languages
         if len(comment_text) > 1500:  # ~375-500 tokens
             print(f"Truncating comment of length {len(comment_text)} to 1500 characters")
@@ -446,7 +446,7 @@ def analyze_sentiment(comments):
     return sentiment
 
 def get_article_content(post_id):
-    """Fetch detailed article content with complete extraction of all sections including Event Details"""
+    # Fetch detailed article content with complete extraction of all sections including Event Details
     add_delay()  # Add delay before each request
     
     api_url = f"https://bbs-api-os.hoyolab.com/community/post/wapi/getPostFull?post_id={post_id}&read=1&scene=1"
@@ -573,7 +573,7 @@ def get_article_content(post_id):
         return None
 
 def format_event_for_firestore(article, dates):
-    """Format article data with sentiment analysis, validated dates, and enhanced image extraction"""
+    # Format article data with sentiment analysis, validated dates, and enhanced image extraction
     # Get raw post data for better description and image extraction
     raw_post_data = article.get('raw_post_data', {})
     clean_description = raw_post_data.get('desc', '') or article.get('description', '')
@@ -766,7 +766,7 @@ def format_event_for_firestore(article, dates):
 
 # Replace the conflict section with this:
 def scrape_hoyolab(article_limit=10):
-    """Main scraping function with two-pass processing and image extraction"""
+    # Main scraping function with two-pass processing and image extraction
     all_articles = []
     formatted_events = []
     version_updates = {}
