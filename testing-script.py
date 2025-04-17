@@ -6,7 +6,7 @@ import random
 from urllib.parse import urlparse
 
 def get_headers():
-    """Get request headers to mimic a browser"""
+    # Get request headers to mimic a browser
     return {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
         'Accept': 'application/json',
@@ -14,13 +14,13 @@ def get_headers():
     }
 
 def add_delay(min_seconds=1, max_seconds=2):
-    """Add a random delay between requests to be respectful to the server"""
+    # Add a random delay between requests to be respectful to the server
     delay = random.uniform(min_seconds, max_seconds)
     print(f"Waiting {delay:.1f} seconds before next request...")
     time.sleep(delay)
 
 def test_image_extraction(post_id):
-    """Test image extraction for a single post ID"""
+    # Test image extraction for a single post ID
     print(f"\n===== TESTING IMAGE EXTRACTION FOR POST ID: {post_id} =====")
     
     api_url = f"https://bbs-api-os.hoyolab.com/community/post/wapi/getPostFull?post_id={post_id}&read=1&scene=1"
