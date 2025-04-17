@@ -159,7 +159,7 @@ def test_image_extraction(post_id):
     except Exception as e:
         print(f"Error testing image extraction: {e}")
 
-# Example usage
+
 if __name__ == "__main__":
     print("===== IMAGE EXTRACTION TEST SCRIPT =====")
     post_id = input("Enter a post ID to test (e.g., 38119901): ")
