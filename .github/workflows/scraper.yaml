@@ -26,7 +26,7 @@ jobs:
 
       - name: Create service account key file
         run: |
-          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > serviceAccountKey.json
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > serviceAccountKey.json
 
       - name: Run scraper
         run: python main.py
