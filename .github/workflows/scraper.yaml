@@ -2,7 +2,7 @@ name: Run Honkai Star Rail Event Scraper
 
 on:
   schedule:
-    # Run daily at 12:00 UTC
+    # Run every 6 hours
     - cron: '0 */6 * * *'
   workflow_dispatch:  # Allows manual triggering from GitHub UI
 
@@ -26,7 +26,9 @@ jobs:
 
       - name: Create service account key file
         run: |
-          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > serviceAccountKey.json
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64 }}' | base64 -d > serviceAccountKey.json
+          # Verify the file is valid JSON
+          python -c "import json; print('JSON is valid') if json.load(open('serviceAccountKey.json')) else ''" || echo "Invalid JSON"
 
       - name: Run scraper
         run: python main.py
