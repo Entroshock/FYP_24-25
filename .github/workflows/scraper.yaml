@@ -81,9 +81,10 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      # Run Firebase deploy from the root directory
+      # Run Firebase deploy from the event-calendar directory
       - name: Deploy to Firebase
         run: |
+          cd event-calendar
           firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
