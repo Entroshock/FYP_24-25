@@ -3,7 +3,7 @@ name: Run Honkai Star Rail Event Scraper
 on:
   schedule:
     # Run every 6 hours
-    - cron: '*/10 * * * *'
+    - cron: '0 */12 * * *'
   workflow_dispatch:  # Allows manual triggering from GitHub UI
 
 jobs:
@@ -36,3 +36,11 @@ jobs:
       - name: Clean up service account key
         if: always()
         run: rm -f serviceAccountKey.json
+
+      - name: Commit new images
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          git add src/assets/images/events/
+          git commit -m "Update event images [skip ci]" || echo "No changes to commit"
+          git push
