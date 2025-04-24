@@ -10,7 +10,7 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write  # This gives write permission to repository contents
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -61,6 +61,32 @@ jobs:
           # Commit if there are changes
           git diff --staged --quiet || git commit -m "Update event images [skip ci]"
           git push || echo "No changes to push"
+
+      # Updated to Node.js v20 to be compatible with Firebase CLI
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          
+      - name: Install Angular dependencies
+        run: |
+          cd event-calendar
+          npm install
+          
+      - name: Build Angular app
+        run: |
+          cd event-calendar
+          npm run build
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase
+        run: |
+          cd event-calendar
+          firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
       - name: Clean up service account key
         if: always()
