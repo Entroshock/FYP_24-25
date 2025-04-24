@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/event-calendar",
+    "public": "event-calendar",
     "ignore": [
       "firebase.json",
       "**/.*",
