@@ -10,7 +10,7 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # This gives write permission to repository contents
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -33,19 +33,30 @@ jobs:
           python -c "import json; print('JSON is valid') if json.load(open('serviceAccountKey.json')) else ''" || echo "Invalid JSON"
 
       - name: Run scraper
-        run: python main.py
+        run: |
+          # First, modify the script to use the correct path
+          sed -i 's|src/assets/images/events|event-calendar/src/assets/images/events|g' main.py
+          sed -i 's|src/assets/images/events/sections|event-calendar/src/assets/images/events/sections|g' main.py
+          
+          # Run the scraper
+          python main.py
         
       - name: Commit new images
         run: |
           # Make sure directories exist
-          mkdir -p src/assets/images/events/sections
+          mkdir -p event-calendar/src/assets/images/events/sections
+          
+          # Move any images that might have been created in the wrong location
+          if [ -d "src/assets/images/events" ]; then
+            mv src/assets/images/events/* event-calendar/src/assets/images/events/ || true
+          fi
           
           # Configure git
           git config --global user.name 'GitHub Actions Bot'
           git config --global user.email 'actions@github.com'
           
           # Add all images
-          git add src/assets/images/events/
+          git add event-calendar/src/assets/images/events/
           
           # Commit if there are changes
           git diff --staged --quiet || git commit -m "Update event images [skip ci]"
