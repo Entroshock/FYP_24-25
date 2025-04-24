@@ -3,7 +3,7 @@ name: Run Honkai Star Rail Event Scraper
 on:
   schedule:
     # Run every 6 hours
-    - cron: '0 */6 * * *'
+    - cron: '*/10 * * * *'
   workflow_dispatch:  # Allows manual triggering from GitHub UI
 
 jobs:
