@@ -62,11 +62,11 @@ jobs:
           git diff --staged --quiet || git commit -m "Update event images [skip ci]"
           git push || echo "No changes to push"
 
-      # Add steps to build and deploy the Angular app
+      # Updated to Node.js v20 to be compatible with Firebase CLI
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           
       - name: Install Angular dependencies
         run: |
