@@ -43,7 +43,7 @@ Thumbs.db
 
 # Firebase
 serviceAccountKey.json
-.firebase/
+
 
 # Python
 __pycache__/
