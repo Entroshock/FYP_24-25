@@ -82,13 +82,11 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64 }}'
-          channelId: 'live'
-          projectId: 'project-ba-eff57'
-          entryPoint: './event-calendar'
+        run: |
+          cd event-calendar
+          firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
       - name: Clean up service account key
         if: always()
