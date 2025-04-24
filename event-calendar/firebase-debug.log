@@ -1,0 +1,125 @@
+[debug] [2025-04-24T23:37:00.462Z] ----------------------------------------------------------------------
+[debug] [2025-04-24T23:37:00.465Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\alext\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting --debug
+[debug] [2025-04-24T23:37:00.465Z] CLI Version:   14.2.1
+[debug] [2025-04-24T23:37:00.465Z] Platform:      win32
+[debug] [2025-04-24T23:37:00.466Z] Node Version:  v20.9.0
+[debug] [2025-04-24T23:37:00.466Z] Time:          Fri Apr 25 2025 00:37:00 GMT+0100 (Irish Standard Time)
+[debug] [2025-04-24T23:37:00.466Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-04-24T23:37:00.653Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-04-24T23:37:00.654Z] > authorizing via signed-in user (monkeysidekick@hotmail.com)
+[debug] [2025-04-24T23:37:00.654Z] [iam] checking project project-ba-eff57 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-04-24T23:37:00.656Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:00.656Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:00.657Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-ba-eff57:testIamPermissions [none]
+[debug] [2025-04-24T23:37:00.657Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-ba-eff57:testIamPermissions x-goog-quota-user=projects/project-ba-eff57
+[debug] [2025-04-24T23:37:00.657Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-ba-eff57:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-04-24T23:37:00.888Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-ba-eff57:testIamPermissions 200
+[debug] [2025-04-24T23:37:00.888Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-ba-eff57:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-04-24T23:37:00.889Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:00.890Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:00.890Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/project-ba-eff57 [none]
+[debug] [2025-04-24T23:37:01.192Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/project-ba-eff57 200
+[debug] [2025-04-24T23:37:01.192Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/project-ba-eff57 {"projectId":"project-ba-eff57","projectNumber":"248783791572","displayName":"Project BA","name":"projects/project-ba-eff57","resources":{"hostingSite":"project-ba-eff57"},"state":"ACTIVE","etag":"1_00199672-4b5c-43f9-9616-95652472881a"}
+[info] 
+[info] === Deploying to 'project-ba-eff57'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2025-04-24T23:37:01.197Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:01.197Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:01.197Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/versions [none]
+[debug] [2025-04-24T23:37:01.197Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2025-04-24T23:37:02.226Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/versions 200
+[debug] [2025-04-24T23:37:02.227Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/versions {"name":"projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[project-ba-eff57]: beginning deploy... 
+[info] i  hosting[project-ba-eff57]: found 59 files in dist/event-calendar/browser 
+[debug] [2025-04-24T23:37:02.247Z] [hosting] uploading with 200 concurrency
+[debug] [2025-04-24T23:37:02.280Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:02.280Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:02.282Z] [hosting] hash cache [ZGlzdFxldmVudC1jYWxlbmRhclxicm93c2Vy] stored for 59 files
+[debug] [2025-04-24T23:37:02.282Z] [hosting][hash queue][FINAL] {"max":30,"min":0,"avg":2.78438616401103,"active":0,"complete":59,"success":59,"errored":0,"retried":0,"total":59,"elapsed":34}
+[debug] [2025-04-24T23:37:02.283Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5:populateFiles [none]
+[debug] [2025-04-24T23:37:02.283Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5:populateFiles {"files":{"/favicon.ico":"6785b327204d61c38cc421c055a247a8a461ea4ea6a41d2e38aa8b24f47faa1c","/assets/images/events/event_38368935.png":"1acf1a08458bb304a2611be8c300285fc36119bbccb75c8a6e42625ce9ba61b8","/assets/images/events/event_38119901.png":"4a20a5dcf0000a9846aa911e44b2a9b22aab745d7b872d8fd1e1a7d533b5c1cc","/assets/images/events/event_38119901.jpg":"4a20a5dcf0000a9846aa911e44b2a9b22aab745d7b872d8fd1e1a7d533b5c1cc","/assets/images/events/event_38107267.png":"ede6516a04fae044ab26e734d2c26a776c9f4b77ae03a025a2bb2cb8bd7cb1ad","/assets/images/events/event_38107267.jpg":"ede6516a04fae044ab26e734d2c26a776c9f4b77ae03a025a2bb2cb8bd7cb1ad","/assets/images/events/event_38073215.png":"01ab99717aad9b928f69e28262fe69082441dd3b457909bffe10d882f691292e","/assets/images/events/event_38073215.jpg":"01ab99717aad9b928f69e28262fe69082441dd3b457909bffe10d882f691292e","/assets/images/events/event_38056278.jpg":"6621f541c35166bd49443f821a6488f6b74c39417da483128d197d7deb9ff32f","/assets/images/events/event_37896318.jpg":"3771195bca5e7e28390eaab40c350801fe7ecb121e1d6a41b9b73de8aada5f22","/assets/images/events/event_37871013.png":"ecb6c25412c4ce026aba758a536494006f69587b87adf26e81fdf7b1bb6891ea","/assets/images/events/event_37871013.jpg":"ecb6c25412c4ce026aba758a536494006f69587b87adf26e81fdf7b1bb6891ea","/assets/images/events/event_37702787.png":"4ca98323ad3d47fa91def6e56062f5babd1433047673e1963b9e17143031610e","/assets/images/events/event_37702787.jpg":"4ca98323ad3d47fa91def6e56062f5babd1433047673e1963b9e17143031610e","/assets/images/events/event_37561378.png":"e4cf44ab21be1789ec44e712c241d7cb6f42802319b731ed87b02fb99db945cd","/assets/images/events/event_37561378.jpg":"e4cf44ab21be1789ec44e712c241d7cb6f42802319b731ed87b02fb99db945cd","/assets/images/events/event_37189509.png":"ff13cfd96cbfefdc74eac7d1473451692f7f70228a3786d0a497521903b05306","/assets/images/events/event_37189509.jpg":"ff13cfd96cbfefdc74eac7d1473451692f7f70228a3786d0a497521903b05306","/assets/images/events/event_37034847.png":"1ad0cf1e72647df38952182c9d13a20407ab54c283c8c5d27801d93cf789e306","/assets/images/events/event_37034847.jpg":"1ad0cf1e72647df38952182c9d13a20407ab54c283c8c5d27801d93cf789e306","/assets/images/events/event_36844003.png":"238c0aa001c3cb7c263d1b5674e511193d841134af83bd1b899777b9e58eeb31","/assets/images/events/event_36844003.jpg":"238c0aa001c3cb7c263d1b5674e511193d841134af83bd1b899777b9e58eeb31","/assets/images/events/event_36843932.png":"ca450810893159c024c27eb0da18a5ddb5c6da747c0a891122a0fb6518c78f9e","/assets/images/events/event_36843932.jpg":"ca450810893159c024c27eb0da18a5ddb5c6da747c0a891122a0fb6518c78f9e","/assets/images/events/event_36767294.jpg":"cfbb3806099e248926a043cc59b8d4fa8ce8dd0d67e690ec884e092b5d7cbd44","/assets/images/events/event_36634082.png":"de8554a034e38197ad91255ed7cc165f521a94a1fd4ddcb6a36b73fabb86fc0c","/assets/images/events/event_36634082.jpg":"de8554a034e38197ad91255ed7cc165f521a94a1fd4ddcb6a36b73fabb86fc0c","/assets/images/events/event_36633597.png":"9bf4c9db3c26827a84c11fd59d0142e9e4c9298c3bc6c4d3db5e81b548e71e14","/assets/images/events/event_36633597.jpg":"9bf4c9db3c26827a84c11fd59d0142e9e4c9298c3bc6c4d3db5e81b548e71e14","/assets/images/events/event_36471191.jpg":"a8bcccb5a42d40b21d5a310a9f7bb7d55ca4a8820216637de33b90f107de6962","/assets/images/events/event_36341346.png":"259c6b8b22da1350a97c33841a3dced2309c10a17d7adffa5784ffb8d9463167","/assets/images/events/event_36341346.jpg":"259c6b8b22da1350a97c33841a3dced2309c10a17d7adffa5784ffb8d9463167","/assets/images/events/event_36341290.png":"85032d00f9f04e2cb3f6b5e694cc6887c9ae09543af40e3acc839134d6710f10","/assets/images/events/event_36341290.jpg":"85032d00f9f04e2cb3f6b5e694cc6887c9ae09543af40e3acc839134d6710f10","/assets/images/events/event_36323609.png":"75a738edc9514c1c8cd75c121e0a73b6344db98f42ff31230c961f590a3d25d2","/assets/images/events/event_36323609.jpg":"75a738edc9514c1c8cd75c121e0a73b6344db98f42ff31230c961f590a3d25d2","/assets/images/events/event_36026844.jpg":"455913e446656130b830560415a120492fad0a04839168eb07f9294f1ce0dfe2","/assets/images/events/sections/event_38056278_event_rewards.png":"da88c5e413d07ec93740cddbf15a0166c014de76f76a7d99b8802de291c4e12c","/assets/images/events/sections/event_38056278_event_period_after_version.png":"da88c5e413d07ec93740cddbf15a0166c014de76f76a7d99b8802de291c4e12c","/assets/images/events/sections/event_36767294_event_rewards.png":"e9f4e4bc0219abae04023eee44c27da30d1fa57e8c4ade37a4939f6526052cd0","/assets/images/events/sections/event_36767294_attention.jpg":"a59a09b4d65a5b5fcaec7bfeba9cac58990c98ba94b6e245dffdeca5737c55af","/assets/images/events/sections/event_36633597_lucky_superstar_phase.png":"1a1e8eee5d3e25f8a5cb78aa47b48ae07530196b0839cea5c6aaf65cdce4ed28","/assets/images/events/sections/event_36471191_note.gif":"6212f7e62e8c5329c5e65b50fbf559fd7906cdc0c8879793d98e763282875277","/assets/images/events/sections/event_36471191_event_rewards.png":"758ade975699b46e693126819b533598cfc2dec3cb42bc111812c7e02c7357fe","/assets/images/events/sections/event_36026844_event_period_after_the_version.jpg":"d119b58dfcd5db8145afeb2ada8e771172bb0e4b155f289a1228de8552c20d97","/assets/images/bg/space-background.jpg":"b067c81d0af06241fcdc3eae51a935f18d633329b07bc52a2b40ba37fb7649ee","/chunk-3C2QW33E.js":"46b50c321b39e89a491b6727a01628c34245605a30beb3e7414c5e01cff90e6e","/styles-UL2AS7EK.css":"e3a193c2303980c46585ab4926adc2b065df0949889f5e7ddde5adbeadf77e98","/chunk-POLL2CVR.js":"35520140fa1f868f5479b9dce3b712c793f07a8e272a16606c62e8867958578c","/index.html":"fd8a4298983e3e2e121dba4db02e5f0ac345a2a71cc42e4563a32fe45918fdee","/polyfills-FFHMD2TL.js":"76ba984d37b7b84364b9c83ddfd98f5f0e81404b4003c71f453a86187587a5e0","/chunk-LD47YSIK.js":"bea05296e460462ae90f170f93aba53ad376a041db5db36c9eec0391ff5fe8d4","/chunk-MG3WYN6M.js":"659fd8d255dbca34b11f67d1c1370f0e6cfbf262db272fec5900deac17359d75","/chunk-C2MK2HA6.js":"76057ac012d82b0b0d5fe01677fbfe1a92a24155079467ec709aee120a003931","/chunk-C4LUEVC4.js":"ee2338ee49ec7a893b95443d1441f21d91fe3483d25ea94432e0af8a09555b0f","/chunk-BHHYP5OJ.js":"adcbb716b2f86a3bb7c8ea813d30cb5afeca0ab1ccd4161a366a8fa9e7acfeb3","/chunk-2U4WZS37.js":"c69d9696306d3b509b8658b200a7fe6daf9dcec8dc7d7e01efcc19a7b786e47a","/chunk-EDSKZZ7U.js":"84b5584b7ee9f4d45f1064c3a3fd0176df40c88473cb4d24a1fe5d0164952f08","/main-B5TVUDAO.js":"d5f64c028fa175b1c5206b3043ffb38d57997c18830dd9d2bde527354b6ccf46"}}
+[debug] [2025-04-24T23:37:02.520Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5:populateFiles 200
+[debug] [2025-04-24T23:37:02.520Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5:populateFiles {"uploadRequiredHashes":["d5f64c028fa175b1c5206b3043ffb38d57997c18830dd9d2bde527354b6ccf46","fd8a4298983e3e2e121dba4db02e5f0ac345a2a71cc42e4563a32fe45918fdee"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files"}
+[debug] [2025-04-24T23:37:02.521Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:02.521Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:02.521Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:02.521Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:02.522Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files/d5f64c028fa175b1c5206b3043ffb38d57997c18830dd9d2bde527354b6ccf46 [none]
+[debug] [2025-04-24T23:37:02.522Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files/d5f64c028fa175b1c5206b3043ffb38d57997c18830dd9d2bde527354b6ccf46 [stream]
+[debug] [2025-04-24T23:37:02.523Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files/fd8a4298983e3e2e121dba4db02e5f0ac345a2a71cc42e4563a32fe45918fdee [none]
+[debug] [2025-04-24T23:37:02.523Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files/fd8a4298983e3e2e121dba4db02e5f0ac345a2a71cc42e4563a32fe45918fdee [stream]
+[debug] [2025-04-24T23:37:02.524Z] [hosting][populate queue][FINAL] {"max":241,"min":241,"avg":241,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":244}
+[debug] [2025-04-24T23:37:02.524Z] [hosting] uploads queued: 2
+[debug] [2025-04-24T23:37:03.558Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files/d5f64c028fa175b1c5206b3043ffb38d57997c18830dd9d2bde527354b6ccf46 200
+[debug] [2025-04-24T23:37:03.558Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files/d5f64c028fa175b1c5206b3043ffb38d57997c18830dd9d2bde527354b6ccf46 [stream]
+[debug] [2025-04-24T23:37:04.185Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files/fd8a4298983e3e2e121dba4db02e5f0ac345a2a71cc42e4563a32fe45918fdee 200
+[debug] [2025-04-24T23:37:04.185Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/project-ba-eff57/versions/dd7452907123c7c5/files/fd8a4298983e3e2e121dba4db02e5f0ac345a2a71cc42e4563a32fe45918fdee [stream]
+[debug] [2025-04-24T23:37:04.186Z] [hosting][upload queue][FINAL] {"max":1665,"min":1037,"avg":1351,"active":0,"complete":2,"success":2,"errored":0,"retried":0,"total":2,"elapsed":1665}
+[info] i  hosting: upload complete 
+[info] +  hosting[project-ba-eff57]: file upload complete 
+[debug] [2025-04-24T23:37:04.186Z] [hosting] deploy completed after 1957ms
+[debug] [2025-04-24T23:37:04.186Z] [
+  {
+    "config": {
+      "public": "dist/event-calendar/browser",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**/*.js",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/javascript"
+            }
+          ]
+        },
+        {
+          "source": "**/*.mjs",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/javascript"
+            }
+          ]
+        }
+      ],
+      "site": "project-ba-eff57"
+    },
+    "version": "projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5"
+  }
+]
+[info] i  hosting[project-ba-eff57]: finalizing version... 
+[debug] [2025-04-24T23:37:04.188Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:04.188Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:04.189Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/versions/dd7452907123c7c5 updateMask=status%2Cconfig
+[debug] [2025-04-24T23:37:04.189Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/versions/dd7452907123c7c5 {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}],"headers":[{"glob":"**/*.js","headers":{"Content-Type":"application/javascript"}},{"glob":"**/*.mjs","headers":{"Content-Type":"application/javascript"}}]}}
+[debug] [2025-04-24T23:37:04.493Z] <<< [apiv2][status] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/versions/dd7452907123c7c5 200
+[debug] [2025-04-24T23:37:04.493Z] <<< [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/versions/dd7452907123c7c5 {"name":"projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5","status":"FINALIZED","config":{"headers":[{"headers":{"Content-Type":"application/javascript"},"glob":"**/*.js"},{"headers":{"Content-Type":"application/javascript"},"glob":"**/*.mjs"}],"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2025-04-24T23:36:46.462199Z","createUser":{"email":"monkeysidekick@hotmail.com"},"finalizeTime":"2025-04-24T23:36:48.948145Z","finalizeUser":{"email":"monkeysidekick@hotmail.com"}}
+[debug] [2025-04-24T23:37:04.493Z] [hosting] finalized version for project-ba-eff57:[object Object]
+[info] +  hosting[project-ba-eff57]: version finalized 
+[info] i  hosting[project-ba-eff57]: releasing new version... 
+[debug] [2025-04-24T23:37:04.494Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:04.494Z] Checked if tokens are valid: true, expires at: 1745539804237
+[debug] [2025-04-24T23:37:04.494Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/channels/live/releases versionName=projects%2F248783791572%2Fsites%2Fproject-ba-eff57%2Fversions%2Fdd7452907123c7c5
+[debug] [2025-04-24T23:37:04.494Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/channels/live/releases {}
+[debug] [2025-04-24T23:37:04.810Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/channels/live/releases 200
+[debug] [2025-04-24T23:37:04.810Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/project-ba-eff57/channels/live/releases {"name":"projects/248783791572/sites/project-ba-eff57/channels/live/releases/1745537808731000","version":{"name":"projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5","status":"FINALIZED","config":{"headers":[{"headers":{"Content-Type":"application/javascript"},"glob":"**/*.js"},{"headers":{"Content-Type":"application/javascript"},"glob":"**/*.mjs"}],"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2025-04-24T23:36:46.462199Z","createUser":{"email":"monkeysidekick@hotmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIfstSGv5w-NYz0uROpNumlrFNpkeXzgdpJ5hQrCzvbMM1g7E7l"},"finalizeTime":"2025-04-24T23:36:48.948145Z","finalizeUser":{"email":"monkeysidekick@hotmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIfstSGv5w-NYz0uROpNumlrFNpkeXzgdpJ5hQrCzvbMM1g7E7l"}},"type":"DEPLOY","releaseTime":"2025-04-24T23:36:48.731Z","releaseUser":{"email":"monkeysidekick@hotmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIfstSGv5w-NYz0uROpNumlrFNpkeXzgdpJ5hQrCzvbMM1g7E7l"}}
+[debug] [2025-04-24T23:37:04.811Z] [hosting] release: {"name":"projects/248783791572/sites/project-ba-eff57/channels/live/releases/1745537808731000","version":{"name":"projects/248783791572/sites/project-ba-eff57/versions/dd7452907123c7c5","status":"FINALIZED","config":{"headers":[{"headers":{"Content-Type":"application/javascript"},"glob":"**/*.js"},{"headers":{"Content-Type":"application/javascript"},"glob":"**/*.mjs"}],"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2025-04-24T23:36:46.462199Z","createUser":{"email":"monkeysidekick@hotmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIfstSGv5w-NYz0uROpNumlrFNpkeXzgdpJ5hQrCzvbMM1g7E7l"},"finalizeTime":"2025-04-24T23:36:48.948145Z","finalizeUser":{"email":"monkeysidekick@hotmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIfstSGv5w-NYz0uROpNumlrFNpkeXzgdpJ5hQrCzvbMM1g7E7l"}},"type":"DEPLOY","releaseTime":"2025-04-24T23:36:48.731Z","releaseUser":{"email":"monkeysidekick@hotmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocIfstSGv5w-NYz0uROpNumlrFNpkeXzgdpJ5hQrCzvbMM1g7E7l"}}
+[info] +  hosting[project-ba-eff57]: release complete 
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/project-ba-eff57/overview
+[info] Hosting URL: https://project-ba-eff57.web.app

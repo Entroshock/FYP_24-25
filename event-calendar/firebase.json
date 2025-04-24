@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/event-calendar",
+    "public": "dist/event-calendar/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -17,12 +17,17 @@
         "source": "**/*.js",
         "headers": [
           {
-            "source": "**/*.js",
-            "headers": [{ "key": "Content-Type", "value": "application/javascript" }]
-          },
+            "key": "Content-Type",
+            "value": "application/javascript"
+          }
+        ]
+      },
+      {
+        "source": "**/*.mjs",
+        "headers": [
           {
-            "source": "**/*.mjs",
-            "headers": [{ "key": "Content-Type", "value": "application/javascript" }]
+            "key": "Content-Type",
+            "value": "application/javascript"
           }
         ]
       }
