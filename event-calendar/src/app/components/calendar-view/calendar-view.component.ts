@@ -737,14 +737,12 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
     return title.length > maxLength ? title.substring(0, maxLength) + '...' : title;
   }
 
-  // Find the loadEvents method and update it:
   loadEvents() {
     const eventsCollection = collection(this.firestore, 'events');
     this.eventSubscription = collectionData(eventsCollection).pipe(
       map(events => events as GameEvent[])
     ).subscribe({
       next: (events) => {
-        console.log('Events loaded:', events.length); // Add this
         this.loading = false;
         this.eventsSubject.next(events);
         this.updateCalendarEvents();
@@ -752,8 +750,6 @@ export class CalendarViewComponent implements OnInit, OnDestroy {
       error: (error) => {
         console.error('Error loading events:', error);
         this.loading = false;
-        // Add this recovery mechanism
-        alert('Error loading events. Please refresh the page or try again later.');
       }
     });
   }

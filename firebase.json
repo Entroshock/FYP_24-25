@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "event-calendar/dist/event-calendar/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
