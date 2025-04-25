@@ -10,7 +10,7 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # This gives write permission to repository contents
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -29,40 +29,28 @@ jobs:
       - name: Create service account key file
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64 }}' | base64 -d > serviceAccountKey.json
-          # Verify the file is valid JSON
           python -c "import json; print('JSON is valid') if json.load(open('serviceAccountKey.json')) else ''" || echo "Invalid JSON"
 
       - name: Run scraper
         run: |
-          # First, modify the script to use the correct path
           sed -i 's|src/assets/images/events|event-calendar/src/assets/images/events|g' main.py
           sed -i 's|src/assets/images/events/sections|event-calendar/src/assets/images/events/sections|g' main.py
-          
-          # Run the scraper
           python main.py
         
       - name: Commit new images
         run: |
-          # Make sure directories exist
           mkdir -p event-calendar/src/assets/images/events/sections
           
-          # Move any images that might have been created in the wrong location
           if [ -d "src/assets/images/events" ]; then
             mv src/assets/images/events/* event-calendar/src/assets/images/events/ || true
           fi
           
-          # Configure git
           git config --global user.name 'GitHub Actions Bot'
           git config --global user.email 'actions@github.com'
-          
-          # Add all images
           git add event-calendar/src/assets/images/events/
-          
-          # Commit if there are changes
           git diff --staged --quiet || git commit -m "Update event images [skip ci]"
           git push || echo "No changes to push"
 
-      # Updated to Node.js v20 to be compatible with Firebase CLI
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -73,18 +61,37 @@ jobs:
           cd event-calendar
           npm install
           
-      - name: Build Angular app
+      - name: Build Angular app with production config
         run: |
           cd event-calendar
-          npm run build
+          npm run build -- --configuration=production
+
+      - name: Create firebase.json
+        run: |
+          cat > firebase.json << EOF
+          {
+            "hosting": {
+              "public": "event-calendar/dist/event-calendar/browser",
+              "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+              ],
+              "rewrites": [
+                {
+                  "source": "**",
+                  "destination": "/index.html"
+                }
+              ]
+            }
+          }
+          EOF
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      # Run Firebase deploy from the event-calendar directory
       - name: Deploy to Firebase
         run: |
-          cd event-calendar
           firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
