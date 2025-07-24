@@ -16,7 +16,7 @@ A comprehensive web application that scrapes, processes, and displays upcoming e
 - Database: Firebase Firestore
 - NLP: Hugging Face Transformers for sentiment analysis
 - Hosting: Firebase Hosting
-
+- Automation: Github Actions
 ## 📋  Prerequisites
 
 Node.js (version 16+)
